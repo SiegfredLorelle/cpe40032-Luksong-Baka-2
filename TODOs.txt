@@ -1,6 +1,7 @@
 TODOs
 
-dagdag ung baka
+add cows
 bg change
 move ground
+limit jump height (lumilipad pag nag double jump)
 add git attributes
