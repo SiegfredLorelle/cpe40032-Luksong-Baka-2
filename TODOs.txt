@@ -1,0 +1,6 @@
+TODOs
+
+dagdag ung baka
+bg change
+move ground
+add git attributes
