@@ -34,7 +34,7 @@ public class MoveLeft : MonoBehaviour
         if (gameObject.tag == GameManager.TAG_OBSTACLE)
         {
             transform.position = new Vector3(25, 0, 0);
-            transform.rotation = Quaternion.identity;
+            //transform.rotation = Quaternion.identity;
         }
     }
 
@@ -67,7 +67,7 @@ public class MoveLeft : MonoBehaviour
             }
 
             // do our actual movement, with our modifiedMoveSpeed applied
-            transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed);
+            transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, relativeTo: Space.World);
 
             // finally, if we're an obstacle and we've gone out of bounds,
             // despawn self and notify anyone who is interested in this

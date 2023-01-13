@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
     // the object pool exists as a way to save on garbage collection
     // by reusing the same GameObjects over and over again.
 
-    public GameObject[] obstaclePrefabs = new GameObject[3];
+    public GameObject[] obstaclePrefabs = new GameObject[5];
     private List<GameObject> obstaclePool = new List<GameObject>();
 
 
@@ -153,7 +153,7 @@ public class SpawnManager : MonoBehaviour
     {
         int _choice = Random.Range(0, obstaclePrefabs.Length);
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice],
-            new Vector3(25, 0, 0), Quaternion.identity, transform);
+            new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
         obstaclePool.Add(_newObstacle);
         if (!activeOnInit)
         {
