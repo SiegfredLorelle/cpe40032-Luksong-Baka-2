@@ -1718,8 +1718,8 @@ MonoBehaviour:
   jumpingAnimationSpeed: 0.5
   walkingAnimationSpeed: 1
   deathAnimationSpeed: 0.5
-  jumpForce: 2200
-  gravityModifier: 10
+  jumpForce: 700
+  gravityModifier: 3
   walkSpeed: 5
   introStartPosition: {x: -3.5, y: 0, z: 0}
   introDestinationPosition: {x: 2.5, y: 0, z: 0}

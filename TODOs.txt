@@ -2,7 +2,5 @@ TODOs
 
 
 bg change
-move ground
-limit jump height (lumilipad pag nag double jump)
 prevent destroying object early (pag full screen, hagip sa screen na nadedestroy)
 add git attributes

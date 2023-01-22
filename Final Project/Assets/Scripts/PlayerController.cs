@@ -239,14 +239,7 @@ public class PlayerController : MonoBehaviour
 
     private void PerformJump()
     {
-        if (hasDoubleJumped)
-        {
-            playerRb.AddForce(Vector3.up * jumpForce * 1.5f, ForceMode.Impulse);
-        }
-        else if (!hasDoubleJumped)
-        {
-            playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
+        playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     // this is fired when the player presses space but they are already in

@@ -1,0 +1,7 @@
+
+22:38 1/22/2023
+adjust jump force from 2200 to 700
+adjust gravity modifier from 10 to 3
+
+On player Controller script, under Perform Jump method
+remove the additional jump force when jumping on 2nd jump
