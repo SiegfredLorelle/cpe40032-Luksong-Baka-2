@@ -1,3 +1,6 @@
+21:49 1/23/2023
+create powerup prefab and spawn it at random interval
+
 
 22:38 1/22/2023
 adjust jump force from 2200 to 700

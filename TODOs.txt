@@ -1,6 +1,9 @@
 TODOs
 
 
+powerups
 bg change
 prevent destroying object early (pag full screen, hagip sa screen na nadedestroy)
+ui
+pause mechanic
 add git attributes

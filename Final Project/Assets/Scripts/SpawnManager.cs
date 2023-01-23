@@ -29,6 +29,7 @@ public class SpawnManager : MonoBehaviour
 
     public GameObject[] obstaclePrefabs = new GameObject[5];
     private List<GameObject> obstaclePool = new List<GameObject>();
+    public GameObject powerUpPrefab;
 
 
     // we need to subscribe to three events: one to tell us when to
@@ -52,6 +53,8 @@ public class SpawnManager : MonoBehaviour
         GameManager.GameRestart += InitializePool;
         PlayerController.PlayerFinishedIntro += StartSpawner;
         PlayerController.PlayerHitObstacle += GameOver;
+
+
     }
 
     // start with ten objects in the pool. if the player makes it far enough
@@ -72,6 +75,8 @@ public class SpawnManager : MonoBehaviour
     private void StartSpawner()
     {
         StartCoroutine("CycleObstacles");
+
+        StartCoroutine("SpawnPowerUp");
     }
 
     // this is fired when the player hits an obstacle; it destroys all
@@ -87,6 +92,24 @@ public class SpawnManager : MonoBehaviour
         }
         obstaclePool.Clear();
     }
+
+
+    // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after than randomly spawn powerup between 5-10 secs randomly
+    IEnumerator SpawnPowerUp()
+    {
+        yield return new WaitForSeconds(5);
+
+        while (true)
+        {
+            if (!GameManager.Instance.isGameStopped)
+            {
+                Instantiate(powerUpPrefab, new Vector3(25, 4, 0), powerUpPrefab.transform.rotation);
+            }
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
+        }
+
+    }
+
 
     // this coroutine spawns the obstacles. as the player's score gets
     // higher, the lower and upper limits of the spawn timer become lower
