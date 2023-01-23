@@ -1,3 +1,7 @@
+0:38 1/24/2023
+randomize which powerup to get, creates its cooldown
+
+
 21:49 1/23/2023
 create powerup prefab and spawn it at random interval
 
