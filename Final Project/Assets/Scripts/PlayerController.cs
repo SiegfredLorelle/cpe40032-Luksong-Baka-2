@@ -348,6 +348,31 @@ public class PlayerController : MonoBehaviour
         playerAudio.PlayOneShot(crashSound);
     }
 
+
+
+
+    IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
+    {
+        while (true)
+        {
+            if (obstacle.transform.position.y >= 10.0f)
+            {
+                break;
+            }
+            if (rb.velocity.y < 1)
+            { 
+                rb.AddForce(new Vector3(1, 1) * 200, ForceMode.Impulse);
+                rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
+
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+    }
+
+
+
     private void OnCollisionEnter(Collision other)
     {
         // if the other object that the player has collided with is the ground,
@@ -374,17 +399,41 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE))
         {
-            PlayerHitObstacle?.Invoke();
+
+
+            if (powerUpScript.hasStrengthPowerUp)
+            {
+                // Disable box collider
+                BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
+                boxCollider.enabled = !enabled;
+
+                // Disable move left script
+                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
+                moveLeftScript.enabled = !enabled;
+
+                // Throw obstacles since strength powerup is on
+                Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
+                StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
+                
+
+            }
+
+
+            else
+            { 
+                PlayerHitObstacle?.Invoke();
+            }
         }
 
 
-
+        // Enable powerup when collided with one
         if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
         {
+
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
             Destroy(other.gameObject);
 
             powerUpScript.EnablePowerUp();
-
 
         }
 

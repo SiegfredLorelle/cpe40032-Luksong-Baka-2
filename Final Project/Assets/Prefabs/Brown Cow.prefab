@@ -1328,6 +1328,7 @@ GameObject:
   - component: {fileID: 1615528869230304931}
   - component: {fileID: 538128749298919953}
   - component: {fileID: -613341090986785746}
+  - component: {fileID: 8496111255188818145}
   m_Layer: 0
   m_Name: Brown Cow
   m_TagString: Obstacle
@@ -1394,6 +1395,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.885657, y: 31.317434, z: 47.01928}
   m_Center: {x: 0.1843638, y: 15.285047, z: -0.13608137}
+--- !u!54 &8496111255188818145
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615528869221070883}
+  serializedVersion: 2
+  m_Mass: 60
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1615528869221071285
 GameObject:
   m_ObjectHideFlags: 0

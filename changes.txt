@@ -1,3 +1,6 @@
+15:51 1/24/2023
+throw obstacle when strength power up is on
+
 0:38 1/24/2023
 randomize which powerup to get, creates its cooldown
 

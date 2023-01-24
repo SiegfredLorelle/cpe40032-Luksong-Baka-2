@@ -27,7 +27,8 @@ public class PowerUp : MonoBehaviour
     public void EnablePowerUp()
     {
         hasPowerUp = true;
-        int index = Random.Range(0, powerUps.Count);
+        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
+        int index = Random.Range(0,1);
         string currentPowerUp = powerUps[index];
 
         switch (currentPowerUp)
