@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
 
     // References to other scrips
-    public PowerUp powerUpScript; 
+    public PowerUp powerUpScript;
 
 
     // ANIMATION AND SOUND
@@ -361,7 +361,7 @@ public class PlayerController : MonoBehaviour
             }
             if (rb.velocity.y < 1)
             { 
-                rb.AddForce(new Vector3(1, 1) * 200, ForceMode.Impulse);
+                rb.AddForce(new Vector3(1, 1) * 150, ForceMode.Impulse);
                 rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
 
             }
@@ -403,13 +403,15 @@ public class PlayerController : MonoBehaviour
 
             if (powerUpScript.hasStrengthPowerUp)
             {
+                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>(); 
+                moveLeftScript.isThrown = true;
+
                 // Disable box collider
                 BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
                 boxCollider.enabled = !enabled;
 
-                // Disable move left script
-                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
-                moveLeftScript.enabled = !enabled;
+
+
 
                 // Throw obstacles since strength powerup is on
                 Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();

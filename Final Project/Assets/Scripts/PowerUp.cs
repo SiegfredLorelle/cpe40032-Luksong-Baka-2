@@ -52,6 +52,7 @@ public class PowerUp : MonoBehaviour
     IEnumerator PowerUpCooldown(float cooldown)
     {
         yield return new WaitForSeconds(cooldown);
+        Debug.Log("POWERUP ENDED");
         hasPowerUp = false;
         hasFlightPowerUp = false;
         hasStrengthPowerUp = false;

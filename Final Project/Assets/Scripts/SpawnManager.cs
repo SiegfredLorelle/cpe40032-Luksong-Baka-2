@@ -58,25 +58,14 @@ public class SpawnManager : MonoBehaviour
         powerUpScript = GameObject.Find("Player").GetComponent<PowerUp>();
 
 
-        InitializePool();
-        GameManager.GameRestart += InitializePool;
+        //InitializePool();
+        //GameManager.GameRestart += InitializePool;
         PlayerController.PlayerFinishedIntro += StartSpawner;
         PlayerController.PlayerHitObstacle += GameOver;
 
 
     }
 
-    // start with ten objects in the pool. if the player makes it far enough
-    // for more than ten objects to want to spawn in the play area at once,
-    // we'll make more objects and add them to the pool as we need them
-
-    private void InitializePool()
-    {
-        for (int i = 1; i <= 10; i++)
-        {
-            InitializeObstacle(false);
-        }
-    }
 
     // this is fired when the player has finished the intro, and it starts
     // a coroutine that runs until the player dies
@@ -168,7 +157,7 @@ public class SpawnManager : MonoBehaviour
             // after that time period, this function will run again
 
             float _timer = Random.Range(_lowerFuzz, _upperFuzz);
-            SpawnManager.Instance.PlaceObstacle();
+            SpawnManager.Instance.InitializeObstacle();
             yield return new WaitForSecondsRealtime(_timer);
         } while (true);
     }
@@ -182,57 +171,16 @@ public class SpawnManager : MonoBehaviour
     // at the time that the player is running, we'll let the object start out
     // already active.
 
-    private GameObject InitializeObstacle(bool activeOnInit)
+    private void InitializeObstacle()
     {
         int _choice = Random.Range(0, obstaclePrefabs.Length);
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice],
             new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
         obstaclePool.Add(_newObstacle);
-        if (!activeOnInit)
-        {
-            _newObstacle.SetActive(false);
-        }
-        return _newObstacle;
+
+
+
     }
 
-    // this is a function that randomizes the object pool list. this is used
-    // by PlaceObstacle() to make it so that during time periods where our
-    // object spawning is infrequent, the player isn't just seeing the exact
-    // same create or spool over and over again, and is likely to instead
-    // see a variety of objects.
 
-    private List<GameObject> Shuffle(List<GameObject> list)
-    {
-        List<GameObject> _newList = new List<GameObject>();
-        while (list.Count > 0)
-        {
-            var _newRandom = Random.Range(0, list.Count);
-            _newList.Add(list[_newRandom]);
-            list.RemoveAt(_newRandom);
-        }
-        return _newList;
-    }
-
-    // pick a currently inactive object from the object pool and activate
-    // it. this will cause it to appear from the right of the screen and
-    // move towards the player.
-    //
-    // if we've gotten to a point where all of the objects in our pool are
-    // currently in use, we'll create a new one that starts off immediately
-    // active.
-
-    private GameObject PlaceObstacle()
-    {
-        obstaclePool = Shuffle(obstaclePool);
-
-        foreach (GameObject _obstacle in obstaclePool)
-        {
-            if (_obstacle.activeSelf == false)
-            {
-                _obstacle.SetActive(true);
-                return _obstacle;
-            }
-        }
-        return InitializeObstacle(true);
-    }
 }

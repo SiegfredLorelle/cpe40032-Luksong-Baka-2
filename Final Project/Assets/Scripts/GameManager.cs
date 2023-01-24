@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     // we also want to know when an object has despawned itself, as that is
     // the condition that causes the score to increase
 
+
+
     void Start()
     {
         score = 0;

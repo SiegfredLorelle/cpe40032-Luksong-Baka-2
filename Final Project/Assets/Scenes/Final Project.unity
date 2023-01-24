@@ -661,6 +661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8e412312ef9cb4483f3fc7bf7f0c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isThrown: 0
 --- !u!114 &835818923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1801,7 +1802,7 @@ MonoBehaviour:
   hasStrengthPowerUp: 0
   hasFlightPowerUp: 0
   StrengthCooldown: 10
-  FlightCooldown: 3
+  FlightCooldown: 5
 --- !u!4 &1909851414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
