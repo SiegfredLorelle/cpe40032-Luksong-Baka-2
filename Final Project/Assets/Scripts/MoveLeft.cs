@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
@@ -12,6 +14,10 @@ public class MoveLeft : MonoBehaviour
 
     private float moveSpeed;
     private float modifiedMoveSpeed;
+
+
+    public bool isThrown;
+
 
     // we need to know about the player going into and out of
     // dash mode, so we subscribe to those two events.
@@ -53,7 +59,7 @@ public class MoveLeft : MonoBehaviour
         {
             return;
         }
-        else if (!GameManager.Instance.isGameStopped)
+        else if (!GameManager.Instance.isGameStopped && !isThrown)
         {
             // set our modifiedMoveSpeed according to whether the player
             // is currently dashing or not
@@ -69,15 +75,20 @@ public class MoveLeft : MonoBehaviour
             // do our actual movement, with our modifiedMoveSpeed applied
             transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, relativeTo: Space.World);
 
-            // finally, if we're an obstacle and we've gone out of bounds,
-            // despawn self and notify anyone who is interested in this
-            // event (specifically, the GameManager)
-
-            if (gameObject.tag == GameManager.TAG_OBSTACLE && (transform.position.x < -2 || transform.position.y < -2))
-            {
-                Despawn?.Invoke();
-                gameObject.SetActive(false);
-            }
         }
+
+
+
+       // finally, if we're an obstacle and we've gone out of bounds,
+       // despawn self and notify anyone who is interested in this
+       // event (specifically, the GameManager)
+
+        if (gameObject.tag == GameManager.TAG_OBSTACLE && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
+        {
+            Despawn?.Invoke();
+
+            Destroy(gameObject);
+        }
+        
     }
 }

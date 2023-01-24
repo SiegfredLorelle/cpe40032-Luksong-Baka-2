@@ -2,6 +2,9 @@ TODOs
 
 
 powerups
+count as score when throwing obstacles
+add ceiling for player, and sensor for obstacles thrown using strength powerup
+reconstruct spawn system
 bg change
 prevent destroying object early (pag full screen, hagip sa screen na nadedestroy)
 ui

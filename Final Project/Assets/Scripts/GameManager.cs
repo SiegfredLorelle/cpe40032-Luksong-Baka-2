@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public const string ANIM_SPEED_F = "Speed_f";
     public const string TAG_WALKABLE = "Walkable";
     public const string TAG_OBSTACLE = "Obstacle";
+    public const string TAG_POWERUP = "Power Up";
     public const string TAG_PLAYER = "Player";
     public const string STATIC_B = "Static_b";
 
@@ -53,6 +54,8 @@ public class GameManager : MonoBehaviour
 
     // we also want to know when an object has despawned itself, as that is
     // the condition that causes the score to increase
+
+
 
     void Start()
     {

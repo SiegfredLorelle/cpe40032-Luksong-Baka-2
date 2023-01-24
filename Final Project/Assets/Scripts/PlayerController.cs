@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +29,10 @@ public class PlayerController : MonoBehaviour
 
     public delegate void PlayerStopDashingEvent();
     public static event PlayerStopDashingEvent PlayerStopDashing;
+
+
+    // References to other scrips
+    public PowerUp powerUpScript;
 
 
     // ANIMATION AND SOUND
@@ -68,11 +74,20 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround;
     private bool hasDoubleJumped;
 
+
+
+
+
+
+
+
     // grab all of our required components, get the intro rolling, and
     // subscribe to a whole bunch of events (mostly our own)
 
     private void Start()
     {
+        powerUpScript = GetComponent<PowerUp>();
+
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = gameObject.GetComponent<AudioSource>();
@@ -175,6 +190,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         MovePlayer();
+
     }
 
     private void MovePlayer()
@@ -332,6 +348,31 @@ public class PlayerController : MonoBehaviour
         playerAudio.PlayOneShot(crashSound);
     }
 
+
+
+
+    IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
+    {
+        while (true)
+        {
+            if (obstacle.transform.position.y >= 10.0f)
+            {
+                break;
+            }
+            if (rb.velocity.y < 1)
+            { 
+                rb.AddForce(new Vector3(1, 1) * 150, ForceMode.Impulse);
+                rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
+
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+
+    }
+
+
+
     private void OnCollisionEnter(Collision other)
     {
         // if the other object that the player has collided with is the ground,
@@ -358,8 +399,48 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE))
         {
-            PlayerHitObstacle?.Invoke();
+
+
+            if (powerUpScript.hasStrengthPowerUp)
+            {
+                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>(); 
+                moveLeftScript.isThrown = true;
+
+                // Disable box collider
+                BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
+                boxCollider.enabled = !enabled;
+
+
+
+
+                // Throw obstacles since strength powerup is on
+                Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
+                StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
+                
+
+            }
+
+
+            else
+            { 
+                PlayerHitObstacle?.Invoke();
+            }
         }
+
+
+        // Enable powerup when collided with one
+        if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
+        {
+
+            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
+            Destroy(other.gameObject);
+
+            powerUpScript.EnablePowerUp();
+
+        }
+
+
+
     }
 
     // the only thing we care about exiting collision with is the ground,

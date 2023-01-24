@@ -1,3 +1,15 @@
+21:29 1/24/2023
+remove pool of obstacles, just spawn every inteval
+add score when object leaves the screen (either from throw or going past it)
+
+
+15:51 1/24/2023
+throw obstacle when strength power up is on
+
+0:38 1/24/2023
+randomize which powerup to get, creates its cooldown
+
+
 21:49 1/23/2023
 create powerup prefab and spawn it at random interval
 
