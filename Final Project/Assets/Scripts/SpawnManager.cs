@@ -22,8 +22,7 @@ public class SpawnManager : MonoBehaviour
     /** END SINGLETON DECLARATION **/
 
 
-    // References to other scrips
-    private PowerUp powerUpScript;
+
 
 
     // there are three objects that we CAN make obstacles out of,
@@ -52,11 +51,9 @@ public class SpawnManager : MonoBehaviour
     // when the game is over, we disable all obstacles and do nothing until
     // the game restarts
 
+
     private void Start()
     {
-        // Get necessary components
-        powerUpScript = GameObject.Find("Player").GetComponent<PowerUp>();
-
 
         //InitializePool();
         //GameManager.GameRestart += InitializePool;
@@ -101,8 +98,7 @@ public class SpawnManager : MonoBehaviour
         {
             if (!GameManager.Instance.isGameStopped)
             {
-
-                Instantiate(powerUpPrefab, new Vector3(25, 4, 0), powerUpPrefab.transform.rotation);
+                GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(25, 4, 0), powerUpPrefab.transform.rotation);
             }
             yield return new WaitForSeconds(Random.Range(10.0f, 15.0f));
         }

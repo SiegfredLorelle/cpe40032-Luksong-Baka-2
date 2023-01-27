@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public static event PlayerStopDashingEvent PlayerStopDashing;
 
 
-    // References to other scrips
+    // References to other scripts
     public PowerUp powerUpScript;
 
 
@@ -94,6 +94,7 @@ public class PlayerController : MonoBehaviour
         Physics.gravity *= gravityModifier;
         SetupIntro();
 
+
         GameManager.GameRestart += SetupIntro;
         PlayerFinishedIntro += ActivatePlayer;
         PlayerHitGround += TransitionToRunning;
@@ -135,7 +136,7 @@ public class PlayerController : MonoBehaviour
     // when starting the 'walk-in' intro, we put the player off of the left
     // side of the screen and turn on isInIntro so that the player's controls
     // will be locked in Update().
-    
+
     // we also invoke PlayerStopDashing so that the dash mode doesn't get
     // 'stuck' if the player was holding shift at the time of death in a
     // previous round.
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
 
     private void TransitionToJumping()
     {
-        playerAnim.SetBool(GameManager.STATIC_B,true);
+        playerAnim.SetBool(GameManager.STATIC_B, true);
         playerAnim.speed = jumpingAnimationSpeed;
         isOnGround = false;
         dirtParticle.Stop();
@@ -301,9 +302,9 @@ public class PlayerController : MonoBehaviour
 
     private void TransitionToRunning()
     {
-        playerAnim.SetBool(GameManager.STATIC_B,true);
+        playerAnim.SetBool(GameManager.STATIC_B, true);
         playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-        playerAnim.SetFloat(GameManager.ANIM_SPEED_F,1);
+        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 1);
         playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
         playerAnim.speed = modifiedRunningAnimationSpeed;
         isOnGround = true;
@@ -317,9 +318,9 @@ public class PlayerController : MonoBehaviour
 
     private void TransitionToWalking()
     {
-        playerAnim.SetBool(GameManager.STATIC_B,true);
+        playerAnim.SetBool(GameManager.STATIC_B, true);
         playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-        playerAnim.SetFloat(GameManager.ANIM_SPEED_F,0.30f);
+        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
         playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
         playerAnim.speed = walkingAnimationSpeed;
         isOnGround = true;
@@ -360,7 +361,7 @@ public class PlayerController : MonoBehaviour
                 break;
             }
             if (rb.velocity.y < 1)
-            { 
+            {
                 rb.AddForce(new Vector3(1, 1) * 150, ForceMode.Impulse);
                 rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
 
@@ -403,7 +404,7 @@ public class PlayerController : MonoBehaviour
 
             if (powerUpScript.hasStrengthPowerUp)
             {
-                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>(); 
+                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;
 
                 // Disable box collider
@@ -411,33 +412,19 @@ public class PlayerController : MonoBehaviour
                 boxCollider.enabled = !enabled;
 
 
-
-
                 // Throw obstacles since strength powerup is on
                 Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
                 StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
-                
-
             }
 
 
             else
-            { 
+            {
                 PlayerHitObstacle?.Invoke();
             }
         }
 
 
-        // Enable powerup when collided with one
-        if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
-        {
-
-            Physics.IgnoreCollision(other.gameObject.GetComponent<Collider>(), GetComponent<Collider>());
-            Destroy(other.gameObject);
-
-            powerUpScript.EnablePowerUp();
-
-        }
 
 
 
@@ -453,6 +440,19 @@ public class PlayerController : MonoBehaviour
             !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
             PlayerLeftGround?.Invoke();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        // Enable powerup when collided with one
+        if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
+        {
+            Destroy(other.gameObject);
+
+            powerUpScript.EnablePowerUp();
+
         }
     }
 }
