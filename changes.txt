@@ -20,3 +20,6 @@ adjust gravity modifier from 10 to 3
 
 On player Controller script, under Perform Jump method
 remove the additional jump force when jumping on 2nd jump
+
+9:09 am 28/01/2023
+put cow and losing sound effects
