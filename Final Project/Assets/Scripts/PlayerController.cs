@@ -354,7 +354,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
     {
-        while (true)
+        while (!GameManager.Instance.isGameStopped)
         {
             if (obstacle.transform.position.y >= 10.0f)
             {

@@ -32,8 +32,10 @@ public class SpawnManager : MonoBehaviour
     // by reusing the same GameObjects over and over again.
 
     public GameObject[] obstaclePrefabs = new GameObject[5];
-    private List<GameObject> obstaclePool = new List<GameObject>();
     public GameObject powerUpPrefab;
+
+    public List<AudioClip> mooSoundEffects;
+    private AudioSource Audio;
 
 
     // we need to subscribe to three events: one to tell us when to
@@ -54,6 +56,8 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+        Audio = GetComponent<AudioSource>();
+
 
         //InitializePool();
         //GameManager.GameRestart += InitializePool;
@@ -81,11 +85,13 @@ public class SpawnManager : MonoBehaviour
     private void GameOver()
     {
         StopCoroutine("CycleObstacles");
-        foreach (GameObject _obstacle in obstaclePool)
+
+        GameObject[] obstaclesOnScene = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (GameObject obstacle in obstaclesOnScene)
         {
-            Destroy(_obstacle);
+            Destroy(obstacle);
         }
-        obstaclePool.Clear();
+
     }
 
 
@@ -170,9 +176,16 @@ public class SpawnManager : MonoBehaviour
     private void InitializeObstacle()
     {
         int _choice = Random.Range(0, obstaclePrefabs.Length);
-        GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice],
-            new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
-        obstaclePool.Add(_newObstacle);
+        GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
+
+        if (_newObstacle.gameObject.name == "Brown Cow(Clone)" || _newObstacle.gameObject.name == "White Cow(Clone)")
+        {
+            int index = Random.Range(0, mooSoundEffects.Count);
+            Audio.PlayOneShot(mooSoundEffects[index]);
+        }
+
+
+        //obstaclePool.Add(_newObstacle);
 
 
 
