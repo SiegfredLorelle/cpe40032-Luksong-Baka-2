@@ -14,9 +14,14 @@ public class PowerUp : MonoBehaviour
     public float FlightCooldown = 3.0f;
     private float powerUpIndicatorBlinkDuration = 3.0f;
 
+    private AudioSource playerAudio;
+    public AudioClip powerUpPickUpSound;
+    public GameObject powerUpPickUpEffects;
+
     // Start is called before the first frame update
     void Start()
     {
+        playerAudio = gameObject.GetComponent<AudioSource>();
 
     }
 
@@ -26,11 +31,17 @@ public class PowerUp : MonoBehaviour
         powerUpIndicator.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
-    public void EnablePowerUp()
+    public void EnablePowerUp(GameObject powerUpBox)
     {
         hasPowerUp = true;
-        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
-        int index = Random.Range(0,1);
+        playerAudio.PlayOneShot(powerUpPickUpSound);
+        GameObject effects = Instantiate(powerUpPickUpEffects, new Vector3(powerUpBox.transform.position.x, powerUpBox.transform.position.y, powerUpBox.transform.position.z), Quaternion.identity);
+        Destroy(powerUpBox);
+        Destroy(effects, 1.0f);
+
+
+    // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
+    int index = Random.Range(0,1);
         string currentPowerUp = powerUps[index];
 
         switch (currentPowerUp)

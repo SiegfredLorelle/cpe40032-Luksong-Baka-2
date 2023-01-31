@@ -98,13 +98,14 @@ public class SpawnManager : MonoBehaviour
     // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after than randomly spawn powerup between 5-10 secs randomly
     IEnumerator SpawnPowerUp()
     {
-        yield return new WaitForSeconds(15);
+        yield return new WaitForSeconds(5);
 
         while (true)
         {
             if (!GameManager.Instance.isGameStopped)
             {
-                GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(25, 4, 0), powerUpPrefab.transform.rotation);
+                float randomSpawnHeight = Random.Range(4.0f, 7.5f);
+                GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
             }
             yield return new WaitForSeconds(Random.Range(10.0f, 15.0f));
         }

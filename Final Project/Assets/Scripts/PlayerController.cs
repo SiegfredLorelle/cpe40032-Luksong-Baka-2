@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+
+
     public float runningAnimationSpeed;
     public float modifiedRunningAnimationSpeed;
     public float jumpingAnimationSpeed;
@@ -453,9 +455,8 @@ public class PlayerController : MonoBehaviour
         // Enable powerup when collided with one
         if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
         {
-            Destroy(other.gameObject);
 
-            powerUpScript.EnablePowerUp();
+            powerUpScript.EnablePowerUp(other.gameObject);
 
         }
     }
