@@ -1,10 +1,8 @@
 TODOs
 
 
-powerup indicator
-adjust spawn position of powerups
-sfx on powerup
 add ceiling
+fix direction when throwing (para d sumayad sa sahig ung binabato)
 bg change
 elevate floor
 add lives

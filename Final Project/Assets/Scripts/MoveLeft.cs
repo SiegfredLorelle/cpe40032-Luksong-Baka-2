@@ -79,14 +79,19 @@ public class MoveLeft : MonoBehaviour
 
 
 
-       // finally, if we're an obstacle and we've gone out of bounds,
-       // despawn self and notify anyone who is interested in this
-       // event (specifically, the GameManager)
+        // finally, if we're an obstacle and we've gone out of bounds,
+        // despawn self and notify anyone who is interested in this
+        // event (specifically, the GameManager)
 
         if (gameObject.tag == GameManager.TAG_OBSTACLE && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
         {
             Despawn?.Invoke();
 
+            Destroy(gameObject);
+        }
+
+        else if (gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10))
+        {
             Destroy(gameObject);
         }
         
