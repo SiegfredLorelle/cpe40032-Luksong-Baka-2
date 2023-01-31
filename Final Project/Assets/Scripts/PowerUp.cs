@@ -6,11 +6,13 @@ public class PowerUp : MonoBehaviour
 {
     // Powerups related variables
     public List<string> powerUps = new List<string> { "Strength", "Flight" };
+    public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
     public bool hasStrengthPowerUp = false;
     public bool hasFlightPowerUp = false;
     public float StrengthCooldown = 5.0f;
     public float FlightCooldown = 3.0f;
+    private float powerUpIndicatorBlinkDuration = 3.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,7 @@ public class PowerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        powerUpIndicator.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
     public void EnablePowerUp()
@@ -37,6 +39,7 @@ public class PowerUp : MonoBehaviour
                 hasStrengthPowerUp = true;
                 Debug.Log($"COLLIDED WITH {currentPowerUp} POWERUP");
                 StartCoroutine("PowerUpCooldown", StrengthCooldown);
+                powerUpIndicator.SetActive(true);
                 break;
 
             case "Flight":
@@ -51,10 +54,45 @@ public class PowerUp : MonoBehaviour
 
     IEnumerator PowerUpCooldown(float cooldown)
     {
-        yield return new WaitForSeconds(cooldown);
-        Debug.Log("POWERUP ENDED");
-        hasPowerUp = false;
-        hasFlightPowerUp = false;
-        hasStrengthPowerUp = false;
+        while (true)
+        {
+            if (cooldown == 0)
+            { 
+                hasPowerUp = false;
+                hasFlightPowerUp = false;
+                hasStrengthPowerUp = false;
+                powerUpIndicator.SetActive(false);
+                Debug.Log("POWERUP ENDED");
+                break;
+            }
+
+            else if (cooldown == powerUpIndicatorBlinkDuration)
+            {
+                StartCoroutine("BlinkPowerUpIndicator", powerUpIndicatorBlinkDuration);
+            }
+
+            yield return new WaitForSeconds(1);
+            cooldown--;
+        }
+
+    }
+
+// Routine for blinking the powerup indicator, called when powerup duration has 3 seconds left
+    IEnumerator BlinkPowerUpIndicator(float duration)
+    {
+        float endTime = Time.time + duration;
+        while (Time.time < endTime)
+        {
+            if (powerUpIndicator.activeSelf)
+            {
+                powerUpIndicator.SetActive(false);
+            }
+            else
+            {
+                powerUpIndicator.SetActive(true);
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
+        
     }
 }

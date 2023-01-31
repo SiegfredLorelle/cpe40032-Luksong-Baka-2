@@ -98,7 +98,7 @@ public class SpawnManager : MonoBehaviour
     // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after than randomly spawn powerup between 5-10 secs randomly
     IEnumerator SpawnPowerUp()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(15);
 
         while (true)
         {
@@ -184,8 +184,6 @@ public class SpawnManager : MonoBehaviour
             Audio.PlayOneShot(mooSoundEffects[index]);
         }
 
-
-        //obstaclePool.Add(_newObstacle);
 
 
 

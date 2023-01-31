@@ -8,6 +8,6 @@ public class StartGame : MonoBehaviour
 
     public void BeginGame()
     {
-        SceneManager.LoadScene("Prototype 3");
+        SceneManager.LoadScene("Menu");
     }
 }

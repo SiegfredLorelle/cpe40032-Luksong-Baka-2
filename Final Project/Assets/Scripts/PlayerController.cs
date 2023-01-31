@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public PowerUp powerUpScript;
 
 
+
+
     // ANIMATION AND SOUND
     // we have modifiedRunningAnimationSpeed for when the player
     // is using dash mode.
@@ -73,6 +75,8 @@ public class PlayerController : MonoBehaviour
     private bool isInIntro;
     private bool isOnGround;
     private bool hasDoubleJumped;
+
+    
 
 
 

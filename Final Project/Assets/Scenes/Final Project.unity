@@ -523,6 +523,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerupIndicator
       objectReference: {fileID: 0}
+    - target: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4428908044626120, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
       propertyPath: m_RootOrder
       value: 15
@@ -545,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4428908044626120, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4428908044626120, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -692,6 +696,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d6439663f8cd744b7f85a3005b8673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &941181306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1742899641471652, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
+  m_PrefabInstance: {fileID: 712820187}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &969354455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,6 +1997,7 @@ MonoBehaviour:
   powerUps:
   - Strength
   - Flight
+  powerUpIndicator: {fileID: 941181306}
   hasPowerUp: 0
   hasStrengthPowerUp: 0
   hasFlightPowerUp: 0
