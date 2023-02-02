@@ -41,10 +41,7 @@ public class PlayerPowerUp : MonoBehaviour
 
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
-    //public bool hasStrengthPowerUp = false;
-    //public bool hasFlightPowerUp = false;
-    //public float StrengthCooldown = 5.0f;
-    //public float FlightCooldown = 3.0f;
+
     private float powerUpIndicatorBlinkDuration = 2.0f;
 
 
@@ -81,21 +78,23 @@ public class PlayerPowerUp : MonoBehaviour
     {
         hasPowerUp = true;
         playerAudio.PlayOneShot(powerUpPickUpSound);
-        GameObject effects = Instantiate(powerUpPickUpEffects, new Vector3(powerUpBox.transform.position.x, powerUpBox.transform.position.y, powerUpBox.transform.position.z), Quaternion.identity);
-        Destroy(effects, 1.0f);
+        Instantiate(powerUpPickUpEffects, new Vector3(powerUpBox.transform.position.x, powerUpBox.transform.position.y, powerUpBox.transform.position.z), Quaternion.identity);
         Destroy(powerUpBox);
 
 
-        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
-        int index = Random.Range(0, powerUps.Count);
-        PowerUp currentPowerUp = powerUps.ElementAt(1).Value;
+        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
+        int index = Random.Range(0, 2);
+        PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
 
+
+        // CHANGE POWERUP INDICATOR FOR EACH POWERUP
         switch (currentPowerUp.name)
         {
             case "Strength":
                 powerUpIndicator.SetActive(true);
                 break;
             case "Bomb":
+                powerUpIndicator.SetActive(true);
                 break;
             case "Bullet":
                 break;
@@ -103,7 +102,7 @@ public class PlayerPowerUp : MonoBehaviour
         }
         currentPowerUp.isActivated = true;
         StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
-        Debug.Log($"COLLIDED WITH {currentPowerUp.name} POWERUP");
+        Debug.Log($"PICKED UP {currentPowerUp.name} POWERUP");
 
     }
 
@@ -112,7 +111,7 @@ public class PlayerPowerUp : MonoBehaviour
     {
         while (true)
         {
-            if (cooldown == 0)
+            if (cooldown == 0 || GameManager.Instance.isGameStopped)
             {
                 hasPowerUp = false;
                 powerUpIndicator.SetActive(false);
