@@ -17,6 +17,7 @@ public class MoveLeft : MonoBehaviour
 
 
     public bool isThrown;
+    public ParticleSystem explosionEffects;
 
 
     // we need to know about the player going into and out of
@@ -95,5 +96,17 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
+        {
+            Despawn?.Invoke();
+
+            Instantiate(explosionEffects, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+        }
     }
 }

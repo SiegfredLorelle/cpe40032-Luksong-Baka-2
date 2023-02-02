@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour
 
 
     // References to other scripts
-    public PowerUp powerUpScript;
+    public PlayerPowerUp powerUpScript;
+
+    public GameObject bombPrefab;
 
 
 
@@ -78,6 +80,7 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround;
     private bool hasDoubleJumped;
 
+
     
 
 
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        powerUpScript = GetComponent<PowerUp>();
+        powerUpScript = GetComponent<PlayerPowerUp>();
 
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
@@ -198,6 +201,7 @@ public class PlayerController : MonoBehaviour
         }
         MovePlayer();
 
+
     }
 
     private void MovePlayer()
@@ -242,6 +246,18 @@ public class PlayerController : MonoBehaviour
         {
             PlayerStopDashing?.Invoke();
         }
+
+        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped)
+        {
+            GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
+            Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
+            newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
+            newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
+            Destroy(newBomb, 5.0f);
+        }
+
+
+
     }
 
     // all this does is add the force. this is fired in reaction to the event
@@ -408,7 +424,7 @@ public class PlayerController : MonoBehaviour
         {
 
 
-            if (powerUpScript.hasStrengthPowerUp)
+            if (powerUpScript.powerUps["Strength"].isActivated)
             {
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;

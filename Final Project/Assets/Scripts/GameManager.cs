@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public const string TAG_OBSTACLE = "Obstacle";
     public const string TAG_POWERUP = "Power Up";
     public const string TAG_PLAYER = "Player";
+    public const string TAG_PROJECTILE = "Projectile";
     public const string STATIC_B = "Static_b";
 
     /** END GLOBAL CONSTANTS **/
