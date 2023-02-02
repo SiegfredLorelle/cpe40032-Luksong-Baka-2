@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
 
     // References to other scripts
-    public PowerUp powerUpScript;
+    public PlayerPowerUp powerUpScript;
 
 
 
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        powerUpScript = GetComponent<PowerUp>();
+        powerUpScript = GetComponent<PlayerPowerUp>();
 
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
@@ -408,7 +408,7 @@ public class PlayerController : MonoBehaviour
         {
 
 
-            if (powerUpScript.hasStrengthPowerUp)
+            if (powerUpScript.powerUps["Strength"].isActivated)
             {
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;

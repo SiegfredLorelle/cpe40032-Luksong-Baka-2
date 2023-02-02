@@ -3,38 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp : MonoBehaviour
+
+public class PlayerPowerUp : MonoBehaviour
 {
 
     // Powerups related variables
     //public List<string> powerUps = new List<string>{ "Strength", "Flight" };
     //public List<Dictionary<string, float>> powerUps1 = new List<Dictionary<string, float>> { ("Strength", 7.0f), ("name1", 1.0f) };
-    public Dictionary<string, float> powerUps = new Dictionary<string, float>() {
-                {"Strength", 7.0f },
-                {"Bomb", 5.0f },
-                {"Bullet", 7.0f }
-        };
+    //public Dictionary<string, float> powerUps = new Dictionary<string, float>() {
+    //        {"Strength", 7.0f },
+    //        {"Bomb", 5.0f },
+    //        {"Bullet", 7.0f }
+    //};
 
-    //string name;
-    //float cooldown;
-    //bool isActivated;
+    public class PowerUp
+    {
+        public string name;
+        public float cooldown;
+        public bool isActivated;
 
-    //public PowerUp(string name, float cooldown)
-    //{
-    //    this.name = name;
-    //    this.cooldown = cooldown;
-    //    this.isActivated = false;
-    //}
+        public PowerUp(string name, float cooldown)
+        {
+            this.name = name;
+            this.cooldown = cooldown;
+            this.isActivated = false;
+        }
+
+    }
+
+
+
+    public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
+
 
 
 
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
-    public bool hasStrengthPowerUp = false;
-    public bool hasFlightPowerUp = false;
-    public float StrengthCooldown = 5.0f;
-    public float FlightCooldown = 3.0f;
+    //public bool hasStrengthPowerUp = false;
+    //public bool hasFlightPowerUp = false;
+    //public float StrengthCooldown = 5.0f;
+    //public float FlightCooldown = 3.0f;
     private float powerUpIndicatorBlinkDuration = 2.0f;
+
 
     private AudioSource playerAudio;
     public AudioClip powerUpPickUpSound;
@@ -45,11 +56,17 @@ public class PowerUp : MonoBehaviour
     {
         playerAudio = gameObject.GetComponent<AudioSource>();
 
-        //PowerUp a = new PowerUp("Strength", 5.0f);
-        //Debug.Log(a);
+        // Create all the powerups with their respective cooldowns
+        powerUps.Add("Strength", new PowerUp("Strength", 7.0f));
+        powerUps.Add("Bomb", new PowerUp("Bomb", 7.0f));
+        powerUps.Add("Bullet", new PowerUp("Bullet", 7.0f));
 
 
-    }
+
+
+
+
+}
 
     // Update is called once per frame
     void Update()
@@ -68,23 +85,22 @@ public class PowerUp : MonoBehaviour
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
         int index = Random.Range(0, powerUps.Count);
-        string currentPowerUp = powerUps.ElementAt(index).Key;
+        PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
 
-        switch (currentPowerUp)
+        switch (currentPowerUp.name)
         {
             case "Strength":
-                hasStrengthPowerUp = true;
                 powerUpIndicator.SetActive(true);
                 break;
             case "Bomb":
-                hasFlightPowerUp = true;
                 break;
             case "Bullet":
                 break;
 
         }
-        StartCoroutine("PowerUpCooldown", powerUps[currentPowerUp]);
-        Debug.Log($"COLLIDED WITH {currentPowerUp} POWERUP");
+        currentPowerUp.isActivated = true;
+        StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
+        Debug.Log($"COLLIDED WITH {currentPowerUp.name} POWERUP");
 
     }
 
@@ -96,9 +112,11 @@ public class PowerUp : MonoBehaviour
             if (cooldown == 0)
             {
                 hasPowerUp = false;
-                hasFlightPowerUp = false;
-                hasStrengthPowerUp = false;
                 powerUpIndicator.SetActive(false);
+                foreach(PowerUp powerUp in powerUps.Values)
+                {
+                    powerUp.isActivated = false;
+                }
                 Debug.Log("POWERUP ENDED");
                 break;
             }
@@ -132,4 +150,6 @@ public class PowerUp : MonoBehaviour
         }
 
     }
+
 }
+

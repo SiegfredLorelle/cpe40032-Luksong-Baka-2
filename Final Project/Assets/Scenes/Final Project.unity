@@ -2123,7 +2123,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1909851409}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5e77758aac6ea1448161177304d8652, type: 3}
   m_Name: 
@@ -2237,6 +2237,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1909851417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909851409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2ac2fcd683629d4e8c39be60c7bc758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpIndicator: {fileID: 941181306}
+  hasPowerUp: 0
+  powerUpPickUpSound: {fileID: 8300000, guid: 42d23269f3ac3064f887f86c2759fab9, type: 3}
+  powerUpPickUpEffects: {fileID: 1262544474120978219, guid: f8207af6abef93e418399f4f061a53fa, type: 3}
 --- !u!1 &2014335011
 GameObject:
   m_ObjectHideFlags: 0
