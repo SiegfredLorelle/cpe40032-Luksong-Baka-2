@@ -92,6 +92,7 @@ public class SpawnManager : MonoBehaviour
             Destroy(obstacle);
         }
 
+
     }
 
 

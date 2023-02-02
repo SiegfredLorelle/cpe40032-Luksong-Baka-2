@@ -29,12 +29,13 @@ public class PlayerPowerUp : MonoBehaviour
             this.isActivated = false;
         }
 
+
+
     }
 
 
 
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
-
 
 
 
@@ -72,6 +73,8 @@ public class PlayerPowerUp : MonoBehaviour
     void Update()
     {
         powerUpIndicator.transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+
+
     }
 
     public void EnablePowerUp(GameObject powerUpBox)
@@ -85,7 +88,7 @@ public class PlayerPowerUp : MonoBehaviour
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
         int index = Random.Range(0, powerUps.Count);
-        PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
+        PowerUp currentPowerUp = powerUps.ElementAt(1).Value;
 
         switch (currentPowerUp.name)
         {
