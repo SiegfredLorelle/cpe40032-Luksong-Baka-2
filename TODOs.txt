@@ -1,6 +1,7 @@
 TODOs
 
 
+add bomb, bullet powerup
 add ceiling
 fix direction when throwing (para d sumayad sa sahig ung binabato)
 bg change

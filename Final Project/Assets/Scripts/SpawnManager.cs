@@ -107,7 +107,7 @@ public class SpawnManager : MonoBehaviour
                 float randomSpawnHeight = Random.Range(4.0f, 7.5f);
                 GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
             }
-            yield return new WaitForSeconds(Random.Range(10.0f, 15.0f));
+            yield return new WaitForSeconds(Random.Range(7.0f, 12.5f));
         }
 
     }

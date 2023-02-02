@@ -1,18 +1,28 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerUp : MonoBehaviour
 {
+
     // Powerups related variables
-    public List<string> powerUps = new List<string> { "Strength", "Flight" };
+    //public List<string> powerUps = new List<string>{ "Strength", "Flight" };
+    //public List<Dictionary<string, float>> powerUps1 = new List<Dictionary<string, float>> { ("Strength", 7.0f), ("name1", 1.0f) };
+    public Dictionary<string, float> powerUps = new Dictionary<string, float>() {
+            {"Strength", 7.0f },
+            {"Bomb", 5.0f },
+            {"Bullet", 7.0f }
+    };
+
+
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
     public bool hasStrengthPowerUp = false;
     public bool hasFlightPowerUp = false;
     public float StrengthCooldown = 5.0f;
     public float FlightCooldown = 3.0f;
-    private float powerUpIndicatorBlinkDuration = 3.0f;
+    private float powerUpIndicatorBlinkDuration = 2.0f;
 
     private AudioSource playerAudio;
     public AudioClip powerUpPickUpSound;
@@ -41,25 +51,25 @@ public class PowerUp : MonoBehaviour
 
 
     // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM
-    int index = Random.Range(0,1);
-        string currentPowerUp = powerUps[index];
+    int index = Random.Range(0, powerUps.Count);
+        string currentPowerUp = powerUps.ElementAt(index).Key;
 
         switch (currentPowerUp)
         {
             case "Strength":
                 hasStrengthPowerUp = true;
-                Debug.Log($"COLLIDED WITH {currentPowerUp} POWERUP");
-                StartCoroutine("PowerUpCooldown", StrengthCooldown);
                 powerUpIndicator.SetActive(true);
                 break;
-
-            case "Flight":
+            case "Bomb":
                 hasFlightPowerUp = true;
-                Debug.Log($"COLLIDED WITH {currentPowerUp} POWERUP");
-                StartCoroutine("PowerUpCooldown", FlightCooldown);
+                break;
+            case "Bullet":
                 break;
 
         }
+        StartCoroutine("PowerUpCooldown", powerUps[currentPowerUp]);
+        Debug.Log($"COLLIDED WITH {currentPowerUp} POWERUP");
+
     }
 
 
