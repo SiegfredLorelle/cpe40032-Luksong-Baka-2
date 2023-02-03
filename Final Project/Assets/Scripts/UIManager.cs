@@ -79,7 +79,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(4);
         scoreDisplay.SetActive(false);
         finalScoreDisplay.SetActive(true);
-        finalScoreDisplay.GetComponent<Text>().text = "Final Score\n"
+        finalScoreDisplay.GetComponent<Text>().text = "FINAL SCORE\n"
             + GameManager.Instance.score;
         restartButton.SetActive(true);
     }
