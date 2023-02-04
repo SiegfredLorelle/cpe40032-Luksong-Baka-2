@@ -17,8 +17,11 @@ public class MoveLeft : MonoBehaviour
 
 
     public bool isThrown;
-    public ParticleSystem explosionEffects;
 
+    // Variables which not all objects has something assigned to it
+    public ParticleSystem explosionEffects;
+    public Renderer rend;
+    public AudioSource audioExplosion;
 
     // we need to know about the player going into and out of
     // dash mode, so we subscribe to those two events.
@@ -102,11 +105,23 @@ public class MoveLeft : MonoBehaviour
     {
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
+            // Call despawn method from game maanger script, mainly to add a score
             Despawn?.Invoke();
 
+            // Create an explosion effects and destroy the obstacle hit
             Instantiate(explosionEffects, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            Destroy(other.gameObject);
+
+            // Get Audio Source and play the explosion clip assigned to it
+            audioExplosion = other.GetComponent<AudioSource>();
+            audioExplosion.Play();
+
+            // Turn off render and collider, to prevent it from affecting other objects while the explosion sfx is still playing
+            other.gameObject.GetComponent<Renderer>().enabled = false;
+            other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+            // Destroy bomb as soon as its explosion sfx is finished
+            Destroy(other.gameObject, audioExplosion.clip.length);
         }
     }
 }
