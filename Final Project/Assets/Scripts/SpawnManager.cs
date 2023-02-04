@@ -85,6 +85,7 @@ public class SpawnManager : MonoBehaviour
     private void GameOver()
     {
         StopCoroutine("CycleObstacles");
+        StopCoroutine("SpawnPowerUp");
 
         GameObject[] obstaclesOnScene = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach (GameObject obstacle in obstaclesOnScene)
@@ -106,7 +107,7 @@ public class SpawnManager : MonoBehaviour
             if (!GameManager.Instance.isGameStopped)
             {
                 float randomSpawnHeight = Random.Range(4.0f, 7.5f);
-                GameObject newPowerUp = Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
+                Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
             }
             yield return new WaitForSeconds(Random.Range(7.0f, 12.5f));
         }
@@ -122,6 +123,8 @@ public class SpawnManager : MonoBehaviour
 
     private IEnumerator CycleObstacles()
     {
+        yield return new WaitForSeconds(2);
+
         float _lowerFuzz;
         float _upperFuzz;
         do

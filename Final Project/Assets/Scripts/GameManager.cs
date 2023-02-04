@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public const string ANIM_JUMP_TRIG = "Jump_trig";
     public const string ANIM_DEATH_B = "Death_b";
     public const string ANIM_SPEED_F = "Speed_f";
+    public const string ANIM_INT = "Animation_int";
     public const string TAG_WALKABLE = "Walkable";
     public const string TAG_OBSTACLE = "Obstacle";
     public const string TAG_POWERUP = "Power Up";

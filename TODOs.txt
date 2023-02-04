@@ -1,7 +1,14 @@
 TODOs
 
 
-add bomb, bullet powerup
+
+BOMB powerup
+- sfx when colliding with obstacle
+- different powerup indicator (change color maybe?)
+
+
+other powerups (bullet, triple jump, shield)
+change difficulty scaling (not of arbitrary values)
 add ceiling
 fix direction when throwing (para d sumayad sa sahig ung binabato)
 bg change

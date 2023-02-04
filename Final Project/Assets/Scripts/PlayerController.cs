@@ -56,6 +56,9 @@ public class PlayerController : MonoBehaviour
     public float deathAnimationSpeed;
 
     private Animator playerAnim;
+    private string[] idleAnimations = new string[] { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
+    private float endTimeOfAnimation;
+
     private AudioSource playerAudio;
 
     // PLAYER MOVEMENT
@@ -81,7 +84,7 @@ public class PlayerController : MonoBehaviour
     private bool hasDoubleJumped;
 
 
-    
+
 
 
 
@@ -154,7 +157,8 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = introStartPosition;
         PlayerStopDashing?.Invoke();
-        TransitionToWalking();
+        //TransitionToWalking();
+        PerformIntro();
         isInIntro = true;
     }
 
@@ -169,22 +173,44 @@ public class PlayerController : MonoBehaviour
 
     private void PerformIntro()
     {
-        if (transform.position.x >= introDestinationPosition.x)
+        int index = Random.Range(0, idleAnimations.Length);
+        playerAnim.Play(idleAnimations[index]);
+        endTimeOfAnimation = Time.time + 1.0f;
+
+
+
+    }
+
+    private void CheckIntroProgress()
+    {
+
+        // If the idle animations is finished playing
+        if (!playerAnim.GetCurrentAnimatorStateInfo(2).IsTag("Idle") && Time.time > endTimeOfAnimation)
         {
-            PlayerFinishedIntro?.Invoke();
-        }
-        else
-        {
-            transform.Translate(Vector3.forward * walkSpeed * Time.fixedDeltaTime);
+            // start running animation
+            playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 1.0f);
+
+            // if already on running animation and its transitions are finished
+            if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
+            {
+                PlayerFinishedIntro?.Invoke();
+
+                //// intro is done, start playing dirt particles 
+                //dirtParticle.Play();
+            }
+
         }
     }
+
 
     // when isInIntro is false, the player controls are unlocked.
     // we grab our initial running speed and start running!
 
     private void ActivatePlayer()
     {
+        TransitionToWalking();
         isInIntro = false;
+        GameManager.Instance.isGameStopped = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         TransitionToRunning();
     }
@@ -196,10 +222,11 @@ public class PlayerController : MonoBehaviour
     {
         if (isInIntro)
         {
-            PerformIntro();
+            CheckIntroProgress();
             return;
         }
         MovePlayer();
+
 
 
     }
@@ -340,13 +367,13 @@ public class PlayerController : MonoBehaviour
 
     private void TransitionToWalking()
     {
-        playerAnim.SetBool(GameManager.STATIC_B, true);
-        playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
-        playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
-        playerAnim.speed = walkingAnimationSpeed;
-        isOnGround = true;
-        hasDoubleJumped = false;
+        //playerAnim.SetBool(GameManager.STATIC_B, true);
+        //playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
+        //playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
+        //playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
+        //playerAnim.speed = walkingAnimationSpeed;
+        //isOnGround = true;
+        //hasDoubleJumped = false;
     }
 
     // this handles the animation, particles and sound for death.
