@@ -521,7 +521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_Name
-      value: Powerup (1)
+      value: ENABLE TO EASILY TEST POWERUPS 2
       objectReference: {fileID: 0}
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_IsActive
@@ -746,6 +746,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isThrown: 0
   explosionEffects: {fileID: 0}
+  rend: {fileID: 0}
+  audioExplosion: {fileID: 0}
 --- !u!114 &835818923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1882,7 +1884,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_Name
-      value: Powerup
+      value: ENABLE TO EASILY TEST POWERUPS
       objectReference: {fileID: 0}
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_IsActive
