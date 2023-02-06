@@ -136,24 +136,36 @@ public class SpawnManager : MonoBehaviour
                     _upperFuzz = 3f;
                     break;
                 case int score when score < 10:
-                    _lowerFuzz = 1f;
+                    _lowerFuzz = 1.75f;
+                    _upperFuzz = 2.75f;
+                    break;
+                case int score when score < 15:
+                    _lowerFuzz = 1.5f;
                     _upperFuzz = 2.5f;
                     break;
                 case int score when score < 20:
-                    _lowerFuzz = 0.5f;
-                    _upperFuzz = 1.5f;
+                    _lowerFuzz = 1.25f;
+                    _upperFuzz = 2.25f;
+                    break;
+                case int score when score < 25:
+                    _lowerFuzz = 1.0f;
+                    _upperFuzz = 2.0f;
                     break;
                 case int score when score < 30:
-                    _lowerFuzz = 0.4f;
-                    _upperFuzz = 0.9f;
+                    _lowerFuzz = 0.75f;
+                    _upperFuzz = 1.75f;
+                    break;
+                case int score when score < 35:
+                    _lowerFuzz = 0.50f;
+                    _upperFuzz = 1.50f;
                     break;
                 case int score when score < 40:
-                    _lowerFuzz = 0.3f;
-                    _upperFuzz = 0.8f;
+                    _lowerFuzz = 0.25f;
+                    _upperFuzz = 1.25f;
                     break;
                 default:
-                    _lowerFuzz = 0.2f;
-                    _upperFuzz = 0.7f;
+                    _lowerFuzz = 0.25f;
+                    _upperFuzz = 1.0f;
                     break;
             }
 
