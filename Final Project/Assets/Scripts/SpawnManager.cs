@@ -177,7 +177,7 @@ public class SpawnManager : MonoBehaviour
 
             float _timer = Random.Range(_lowerFuzz, _upperFuzz);
             SpawnManager.Instance.InitializeObstacle();
-            yield return new WaitForSecondsRealtime(_timer);
+            yield return new WaitForSeconds(_timer);
         } while (true);
     }
 

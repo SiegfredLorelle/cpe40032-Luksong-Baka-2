@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     public int score;
     public bool isGameStopped;
+    public bool isGamePaused;
     public delegate void RestartAction();
     public static event RestartAction GameRestart;
 
@@ -115,4 +116,6 @@ public class GameManager : MonoBehaviour
         isGameStopped = true;
         GameRestart?.Invoke();
     }
+
+
 }

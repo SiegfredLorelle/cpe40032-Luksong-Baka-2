@@ -183,7 +183,6 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIntroProgress()
     {
-
         // If the idle animations is finished playing
         if (!playerAnim.GetCurrentAnimatorStateInfo(2).IsTag("Idle") && Time.time > endTimeOfAnimation)
         {
@@ -194,11 +193,7 @@ public class PlayerController : MonoBehaviour
             if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
             {
                 PlayerFinishedIntro?.Invoke();
-
-                //// intro is done, start playing dirt particles 
-                //dirtParticle.Play();
             }
-
         }
     }
 
@@ -239,6 +234,7 @@ public class PlayerController : MonoBehaviour
 
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
+            && !GameManager.Instance.isGamePaused
             && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
         {
             if (!isOnGround)
@@ -274,7 +270,7 @@ public class PlayerController : MonoBehaviour
             PlayerStopDashing?.Invoke();
         }
 
-        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped)
+        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped && !GameManager.Instance.isGamePaused)
         {
             GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
             Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
