@@ -37,7 +37,8 @@ public class SpawnManager : MonoBehaviour
     public List<AudioClip> mooSoundEffects;
     private AudioSource Audio;
 
-
+    public GameObject player;
+    public PlayerPowerUp playerPowerUpScript;
     // we need to subscribe to three events: one to tell us when to
     // prepare the object pool, one to tell us when the player intro
     // has finished and the player is now actively running, and one to
@@ -58,11 +59,13 @@ public class SpawnManager : MonoBehaviour
     {
         Audio = GetComponent<AudioSource>();
 
+        player = GameObject.Find("Player");
+        playerPowerUpScript = player.GetComponent<PlayerPowerUp>();
 
-        //InitializePool();
-        //GameManager.GameRestart += InitializePool;
+
         PlayerController.PlayerFinishedIntro += StartSpawner;
         PlayerController.PlayerHitObstacle += GameOver;
+
 
 
     }
@@ -106,10 +109,23 @@ public class SpawnManager : MonoBehaviour
         {
             if (!GameManager.Instance.isGameStopped)
             {
+                // Spawn a powerup at random height
                 float randomSpawnHeight = Random.Range(4.0f, 7.5f);
                 Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
             }
-            yield return new WaitForSeconds(Random.Range(7.0f, 12.5f));
+
+            yield return new WaitForSeconds(1.5f);
+
+            // If the player picked up the most recent powerup, then spawn the next one a little longer
+            if (playerPowerUpScript.hasPowerUp)
+            {
+                yield return new WaitForSeconds(Random.Range(8.0f, 13.0f));
+            }
+            // If player did not picked up the most recent powerup, then shorten the delay for the next powerup
+            else
+            {
+                yield return new WaitForSeconds(Random.Range(5.0f, 8.0f));
+            }
         }
 
     }

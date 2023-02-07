@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    //public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public AudioSource[] audioSources;
 
     // Start is called before the first frame update
     private void Start()
     {
         GameManager.Instance.isGamePaused = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isGameStopped)
         {
-            if (GameManager.Instance.isGamePaused) // USE isGamePaused VARIABLE FROM GAME MANAGER INSTEAD OF LOCAL VAR IN THIS SCRIPT (mula game manager sana para maaccess ng ibang script ung var)
+            if (GameManager.Instance.isGamePaused)
             {
                 Resume();
             } else
@@ -32,8 +33,12 @@ public class PauseMenu : MonoBehaviour
         GameManager.Instance.isGamePaused = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        //GameIsPaused = false;
 
+        // Unpause all sound sources
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.UnPause();
+        }
     }
 
     void Pause ()
@@ -41,7 +46,14 @@ public class PauseMenu : MonoBehaviour
         GameManager.Instance.isGamePaused = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        //GameIsPaused = true;
+
+        // Find all audio sources then pause them
+        audioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audioSource in audioSources)
+        {
+            audioSource.Pause();
+        }
 
     }
+
 }

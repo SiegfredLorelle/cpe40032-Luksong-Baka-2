@@ -44,7 +44,6 @@ public class MoveLeft : MonoBehaviour
         if (gameObject.tag == GameManager.TAG_OBSTACLE)
         {
             transform.position = new Vector3(25, 0, 0);
-            //transform.rotation = Quaternion.identity;
         }
     }
 

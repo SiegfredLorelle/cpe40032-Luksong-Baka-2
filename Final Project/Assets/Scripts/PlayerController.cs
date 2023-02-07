@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     public static event PlayerStopDashingEvent PlayerStopDashing;
 
 
-    // References to other scripts
+    // References from other objects
     public PlayerPowerUp powerUpScript;
-
+    public AudioSource backgroundMusic;
     public GameObject bombPrefab;
 
 
@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         powerUpScript = GetComponent<PlayerPowerUp>();
+        backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
@@ -160,7 +161,10 @@ public class PlayerController : MonoBehaviour
         //TransitionToWalking();
         PerformIntro();
         isInIntro = true;
+        backgroundMusic.Play();
+
     }
+
 
 
     // until we reach the position at which the player is to begin running
@@ -173,9 +177,12 @@ public class PlayerController : MonoBehaviour
 
     private void PerformIntro()
     {
+        playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
+
+        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
         int index = Random.Range(0, idleAnimations.Length);
         playerAnim.Play(idleAnimations[index]);
-        endTimeOfAnimation = Time.time + 1.0f;
+        endTimeOfAnimation = Time.time + 1.10f;
 
 
 
@@ -188,6 +195,9 @@ public class PlayerController : MonoBehaviour
         {
             // start running animation
             playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 1.0f);
+
+            playerAnim.SetInteger(GameManager.ANIM_INT, 0);
+
 
             // if already on running animation and its transitions are finished
             if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
@@ -230,7 +240,7 @@ public class PlayerController : MonoBehaviour
     {
         // if player presses space and is on the ground,
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
-        // let them jump as long as they are ALSO not dead
+        // let them jump as long as they are ALSO not dead and that the game is not paused
 
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
@@ -270,13 +280,11 @@ public class PlayerController : MonoBehaviour
             PlayerStopDashing?.Invoke();
         }
 
+        // If 'E' is pressed, then throw bomb as long as
+        // the player has bomb powerup, and the game is not over and not paused
         if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped && !GameManager.Instance.isGamePaused)
         {
-            GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-            Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
-            newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-            newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
-            Destroy(newBomb, 5.0f);
+            ThrowBomb();
         }
 
 
@@ -417,6 +425,16 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void ThrowBomb()
+    {
+        GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
+        Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
+        newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
+        newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
+        Destroy(newBomb, 5.0f);
+
+    }
+
 
 
     private void OnCollisionEnter(Collision other)
@@ -466,6 +484,9 @@ public class PlayerController : MonoBehaviour
             else
             {
                 PlayerHitObstacle?.Invoke();
+                backgroundMusic.Stop();
+                playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
+
             }
         }
 

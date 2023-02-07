@@ -522,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   isGameStopped: 0
+  isGamePaused: 0
   playerIsDashing: 0
 --- !u!198 &318874665 stripped
 ParticleSystem:
@@ -807,6 +808,14 @@ PrefabInstance:
       value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.11
       objectReference: {fileID: 0}
@@ -820,7 +829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.46467185
+      value: -0.46467188
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.x
@@ -828,11 +837,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8854829
+      value: -0.88548297
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2191,6 +2200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 1600414163}
+  audioSources: []
 --- !u!1 &1563063649
 GameObject:
   m_ObjectHideFlags: 0
@@ -2760,6 +2770,8 @@ MonoBehaviour:
   mooSoundEffects:
   - {fileID: 8300000, guid: f0ce9d26c67529d45a1acd923a9cebd0, type: 3}
   - {fileID: 8300000, guid: 7f3fe1691cd260c4294922b5ba08dad3, type: 3}
+  player: {fileID: 0}
+  playerPowerUpScript: {fileID: 0}
 --- !u!4 &1734187969
 Transform:
   m_ObjectHideFlags: 0
@@ -2891,6 +2903,14 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.0000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.721924
       objectReference: {fileID: 0}
@@ -2904,7 +2924,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.46467185
+      value: -0.46467188
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2912,11 +2932,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8854829
+      value: -0.88548297
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3039,7 +3059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9383d7d76b37563448965784f5b97cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpScript: {fileID: 0}
+  powerUpScript: {fileID: 1909851417}
+  backgroundMusic: {fileID: 534669906}
   bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
   explosionParticle: {fileID: 318874665}
   dirtParticle: {fileID: 1209890967}
