@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     public GameObject scoreDisplay;
     public GameObject finalScoreDisplay;
     public GameObject restartButton;
+    public GameObject bg;
 
     // UI manager only needs to know about GameOver and GameRestart
     // events, and switches which elements are displayed accordingly
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
         scoreDisplay.SetActive(true);
         finalScoreDisplay.SetActive(false);
         restartButton.SetActive(false);
+        bg.SetActive(false);
     }
 
     // score is 'how many obstacles we've avoided.' score is kept in
@@ -53,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-       scoreDisplay.gameObject.GetComponent<Text>().text = "Score: "
+       scoreDisplay.gameObject.GetComponent<Text>().text = "SCORE: "
             + GameManager.Instance.score;
     }
     
@@ -79,8 +81,9 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(4);
         scoreDisplay.SetActive(false);
         finalScoreDisplay.SetActive(true);
-        finalScoreDisplay.GetComponent<Text>().text = "FINAL SCORE\n"
+        finalScoreDisplay.GetComponent<Text>().text = "FINAL SCORE: "
             + GameManager.Instance.score;
         restartButton.SetActive(true);
+        bg.SetActive(true);
     }
 }
