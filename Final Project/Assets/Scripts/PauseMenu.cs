@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    //public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+
+    // Start is called before the first frame update
+    private void Start()
+    {
+        GameManager.Instance.isGamePaused = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GameIsPaused)
+            if (GameManager.Instance.isGamePaused) // USE isGamePaused VARIABLE FROM GAME MANAGER INSTEAD OF LOCAL VAR IN THIS SCRIPT (mula game manager sana para maaccess ng ibang script ung var)
             {
                 Resume();
             } else
@@ -23,17 +29,19 @@ public class PauseMenu : MonoBehaviour
     }
     void Resume ()
     {
+        GameManager.Instance.isGamePaused = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
-        GameIsPaused = false;
+        //GameIsPaused = false;
 
     }
 
     void Pause ()
     {
+        GameManager.Instance.isGamePaused = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
-        GameIsPaused = true;
+        //GameIsPaused = true;
 
     }
 }
