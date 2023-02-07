@@ -33,7 +33,7 @@ public class PlayerPowerUp : MonoBehaviour
 
     }
 
-
+    GameManager gameManagerScript;
 
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
 
@@ -53,6 +53,8 @@ public class PlayerPowerUp : MonoBehaviour
     void Start()
     {
         playerAudio = gameObject.GetComponent<AudioSource>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
 
         // Create all the powerups with their respective cooldowns
         powerUps.Add("Strength", new PowerUp("Strength", 7.0f));
@@ -64,7 +66,7 @@ public class PlayerPowerUp : MonoBehaviour
 
 
 
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -112,11 +114,11 @@ public class PlayerPowerUp : MonoBehaviour
     {
         while (true)
         {
-            if (cooldown == 0 || GameManager.Instance.isGameStopped)
+            if (cooldown == 0 || gameManagerScript.isGameStopped)
             {
                 hasPowerUp = false;
                 powerUpIndicator.SetActive(false);
-                foreach(PowerUp powerUp in powerUps.Values)
+                foreach (PowerUp powerUp in powerUps.Values)
                 {
                     powerUp.isActivated = false;
                 }
@@ -139,7 +141,7 @@ public class PlayerPowerUp : MonoBehaviour
     IEnumerator BlinkPowerUpIndicator(float duration)
     {
         float endTime = Time.time + duration;
-        
+
         // Turn on and off the powerup indicator until time is up
         while (Time.time < endTime)
         {
@@ -153,6 +155,7 @@ public class PlayerPowerUp : MonoBehaviour
             }
             yield return new WaitForSeconds(0.25f);
         }
+
 
     }
 

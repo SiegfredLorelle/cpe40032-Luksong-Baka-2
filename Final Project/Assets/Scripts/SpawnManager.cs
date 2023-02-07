@@ -5,20 +5,20 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     /** BEGIN SINGLETON DECLARATION **/
-    private static SpawnManager _instance;
-    public static SpawnManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("SpawnManager doesn't exist!");
-            }
-            return _instance;
-        }
-    }
+    //private SpawnManager _instance;
+    //public SpawnManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            Debug.LogError("SpawnManager doesn't exist!");
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
-    void Awake() => _instance = this;
+    //void Awake() => _instance = this;
     /** END SINGLETON DECLARATION **/
 
 
@@ -30,6 +30,9 @@ public class SpawnManager : MonoBehaviour
 
     // the object pool exists as a way to save on garbage collection
     // by reusing the same GameObjects over and over again.
+
+    public GameManager gameManagerScript;
+
 
     public GameObject[] obstaclePrefabs = new GameObject[5];
     public GameObject powerUpPrefab;
@@ -57,16 +60,26 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+
         Audio = GetComponent<AudioSource>();
 
         player = GameObject.Find("Player");
         playerPowerUpScript = player.GetComponent<PlayerPowerUp>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 
-        PlayerController.PlayerFinishedIntro += StartSpawner;
-        PlayerController.PlayerHitObstacle += GameOver;
 
+        ////PlayerController.PlayerFinishedIntro += StartSpawner;
+        ////PlayerController.PlayerHitObstacle += GameOver;
 
+    }
+
+    private void Update()
+    {
+        if (gameManagerScript.isGameStopped)
+        {
+            GameOver();
+        }
 
     }
 
@@ -74,7 +87,7 @@ public class SpawnManager : MonoBehaviour
     // this is fired when the player has finished the intro, and it starts
     // a coroutine that runs until the player dies
 
-    private void StartSpawner()
+    public void StartSpawner()
     {
         StartCoroutine("CycleObstacles");
 
@@ -85,7 +98,7 @@ public class SpawnManager : MonoBehaviour
     // objects in the pool so we can create a slightly different pool for
     // the next round
 
-    private void GameOver()
+    public void GameOver()
     {
         StopCoroutine("CycleObstacles");
         StopCoroutine("SpawnPowerUp");
@@ -107,7 +120,8 @@ public class SpawnManager : MonoBehaviour
 
         while (true)
         {
-            if (!GameManager.Instance.isGameStopped)
+
+            if (!gameManagerScript.isGameStopped)
             {
                 // Spawn a powerup at random height
                 float randomSpawnHeight = Random.Range(4.0f, 7.5f);
@@ -145,7 +159,8 @@ public class SpawnManager : MonoBehaviour
         float _upperFuzz;
         do
         {
-            switch (GameManager.Instance.score)
+
+            switch (gameManagerScript.score)
             {
                 case int score when score < 5:
                     _lowerFuzz = 2f;
@@ -192,7 +207,7 @@ public class SpawnManager : MonoBehaviour
             // after that time period, this function will run again
 
             float _timer = Random.Range(_lowerFuzz, _upperFuzz);
-            SpawnManager.Instance.InitializeObstacle();
+            InitializeObstacle();
             yield return new WaitForSeconds(_timer);
         } while (true);
     }
@@ -208,6 +223,7 @@ public class SpawnManager : MonoBehaviour
 
     private void InitializeObstacle()
     {
+
         int _choice = Random.Range(0, obstaclePrefabs.Length);
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
 

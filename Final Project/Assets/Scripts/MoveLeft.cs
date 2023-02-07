@@ -7,8 +7,10 @@ public class MoveLeft : MonoBehaviour
     // we have this event so that the GameManager can know
     // an object has despawned; despawning an object causes
     // the GameManager to increase the score.
-    public delegate void DespawnEvent();
-    public static event DespawnEvent Despawn;
+    //public delegate void DespawnEvent();
+    //public static event DespawnEvent Despawn;
+
+    public GameManager gameManagerScript;
 
     // there are two movespeed variables because of dash mode.
 
@@ -28,10 +30,13 @@ public class MoveLeft : MonoBehaviour
 
     void Start()
     {
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+
         moveSpeed = 20f;
         modifiedMoveSpeed = moveSpeed;
-        PlayerController.PlayerStartDashing += SpeedUp;
-        PlayerController.PlayerStopDashing += SlowDown;
+        ////PlayerController.PlayerStartDashing += SpeedUp;
+        ////PlayerController.PlayerStopDashing += SlowDown;
     }
 
     // since this script is attached to both the background
@@ -54,19 +59,34 @@ public class MoveLeft : MonoBehaviour
     void SpeedUp() => modifiedMoveSpeed = moveSpeed * 2f;
     void SlowDown() => modifiedMoveSpeed = moveSpeed;
 
+    ///   NEW CODE ////
+
+    private void Update()
+    {
+        if (gameManagerScript.playerIsDashing)
+        {
+            SpeedUp();
+        }
+        else
+        {
+            SlowDown();
+        }
+    }
+    ///   END NEW CODE ////
+
     void FixedUpdate()
     {
         // do nothing if the game is stopped
 
-        if (GameManager.Instance.isGameStopped)
+        if (gameManagerScript.isGameStopped)
         {
             return;
         }
-        else if (!GameManager.Instance.isGameStopped && !isThrown)
+        else if (!gameManagerScript.isGameStopped && !isThrown)
         {
             // set our modifiedMoveSpeed according to whether the player
             // is currently dashing or not
-            if (GameManager.Instance.playerIsDashing)
+            if (gameManagerScript.playerIsDashing)
             {
                 modifiedMoveSpeed = moveSpeed * 2f;
             }
@@ -88,7 +108,8 @@ public class MoveLeft : MonoBehaviour
 
         if (gameObject.tag == GameManager.TAG_OBSTACLE && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
         {
-            Despawn?.Invoke();
+            //Despawn?.Invoke();
+            gameManagerScript.IncreaseScore();
 
             Destroy(gameObject);
         }
@@ -97,7 +118,7 @@ public class MoveLeft : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -105,7 +126,9 @@ public class MoveLeft : MonoBehaviour
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
             // Call despawn method from game maanger script, mainly to add a score
-            Despawn?.Invoke();
+            //Despawn?.Invoke();
+            gameManagerScript.IncreaseScore();
+
 
             // Create an explosion effects and destroy the obstacle hit
             Instantiate(explosionEffects, transform.position, Quaternion.identity);

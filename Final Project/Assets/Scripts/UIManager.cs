@@ -4,23 +4,26 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    /** BEGIN SINGLETON DECLARATION **/
+    ///** BEGIN SINGLETON DECLARATION **/
 
-    private static UIManager _instance;
-    public static UIManager Instance 
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("The UIManager doesn't exist!");
-            }
-            return _instance;
-        }
-    }
+    //private UIManager _instance;
+    //public UIManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            Debug.LogError("The UIManager doesn't exist!");
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
-    void Awake() => _instance = this;
+    //void Awake() => _instance = this;
     /** END SINGLETON DECLARATION **/
+
+
+    public GameManager gameManagerScript;
 
     public GameObject scoreDisplay;
     public GameObject finalScoreDisplay;
@@ -30,17 +33,19 @@ public class UIManager : MonoBehaviour
     // UI manager only needs to know about GameOver and GameRestart
     // events, and switches which elements are displayed accordingly
 
-    private void Start()
+    void Start()
     {
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         StartUI();
-        PlayerController.PlayerHitObstacle += GameOver;
-        GameManager.GameRestart += StartUI;
+        ////PlayerController.PlayerHitObstacle += GameOver;
+        ////GameManager.GameRestart += StartUI;
     }
 
     // when the game is started or restarted, we make sure the death
     // screen is deactivated, and the basic score display is activated
 
-    private void StartUI()
+    public void StartUI()
     {
         scoreDisplay.SetActive(true);
         finalScoreDisplay.SetActive(false);
@@ -53,14 +58,13 @@ public class UIManager : MonoBehaviour
     // 'despawn' event, which is caused by the obstacle leaving the
     // screen and going out of bounds
 
-    private void Update()
+    void Update()
     {
-       scoreDisplay.gameObject.GetComponent<Text>().text = "SCORE: "
-            + GameManager.Instance.score;
+        scoreDisplay.gameObject.GetComponent<Text>().text = "SCORE: " + gameManagerScript.score;
     }
-    
 
-    private void GameOver()
+
+    public void GameOver()
     {
         StartCoroutine("DeathScreen");
     }
@@ -82,7 +86,7 @@ public class UIManager : MonoBehaviour
         scoreDisplay.SetActive(false);
         finalScoreDisplay.SetActive(true);
         finalScoreDisplay.GetComponent<Text>().text = "FINAL SCORE: "
-            + GameManager.Instance.score;
+            + gameManagerScript.score;
         restartButton.SetActive(true);
         bg.SetActive(true);
     }

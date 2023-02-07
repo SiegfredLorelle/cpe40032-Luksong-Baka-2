@@ -12,29 +12,32 @@ public class PlayerController : MonoBehaviour
     // the player also subscribes to some of its own events
     // for the purposes of sound and animation.
 
-    public delegate void PlayerHitObstacleEvent();
-    public static event PlayerHitObstacleEvent PlayerHitObstacle;
+    //public delegate void PlayerHitObstacleEvent();
+    ////public static event PlayerHitObstacleEvent PlayerHitObstacle;
 
-    public delegate void PlayerHitGroundEvent();
-    public static event PlayerHitGroundEvent PlayerHitGround;
+    //public delegate void PlayerHitGroundEvent();
+    ////public static event PlayerHitGroundEvent PlayerHitGround;
 
-    public delegate void PlayerLeftGroundEvent();
-    public static event PlayerLeftGroundEvent PlayerLeftGround;
+    //public delegate void PlayerLeftGroundEvent();
+    ////public static event PlayerLeftGroundEvent PlayerLeftGround;
 
-    public delegate void PlayerFinishedIntroEvent();
-    public static event PlayerFinishedIntroEvent PlayerFinishedIntro;
+    //public delegate void PlayerFinishedIntroEvent();
+    ////public static event PlayerFinishedIntroEvent PlayerFinishedIntro;
 
-    public delegate void PlayerStartDashingEvent();
-    public static event PlayerStartDashingEvent PlayerStartDashing;
+    //public delegate void PlayerStartDashingEvent();
+    ////public static event PlayerStartDashingEvent PlayerStartDashing;
 
-    public delegate void PlayerStopDashingEvent();
-    public static event PlayerStopDashingEvent PlayerStopDashing;
+    //public delegate void PlayerStopDashingEvent();
+    ////public static event PlayerStopDashingEvent PlayerStopDashing;
 
 
     // References from other objects
     public PlayerPowerUp powerUpScript;
     public AudioSource backgroundMusic;
+    public SpawnManager spawnManagerScript;
+    public UIManager UIManagerScript;
     public GameObject bombPrefab;
+    public GameManager gameManagerScript;
 
 
 
@@ -61,6 +64,7 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource playerAudio;
 
+
     // PLAYER MOVEMENT
     //
     // walkSpeed, introStartPosition and introDestinationPosition are used
@@ -70,6 +74,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float gravityModifier;
     public float walkSpeed;
+    public Vector3 gravityConstant;
     public Vector3 introStartPosition;
     public Vector3 introDestinationPosition;
 
@@ -99,22 +104,27 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         powerUpScript = GetComponent<PlayerPowerUp>();
+        spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = gameObject.GetComponent<AudioSource>();
-        Physics.gravity *= gravityModifier;
+        Physics.gravity = gravityConstant;
+
         SetupIntro();
 
 
-        GameManager.GameRestart += SetupIntro;
-        PlayerFinishedIntro += ActivatePlayer;
-        PlayerHitGround += TransitionToRunning;
-        PlayerLeftGround += TransitionToJumping;
-        PlayerHitObstacle += TransitionToDeath;
-        PlayerStartDashing += SpeedUp;
-        PlayerStopDashing += SlowDown;
+
+        //GameManager.GameRestart += SetupIntro;
+        //PlayerFinishedIntro += ActivatePlayer;
+        //PlayerHitGround += TransitionToRunning;
+        //PlayerLeftGround += TransitionToJumping;
+        //PlayerHitObstacle += TransitionToDeath;
+        //PlayerStartDashing += SpeedUp;
+        //PlayerStopDashing += SlowDown;
     }
 
     // animation speed has to change in dash mode, but we only do this
@@ -154,14 +164,17 @@ public class PlayerController : MonoBehaviour
     // 'stuck' if the player was holding shift at the time of death in a
     // previous round.
 
-    private void SetupIntro()
+    public void SetupIntro()
     {
+
         transform.position = introStartPosition;
-        PlayerStopDashing?.Invoke();
+        //PlayerStopDashing?.Invoke();
+        SlowDown();
         //TransitionToWalking();
         PerformIntro();
         isInIntro = true;
         backgroundMusic.Play();
+
 
     }
 
@@ -177,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
     private void PerformIntro()
     {
+
         playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
 
         playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
@@ -186,10 +200,14 @@ public class PlayerController : MonoBehaviour
 
 
 
+
+
     }
 
     private void CheckIntroProgress()
     {
+        //Debug.Log(!playerAnim.GetCurrentAnimatorStateInfo(2).IsTag("Idle")) + Tie.;
+
         // If the idle animations is finished playing
         if (!playerAnim.GetCurrentAnimatorStateInfo(2).IsTag("Idle") && Time.time > endTimeOfAnimation)
         {
@@ -202,7 +220,10 @@ public class PlayerController : MonoBehaviour
             // if already on running animation and its transitions are finished
             if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
             {
-                PlayerFinishedIntro?.Invoke();
+                //PlayerFinishedIntro?.Invoke();
+                ActivatePlayer();
+                spawnManagerScript.StartSpawner();
+                gameManagerScript.isGameStopped = false;
             }
         }
     }
@@ -213,9 +234,9 @@ public class PlayerController : MonoBehaviour
 
     private void ActivatePlayer()
     {
-        TransitionToWalking();
+        //TransitionToWalking();
         isInIntro = false;
-        GameManager.Instance.isGameStopped = false;
+        gameManagerScript.isGameStopped = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         TransitionToRunning();
     }
@@ -225,11 +246,17 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //Debug.Log("TESTHERE?");
+
+
         if (isInIntro)
         {
             CheckIntroProgress();
             return;
         }
+
+        //Debug.Log("TESTDINE?");
+
         MovePlayer();
 
 
@@ -242,11 +269,14 @@ public class PlayerController : MonoBehaviour
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
         // let them jump as long as they are ALSO not dead and that the game is not paused
 
+        //Debug.Log("TEST?");
+
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
-            && !GameManager.Instance.isGamePaused
+            && !gameManagerScript.isGamePaused
             && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
         {
+
             if (!isOnGround)
             {
                 PerformDoubleJump();
@@ -273,16 +303,21 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
         {
-            PlayerStartDashing?.Invoke();
+
+            //PlayerStartDashing?.Invoke();
+            SpeedUp();
+            gameManagerScript.playerIsDashing = true;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
         {
-            PlayerStopDashing?.Invoke();
+            //PlayerStopDashing?.Invoke();
+            SlowDown();
+            gameManagerScript.playerIsDashing = false;
         }
 
         // If 'E' is pressed, then throw bomb as long as
         // the player has bomb powerup, and the game is not over and not paused
-        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped && !GameManager.Instance.isGamePaused)
+        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
         {
             ThrowBomb();
         }
@@ -369,16 +404,16 @@ public class PlayerController : MonoBehaviour
     // intro. it's similar to TransitionToRunning, but without
     // the dirt particles, and slower.
 
-    private void TransitionToWalking()
-    {
-        //playerAnim.SetBool(GameManager.STATIC_B, true);
-        //playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-        //playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
-        //playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
-        //playerAnim.speed = walkingAnimationSpeed;
-        //isOnGround = true;
-        //hasDoubleJumped = false;
-    }
+    //private void TransitionToWalking()
+    //{
+    //    //playerAnim.SetBool(GameManager.STATIC_B, true);
+    //    //playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
+    //    //playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
+    //    //playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
+    //    //playerAnim.speed = walkingAnimationSpeed;
+    //    //isOnGround = true;
+    //    //hasDoubleJumped = false;
+    //}
 
     // this handles the animation, particles and sound for death.
     //
@@ -407,7 +442,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
     {
-        while (!GameManager.Instance.isGameStopped)
+        while (!gameManagerScript.isGameStopped && powerUpScript.powerUps["Strength"].isActivated)
         {
             if (obstacle.transform.position.y >= 10.0f)
             {
@@ -415,7 +450,7 @@ public class PlayerController : MonoBehaviour
             }
             if (rb.velocity.y < 1)
             {
-                rb.AddForce(new Vector3(1, 1) * 150, ForceMode.Impulse);
+                rb.AddForce(new Vector3(1, 2) * 150, ForceMode.Impulse);
                 rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
 
             }
@@ -453,7 +488,8 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
             !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            PlayerHitGround?.Invoke();
+            //PlayerHitGround?.Invoke();
+            TransitionToRunning();
         }
 
         // If the player has hit an obstacle,
@@ -483,7 +519,11 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                PlayerHitObstacle?.Invoke();
+                //PlayerHitObstacle?.Invoke();
+                gameManagerScript.isGameStopped = true;
+                TransitionToDeath();
+                spawnManagerScript.GameOver();
+                UIManagerScript.GameOver();
                 backgroundMusic.Stop();
                 playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
 
@@ -505,7 +545,8 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
             !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            PlayerLeftGround?.Invoke();
+            //PlayerLeftGround?.Invoke();
+            TransitionToJumping();
         }
     }
 

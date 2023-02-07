@@ -2,21 +2,23 @@
 
 public class MoveBackground : MonoBehaviour
 {
-    private Vector3 startPos;
+    private Vector3 startPos = new Vector3(45, 8.1f, 10);
 
     // subscribe to GameManager event at the beginning so
     // we know when we're supposed to restart
 
     void Start()
     {
-        startPos = transform.position;
-        GameManager.GameRestart += ResetBackground;
+        //startPos = transform.position;
+        //startPos = new Vector3(45, 8.1f, 10);
+
+        ////GameManager.GameRestart += ResetBackground;
     }
 
     // this event fires when GameManager restarts, placing the background
     // back to its starting position.
 
-    void ResetBackground() => transform.position = startPos;
+    public void ResetBackground() => transform.position = startPos;
 
     void Update()
     {

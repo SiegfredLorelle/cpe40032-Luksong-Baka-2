@@ -1,27 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
-    /** BEGIN SINGLETON DECLARATION **/
+    ///** BEGIN SINGLETON DECLARATION **/
 
-    private static GameManager _instance;
-    public static GameManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                Debug.LogError("The GameManager doesn't exist!");
-            }
-            return _instance;
-        }
-    }
+    //private GameManager _instance;
+    //public GameManager Instance
+    //{
+    //    get
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            Debug.LogError("The GameManager doesn't exist!");
+    //        }
+    //        return _instance;
+    //    }
+    //}
 
-    private void Awake() => _instance = this;
+    //private void Awake() => _instance = this;
     /** END SINGLETON DECLARATION **/
 
     /** GLOBAL CONSTANTS **/
-    
+
+    public PlayerController playerControllerScript;
+    public MoveBackground moveBackgroundScript;
+    public UIManager UIManagerScript;
+
     // I really dislike the way having strings right in my function calls
     // looks, so I prefer to use constants for things like this - helps
     // enforce consistency and reduce issues with potential typos, too
@@ -42,8 +48,8 @@ public class GameManager : MonoBehaviour
     public int score;
     public bool isGameStopped;
     public bool isGamePaused;
-    public delegate void RestartAction();
-    public static event RestartAction GameRestart;
+    //public delegate void RestartAction();
+    //public static event RestartAction GameRestart;
 
     // in a perfect world, i probably wouldn't need the below bool, but
     // i'm running out of time and it's a quick hack
@@ -62,27 +68,38 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
+        moveBackgroundScript = GameObject.Find("Background").GetComponent<MoveBackground>();
+        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
+
+
         score = 0;
+        isGamePaused = false;
         isGameStopped = true;
-        PlayerController.PlayerStartDashing += EnhanceScore;
-        PlayerController.PlayerStopDashing += DeEnhanceScore;
-        PlayerController.PlayerFinishedIntro += FinishedIntro;
-        PlayerController.PlayerHitObstacle += GameOver;
-        MoveLeft.Despawn += IncreaseScore;
+
+
+        //RestartGame();
+
+        ////PlayerController.PlayerStartDashing += EnhanceScore;
+        ////PlayerController.PlayerStopDashing += DeEnhanceScore;
+        ////PlayerController.PlayerFinishedIntro += FinishedIntro;
+        ////PlayerController.PlayerHitObstacle += GameOver;
+
+        //MoveLeft.Despawn += IncreaseScore;
     }
 
     // IncreaseScore looks at playerIsDashing, so we want the value
     // to change accordingly based on what the player is doing
 
-    private void EnhanceScore() => playerIsDashing = true;
-    private void DeEnhanceScore() => playerIsDashing = false;
+    //private void EnhanceScore() => playerIsDashing = true;
+    //private void DeEnhanceScore() => playerIsDashing = false;
 
-    private void GameOver() => isGameStopped = true;
+    //private void GameOver() => isGameStopped = true;
 
     // clearing obstacles is worth double if the player is currently
     // in dash mode
 
-    private void IncreaseScore()
+    public void IncreaseScore()
     {
         if (playerIsDashing)
         {
@@ -114,7 +131,13 @@ public class GameManager : MonoBehaviour
     {
         score = 0;
         isGameStopped = true;
-        GameRestart?.Invoke();
+        playerControllerScript.SetupIntro();
+        moveBackgroundScript.ResetBackground();
+        UIManagerScript.StartUI();
+
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //GameRestart?.Invoke();
     }
 
 
