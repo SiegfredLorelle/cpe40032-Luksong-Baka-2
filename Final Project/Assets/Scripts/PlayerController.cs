@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     public float walkingAnimationSpeed;
     public float deathAnimationSpeed;
 
-    private Animator playerAnim;
+    public Animator playerAnim;
     private string[] idleAnimations = new string[] { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
     private float endTimeOfAnimation;
 

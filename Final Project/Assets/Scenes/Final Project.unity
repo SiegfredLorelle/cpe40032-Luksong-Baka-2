@@ -940,9 +940,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1465227158}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ResetGame, Assembly-CSharp
+        m_MethodName: Reset
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1913,7 +1913,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1318144602}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1465227158}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: LoadMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1318144602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1934,7 +1946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 841ae3188ba4d9746ba4f4ed86597a98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 508b7276e5631294ab35b053b5a7775c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3071,11 +3083,17 @@ MonoBehaviour:
   jumpingAnimationSpeed: 0.5
   walkingAnimationSpeed: 1
   deathAnimationSpeed: 0.5
+  playerAnim: {fileID: 1909851413}
   jumpForce: 700
   gravityModifier: 3
   walkSpeed: 5
   introStartPosition: {x: 0, y: 0, z: 0}
   introDestinationPosition: {x: 2, y: 0, z: 0}
+--- !u!95 &1909851413 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+  m_PrefabInstance: {fileID: 1909851408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1909851414 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
