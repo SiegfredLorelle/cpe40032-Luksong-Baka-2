@@ -197,7 +197,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.33e-43, y: 2.73e-43, z: 0, w: -10.8083725}
+  m_BoundingSphereOverride: {x: 6.73e-43, y: 1.596e-42, z: 0, w: 1.7659892e-38}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -940,9 +940,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1600414163}
-        m_TargetAssemblyTypeName: Pause, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 1465227158}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
