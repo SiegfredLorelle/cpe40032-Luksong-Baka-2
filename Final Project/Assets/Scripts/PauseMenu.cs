@@ -16,7 +16,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isGameStopped)
         {
             if (GameManager.Instance.isGamePaused) // USE isGamePaused VARIABLE FROM GAME MANAGER INSTEAD OF LOCAL VAR IN THIS SCRIPT (mula game manager sana para maaccess ng ibang script ung var)
             {
