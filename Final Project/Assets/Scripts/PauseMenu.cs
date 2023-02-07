@@ -5,22 +5,28 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    public GameManager gameManagerScript;
+
     public GameObject pauseMenuUI;
     public AudioSource[] audioSources;
 
     // Start is called before the first frame update
     private void Start()
     {
-        GameManager.Instance.isGamePaused = false;
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Ensures timescale is normal when reloading scenes
+        Time.timeScale = 1.0f;
+
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isGameStopped)
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameManagerScript.isGameStopped)
         {
-            if (GameManager.Instance.isGamePaused)
+            if (gameManagerScript.isGamePaused)
             {
                 Resume();
             } else
@@ -31,7 +37,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume ()
     {
-        GameManager.Instance.isGamePaused = false;
+        gameManagerScript.isGamePaused = false;
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
 
@@ -44,7 +50,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause ()
     {
-        GameManager.Instance.isGamePaused = true;
+        gameManagerScript.isGamePaused = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
 
@@ -56,6 +62,13 @@ public class PauseMenu : MonoBehaviour
         }
 
     }
+
+     public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+        
+    }
+  
 
     
 }
