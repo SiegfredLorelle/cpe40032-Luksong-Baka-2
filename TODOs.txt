@@ -11,7 +11,7 @@ powerup suggestions:
 shakescreen kapag nabangga
 lives (may tatlong buhay lang)
 
-
+fix bug where idle animation bugs on restart
 different powerup indicator (change color maybe?)
 change difficulty scaling (not of arbitrary values)
 add ceiling
