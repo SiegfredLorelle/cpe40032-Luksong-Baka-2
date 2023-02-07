@@ -2904,11 +2904,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.0000001
+      value: 1.0000002
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.0000001
+      value: 1.0000002
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3059,7 +3059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9383d7d76b37563448965784f5b97cad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpScript: {fileID: 0}
+  powerUpScript: {fileID: 1909851417}
+  backgroundMusic: {fileID: 534669906}
   bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
   explosionParticle: {fileID: 318874665}
   dirtParticle: {fileID: 1209890967}

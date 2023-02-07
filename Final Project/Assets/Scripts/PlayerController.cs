@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     public static event PlayerStopDashingEvent PlayerStopDashing;
 
 
-    // References to other scripts
+    // References from other objects
     public PlayerPowerUp powerUpScript;
-
+    public AudioSource backgroundMusic;
     public GameObject bombPrefab;
 
 
@@ -99,6 +99,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         powerUpScript = GetComponent<PlayerPowerUp>();
+        backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
 
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
@@ -160,7 +161,10 @@ public class PlayerController : MonoBehaviour
         //TransitionToWalking();
         PerformIntro();
         isInIntro = true;
+        backgroundMusic.Play();
+
     }
+
 
 
     // until we reach the position at which the player is to begin running
@@ -173,9 +177,12 @@ public class PlayerController : MonoBehaviour
 
     private void PerformIntro()
     {
+        playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
+
+        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
         int index = Random.Range(0, idleAnimations.Length);
         playerAnim.Play(idleAnimations[index]);
-        endTimeOfAnimation = Time.time + 1.0f;
+        endTimeOfAnimation = Time.time + 1.10f;
 
 
 
@@ -188,6 +195,9 @@ public class PlayerController : MonoBehaviour
         {
             // start running animation
             playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 1.0f);
+
+            playerAnim.SetInteger(GameManager.ANIM_INT, 0);
+
 
             // if already on running animation and its transitions are finished
             if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
@@ -474,6 +484,9 @@ public class PlayerController : MonoBehaviour
             else
             {
                 PlayerHitObstacle?.Invoke();
+                backgroundMusic.Stop();
+                playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
+
             }
         }
 

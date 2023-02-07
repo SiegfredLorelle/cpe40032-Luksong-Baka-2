@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !GameManager.Instance.isGameStopped)
         {
-            if (GameManager.Instance.isGamePaused) // USE isGamePaused VARIABLE FROM GAME MANAGER INSTEAD OF LOCAL VAR IN THIS SCRIPT (mula game manager sana para maaccess ng ibang script ung var)
+            if (GameManager.Instance.isGamePaused)
             {
                 Resume();
             } else
