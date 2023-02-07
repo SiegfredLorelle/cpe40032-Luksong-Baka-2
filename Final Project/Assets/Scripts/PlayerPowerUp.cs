@@ -107,6 +107,7 @@ public class PlayerPowerUp : MonoBehaviour
     }
 
 
+    // Routine for the duration of powerups
     IEnumerator PowerUpCooldown(float cooldown)
     {
         while (true)
@@ -138,6 +139,8 @@ public class PlayerPowerUp : MonoBehaviour
     IEnumerator BlinkPowerUpIndicator(float duration)
     {
         float endTime = Time.time + duration;
+        
+        // Turn on and off the powerup indicator until time is up
         while (Time.time < endTime)
         {
             if (powerUpIndicator.activeSelf)

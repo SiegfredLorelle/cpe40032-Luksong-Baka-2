@@ -230,7 +230,7 @@ public class PlayerController : MonoBehaviour
     {
         // if player presses space and is on the ground,
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
-        // let them jump as long as they are ALSO not dead
+        // let them jump as long as they are ALSO not dead and that the game is not paused
 
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
@@ -270,13 +270,11 @@ public class PlayerController : MonoBehaviour
             PlayerStopDashing?.Invoke();
         }
 
+        // If 'E' is pressed, then throw bomb as long as
+        // the player has bomb powerup, and the game is not over and not paused
         if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !GameManager.Instance.isGameStopped && !GameManager.Instance.isGamePaused)
         {
-            GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-            Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
-            newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-            newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
-            Destroy(newBomb, 5.0f);
+            ThrowBomb();
         }
 
 
@@ -414,6 +412,16 @@ public class PlayerController : MonoBehaviour
 
             yield return new WaitForEndOfFrame();
         }
+
+    }
+
+    private void ThrowBomb()
+    {
+        GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
+        Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
+        newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
+        newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
+        Destroy(newBomb, 5.0f);
 
     }
 
