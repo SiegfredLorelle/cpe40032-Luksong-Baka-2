@@ -68,7 +68,11 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("Menu");
         
     }
-  
+     public void Restart()
+    {
+        SceneManager.LoadScene("Final Project");
+        
+    }
 
     
 }
