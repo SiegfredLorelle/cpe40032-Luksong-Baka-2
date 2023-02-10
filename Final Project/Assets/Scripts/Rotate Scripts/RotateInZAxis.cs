@@ -5,11 +5,12 @@ using UnityEngine;
 public class RotateInZAxis : MonoBehaviour
 {
 
-    float speed;
-    // Update is called once per frame
-    void Update()
+    private float speed;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        // Rotates the powerup, just for effects
+        // Determine the speed of rotation based on its tag
         switch (tag)
         {
             case "Projectile":
@@ -19,6 +20,12 @@ public class RotateInZAxis : MonoBehaviour
                 speed = 90.0f;
                 break;
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Rotates the powerup, just for effects
         transform.Rotate(Vector3.back * speed * Time.deltaTime);
     }
 }
