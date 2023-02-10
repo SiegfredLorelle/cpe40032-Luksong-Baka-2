@@ -116,7 +116,7 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
 
-        else if ((gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10)) || gameObject.name == "Meat(Clone)")
+        else if (((gameObject.tag == GameManager.TAG_POWERUP || gameObject.name == "Meat(Clone)") && (transform.position.x < -10)))
         {
             Destroy(gameObject);
         }
