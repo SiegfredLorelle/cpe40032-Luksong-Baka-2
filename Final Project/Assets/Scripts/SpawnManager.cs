@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -230,7 +231,7 @@ public class SpawnManager : MonoBehaviour
         int _choice = Random.Range(0, obstaclePrefabs.Length);
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
 
-        if (_newObstacle.gameObject.name == "Brown Cow(Clone)" || _newObstacle.gameObject.name == "White Cow(Clone)")
+        if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {
             int index = Random.Range(0, mooSoundEffects.Count);
             Audio.PlayOneShot(mooSoundEffects[index]);

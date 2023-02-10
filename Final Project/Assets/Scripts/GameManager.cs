@@ -36,12 +36,19 @@ public class GameManager : MonoBehaviour
     public const string ANIM_DEATH_B = "Death_b";
     public const string ANIM_SPEED_F = "Speed_f";
     public const string ANIM_INT = "Animation_int";
+    public const string STATIC_B = "Static_b";
+
     public const string TAG_WALKABLE = "Walkable";
     public const string TAG_OBSTACLE = "Obstacle";
     public const string TAG_POWERUP = "Power Up";
     public const string TAG_PLAYER = "Player";
     public const string TAG_PROJECTILE = "Projectile";
-    public const string STATIC_B = "Static_b";
+    public const string TAG_BACKGROUND = "Background";
+
+    public const string NAME_MEAT = "Meat(Clone)";
+    public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
+    public const string NAME_BOMB = "Bomb(Clone)";
+    public const string NAME_DAGGER = "Dagger(Clone)";
 
     /** END GLOBAL CONSTANTS **/
 

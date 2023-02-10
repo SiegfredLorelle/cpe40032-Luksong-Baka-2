@@ -79,7 +79,7 @@ public class PlayerPowerUp : MonoBehaviour
         int index = Random.Range(0, powerUps.Count);
         PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
 
-        //currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
+        //currentPowerUp = powerUps.ElementAt(1).Value; //REMOVE FOR TESTING ONLY
 
 
 

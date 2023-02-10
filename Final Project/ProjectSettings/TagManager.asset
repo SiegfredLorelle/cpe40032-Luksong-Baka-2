@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - Power Up
   - Projectile
+  - Background
   layers:
   - Default
   - TransparentFX
