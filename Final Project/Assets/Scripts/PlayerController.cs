@@ -36,9 +36,10 @@ public class PlayerController : MonoBehaviour
     public AudioSource backgroundMusic;
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
-    public GameObject bombPrefab;
     public GameManager gameManagerScript;
 
+    public GameObject bombPrefab;
+    public GameObject daggerPrefab;
 
 
 
@@ -315,15 +316,27 @@ public class PlayerController : MonoBehaviour
             gameManagerScript.playerIsDashing = false;
         }
 
-        // If 'E' is pressed, then throw bomb as long as
-        // the player has bomb powerup, and the game is not over and not paused
-        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
+        // Throw projectile when pressing E
+        if (Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
         {
-            ThrowBomb();
+            // Throw bomb if bomb powerup is activated
+            if (powerUpScript.powerUps["Bomb"].isActivated)
+            {
+                ThrowBomb();
+            }
+            // Throw dagger if dagger powerup is enabled and there are daggers left
+            else if (powerUpScript.powerUps["Dagger"].isActivated && powerUpScript.powerUps["Dagger"].numberLeft > 0)
+            {
+                ThrowDagger();
+                powerUpScript.powerUps["Dagger"].numberLeft--;
+                Debug.Log($"NUMBER OF DAGGERS LEFT: {powerUpScript.powerUps["Dagger"].numberLeft}");
+
+                if (powerUpScript.powerUps["Dagger"].numberLeft == 0)
+                {
+                    powerUpScript.TurnOffPowerUp();
+                }
+            }
         }
-
-
-
     }
 
     // all this does is add the force. this is fired in reaction to the event
@@ -470,6 +483,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void ThrowDagger()
+    {
+        GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
+        Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
+        newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
+        Destroy(newDagger, 5.0f);
+    }
+
 
 
     private void OnCollisionEnter(Collision other)
@@ -526,6 +547,7 @@ public class PlayerController : MonoBehaviour
                 UIManagerScript.GameOver();
                 backgroundMusic.Stop();
                 playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
+                powerUpScript.TurnOffPowerUp();
 
             }
         }

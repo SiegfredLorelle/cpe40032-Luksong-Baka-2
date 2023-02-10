@@ -99,8 +99,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8e412312ef9cb4483f3fc7bf7f0c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerScript: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 0}
+  rend: {fileID: 0}
+  audioExplosion: {fileID: 0}
 --- !u!114 &8018254009293402796
 MonoBehaviour:
   m_ObjectHideFlags: 0

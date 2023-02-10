@@ -1,8 +1,11 @@
 TODOs
 
-magiging tatlong klase na yung powerup
-- yung isa yung (dagger) na limited lang
-- tas remain yung dalawang powerup
+
+change sfx and particle effects for dagger???
+use rotate script when throwning bombs
+increase speed of projectiles (dagger and bomb) when on dash
+
+
 
 powerup suggestions:
 - triple jump (timer)

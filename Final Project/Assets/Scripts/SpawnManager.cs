@@ -120,8 +120,11 @@ public class SpawnManager : MonoBehaviour
 
         while (true)
         {
-
-            if (!gameManagerScript.isGameStopped)
+            if (playerPowerUpScript.hasPowerUp)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+            else if (!gameManagerScript.isGameStopped)
             {
                 // Spawn a powerup at random height
                 float randomSpawnHeight = Random.Range(4.0f, 7.5f);

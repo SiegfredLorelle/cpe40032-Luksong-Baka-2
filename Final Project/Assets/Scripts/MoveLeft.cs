@@ -12,6 +12,8 @@ public class MoveLeft : MonoBehaviour
 
     public GameManager gameManagerScript;
 
+    public GameObject meatPrefab;
+
     // there are two movespeed variables because of dash mode.
 
     private float moveSpeed;
@@ -114,7 +116,7 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
 
-        else if (gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10))
+        else if ((gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10)) || gameObject.name == "Meat(Clone)")
         {
             Destroy(gameObject);
         }
@@ -125,25 +127,45 @@ public class MoveLeft : MonoBehaviour
     {
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
+            if (other.gameObject.name == "Bomb(Clone)")
+            {
+                // Get Audio Source and play the explosion clip assigned to it
+                audioExplosion = other.GetComponent<AudioSource>();
+                audioExplosion.Play();
+
+                // Turn off render and collider, to prevent it from affecting other objects while the explosion sfx is still playing
+                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+                // Destroy bomb as soon as its explosion sfx is finished
+                Destroy(other.gameObject, audioExplosion.clip.length);
+            }
+
+            else if (other.gameObject.name == "Dagger(Clone)")
+            {   
+                // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+                Destroy(other.gameObject);
+
+                if (gameObject.name == "Brown Cow(Clone)" || gameObject.name == "White Cow(Clone)")
+                {
+                    Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.y), meatPrefab.transform.rotation);
+                }
+            }
+
+            // Turn of render
+            other.gameObject.GetComponent<Renderer>().enabled = false;
+
             // Call despawn method from game maanger script, mainly to add a score
             //Despawn?.Invoke();
             gameManagerScript.IncreaseScore();
-
 
             // Create an explosion effects and destroy the obstacle hit
             Instantiate(explosionEffects, transform.position, Quaternion.identity);
             Destroy(gameObject);
 
-            // Get Audio Source and play the explosion clip assigned to it
-            audioExplosion = other.GetComponent<AudioSource>();
-            audioExplosion.Play();
 
-            // Turn off render and collider, to prevent it from affecting other objects while the explosion sfx is still playing
-            other.gameObject.GetComponent<Renderer>().enabled = false;
-            other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
-            // Destroy bomb as soon as its explosion sfx is finished
-            Destroy(other.gameObject, audioExplosion.clip.length);
         }
     }
 }

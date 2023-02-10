@@ -6,38 +6,29 @@ using UnityEngine;
 
 public class PlayerPowerUp : MonoBehaviour
 {
-
-    // Powerups related variables
-    //public List<string> powerUps = new List<string>{ "Strength", "Flight" };
-    //public List<Dictionary<string, float>> powerUps1 = new List<Dictionary<string, float>> { ("Strength", 7.0f), ("name1", 1.0f) };
-    //public Dictionary<string, float> powerUps = new Dictionary<string, float>() {
-    //        {"Strength", 7.0f },
-    //        {"Bomb", 5.0f },
-    //        {"Bullet", 7.0f }
-    //};
-
     public class PowerUp
     {
         public string name;
-        public float cooldown;
         public bool isActivated;
+        public float cooldown;
+        public int numberLeft;
 
         public PowerUp(string name, float cooldown)
         {
             this.name = name;
-            this.cooldown = cooldown;
             this.isActivated = false;
+            this.cooldown = cooldown;
+            this.numberLeft = 0;
         }
 
 
 
     }
 
-    GameManager gameManagerScript;
 
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
 
-
+    GameManager gameManagerScript;
 
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
@@ -57,9 +48,9 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Create all the powerups with their respective cooldowns
-        powerUps.Add("Strength", new PowerUp("Strength", 7.0f));
+        powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
         powerUps.Add("Bomb", new PowerUp("Bomb", 7.0f));
-        powerUps.Add("Bullet", new PowerUp("Bullet", 7.0f));
+        powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
 
 
 
@@ -85,8 +76,11 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
-        int index = Random.Range(0, 2);
+        int index = Random.Range(0, powerUps.Count);
         PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
+
+        //currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
+
 
 
         // CHANGE POWERUP INDICATOR FOR EACH POWERUP
@@ -94,16 +88,20 @@ public class PlayerPowerUp : MonoBehaviour
         {
             case "Strength":
                 powerUpIndicator.SetActive(true);
+                StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
+
                 break;
             case "Bomb":
                 powerUpIndicator.SetActive(true);
+                StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
                 break;
-            case "Bullet":
+            case "Dagger":
+                powerUpIndicator.SetActive(true);
+                currentPowerUp.numberLeft = 5;
                 break;
 
         }
         currentPowerUp.isActivated = true;
-        StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
         Debug.Log($"PICKED UP {currentPowerUp.name} POWERUP");
 
     }
@@ -116,13 +114,7 @@ public class PlayerPowerUp : MonoBehaviour
         {
             if (cooldown == 0 || gameManagerScript.isGameStopped)
             {
-                hasPowerUp = false;
-                powerUpIndicator.SetActive(false);
-                foreach (PowerUp powerUp in powerUps.Values)
-                {
-                    powerUp.isActivated = false;
-                }
-                Debug.Log("POWERUP ENDED");
+                TurnOffPowerUp();
                 break;
             }
 
@@ -159,5 +151,19 @@ public class PlayerPowerUp : MonoBehaviour
 
     }
 
+    // Turn off powerup
+    public void TurnOffPowerUp()
+    {
+        hasPowerUp = false;
+        powerUpIndicator.SetActive(false);
+        foreach (PowerUp powerUp in powerUps.Values)
+        {
+            powerUp.isActivated = false;
+        }
+        Debug.Log("POWERUP ENDED");
+    }
+
 }
+
+
 
