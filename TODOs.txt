@@ -1,10 +1,7 @@
 TODOs
 
 
-currently:
-add score when dagger hit obstcles
-add meat when dagger hit cow
-add sfx when dagger hit obstacles
+change sfx and particle effects for dagger???
 use rotate script when throwning bombs
 increase speed of projectiles (dagger and bomb) when on dash
 

@@ -12,6 +12,8 @@ public class MoveLeft : MonoBehaviour
 
     public GameManager gameManagerScript;
 
+    public GameObject meatPrefab;
+
     // there are two movespeed variables because of dash mode.
 
     private float moveSpeed;
@@ -114,7 +116,7 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
 
-        else if (gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10))
+        else if ((gameObject.tag == GameManager.TAG_POWERUP && (transform.position.x < -10)) || gameObject.name == "Meat(Clone)")
         {
             Destroy(gameObject);
         }
@@ -145,6 +147,10 @@ public class MoveLeft : MonoBehaviour
 
                 Destroy(other.gameObject);
 
+                if (gameObject.name == "Brown Cow(Clone)" || gameObject.name == "White Cow(Clone)")
+                {
+                    Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.y), meatPrefab.transform.rotation);
+                }
             }
 
             // Turn of render

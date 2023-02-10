@@ -816,7 +816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_RootOrder
@@ -1177,7 +1177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4428908044626120, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.08
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4428908044626120, guid: 923deea38dc6a8843b15db7638919c1e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1312,6 +1312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
+  meatPrefab: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 0}
   rend: {fileID: 0}
@@ -1825,7 +1826,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1184584171
 Transform:
   m_ObjectHideFlags: 0
@@ -3196,7 +3197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_RootOrder

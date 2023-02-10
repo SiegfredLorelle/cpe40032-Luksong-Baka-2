@@ -3,7 +3,12 @@ guid: ed8e412312ef9cb4483f3fc7bf7f0c19
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - gameManagerScript: {instanceID: 0}
+  - meatPrefab: {instanceID: 0}
+  - explosionEffects: {instanceID: 0}
+  - rend: {instanceID: 0}
+  - audioExplosion: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
