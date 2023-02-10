@@ -57,9 +57,9 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Create all the powerups with their respective cooldowns
-        powerUps.Add("Strength", new PowerUp("Strength", 7.0f));
+        powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
         powerUps.Add("Bomb", new PowerUp("Bomb", 7.0f));
-        powerUps.Add("Bullet", new PowerUp("Bullet", 7.0f));
+        powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
 
 
 
@@ -85,8 +85,11 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
-        int index = Random.Range(0, 2);
+        int index = Random.Range(0, powerUps.Count);
         PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
+
+        currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
+
 
 
         // CHANGE POWERUP INDICATOR FOR EACH POWERUP
@@ -94,16 +97,20 @@ public class PlayerPowerUp : MonoBehaviour
         {
             case "Strength":
                 powerUpIndicator.SetActive(true);
+                StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
+
                 break;
             case "Bomb":
                 powerUpIndicator.SetActive(true);
+                StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
                 break;
-            case "Bullet":
+            case "Dagger":
+                powerUpIndicator.SetActive(true);
+
                 break;
 
         }
         currentPowerUp.isActivated = true;
-        StartCoroutine("PowerUpCooldown", currentPowerUp.cooldown);
         Debug.Log($"PICKED UP {currentPowerUp.name} POWERUP");
 
     }

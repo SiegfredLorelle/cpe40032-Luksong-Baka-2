@@ -1,8 +1,14 @@
 TODOs
 
-magiging tatlong klase na yung powerup
-- yung isa yung (dagger) na limited lang
-- tas remain yung dalawang powerup
+
+currently:
+add score when dagger hit obstcles
+add meat when dagger hit cow
+add sfx when dagger hit obstacles
+use rotate script when throwning bombs
+increase speed of projectiles (dagger and bomb) when on dash
+
+
 
 powerup suggestions:
 - triple jump (timer)

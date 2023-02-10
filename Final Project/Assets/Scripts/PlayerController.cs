@@ -36,9 +36,10 @@ public class PlayerController : MonoBehaviour
     public AudioSource backgroundMusic;
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
-    public GameObject bombPrefab;
     public GameManager gameManagerScript;
 
+    public GameObject bombPrefab;
+    public GameObject daggerPrefab;
 
 
 
@@ -315,15 +316,18 @@ public class PlayerController : MonoBehaviour
             gameManagerScript.playerIsDashing = false;
         }
 
-        // If 'E' is pressed, then throw bomb as long as
-        // the player has bomb powerup, and the game is not over and not paused
-        if (powerUpScript.powerUps["Bomb"].isActivated && Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
+        if (Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
         {
-            ThrowBomb();
+            if (powerUpScript.powerUps["Bomb"].isActivated)
+            {
+                ThrowBomb();
+            }
+
+            else if (powerUpScript.powerUps["Dagger"].isActivated)
+            {
+                ThrowDagger();
+            }
         }
-
-
-
     }
 
     // all this does is add the force. this is fired in reaction to the event
@@ -468,6 +472,14 @@ public class PlayerController : MonoBehaviour
         newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
         Destroy(newBomb, 5.0f);
 
+    }
+
+    private void ThrowDagger()
+    {
+        GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
+        Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
+        newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
+        Destroy(newDagger, 5.0f);
     }
 
 

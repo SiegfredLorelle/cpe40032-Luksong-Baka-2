@@ -127,5 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8e412312ef9cb4483f3fc7bf7f0c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManagerScript: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
+  rend: {fileID: 0}
+  audioExplosion: {fileID: 0}
