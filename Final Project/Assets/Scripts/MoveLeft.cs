@@ -132,12 +132,23 @@ public class MoveLeft : MonoBehaviour
                 audioExplosion.Play();
 
                 // Turn off render and collider, to prevent it from affecting other objects while the explosion sfx is still playing
-                other.gameObject.GetComponent<Renderer>().enabled = false;
                 other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
                 // Destroy bomb as soon as its explosion sfx is finished
                 Destroy(other.gameObject, audioExplosion.clip.length);
             }
+
+            else if (other.gameObject.name == "Dagger(Clone)")
+            {   
+                // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
+                other.gameObject.GetComponent<BoxCollider>().enabled = false;
+
+                Destroy(other.gameObject);
+
+            }
+
+            // Turn of render
+            other.gameObject.GetComponent<Renderer>().enabled = false;
 
             // Call despawn method from game maanger script, mainly to add a score
             //Despawn?.Invoke();

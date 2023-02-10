@@ -316,16 +316,25 @@ public class PlayerController : MonoBehaviour
             gameManagerScript.playerIsDashing = false;
         }
 
+        // Throw projectile when pressing E
         if (Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
         {
+            // Throw bomb if bomb powerup is activated
             if (powerUpScript.powerUps["Bomb"].isActivated)
             {
                 ThrowBomb();
             }
-
-            else if (powerUpScript.powerUps["Dagger"].isActivated)
+            // Throw dagger if dagger powerup is enabled and there are daggers left
+            else if (powerUpScript.powerUps["Dagger"].isActivated && powerUpScript.powerUps["Dagger"].numberLeft > 0)
             {
                 ThrowDagger();
+                powerUpScript.powerUps["Dagger"].numberLeft--;
+                Debug.Log($"NUMBER OF DAGGERS LEFT: {powerUpScript.powerUps["Dagger"].numberLeft}");
+
+                if (powerUpScript.powerUps["Dagger"].numberLeft == 0)
+                {
+                    powerUpScript.TurnOffPowerUp();
+                }
             }
         }
     }
@@ -538,6 +547,7 @@ public class PlayerController : MonoBehaviour
                 UIManagerScript.GameOver();
                 backgroundMusic.Stop();
                 playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
+                powerUpScript.TurnOffPowerUp();
 
             }
         }
