@@ -1,11 +1,11 @@
 TODOs
 
 
-change sfx and particle effects for dagger???
-use rotate script when throwning bombs
-increase speed of projectiles (dagger and bomb) when on dash
-
-
+add sfx for dagger
+change particle effects for dagger???
+change difficulty scaling (not of arbitrary values)
+add lives
+fix point system (should not always be based on dash)
 
 powerup suggestions:
 - triple jump (timer)
@@ -14,14 +14,11 @@ powerup suggestions:
 shakescreen kapag nabangga
 lives (may tatlong buhay lang)
 
-fix bug where idle animation bugs on restart
+
 different powerup indicator (change color maybe?)
-change difficulty scaling (not of arbitrary values)
+
 add ceiling
-fix direction when throwing (para d sumayad sa sahig ung binabato)
 bg change
 elevate floor
-add lives
 ui
-pause mechanic
 add git attributes
