@@ -478,7 +478,7 @@ public class PlayerController : MonoBehaviour
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
         Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
         newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-        newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
+        //newBombRb.AddRelativeTorque(Vector3.back * 100.0f, ForceMode.Impulse);
         Destroy(newBomb, 5.0f);
 
     }
