@@ -131,5 +131,4 @@ MonoBehaviour:
   meatPrefab: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 0}
-  rend: {fileID: 0}
   audioExplosion: {fileID: 0}

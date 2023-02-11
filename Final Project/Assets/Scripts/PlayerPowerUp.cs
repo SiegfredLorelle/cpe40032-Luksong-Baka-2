@@ -81,7 +81,7 @@ public class PlayerPowerUp : MonoBehaviour
         int index = Random.Range(0, powerUps.Count);
         PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
 
-        currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
+        //currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
 
 
 
@@ -122,7 +122,11 @@ public class PlayerPowerUp : MonoBehaviour
 
             else if (cooldown == powerUpIndicatorBlinkDuration)
             {
+
+
                 StartCoroutine("BlinkPowerUpIndicator", powerUpIndicatorBlinkDuration);
+
+
             }
 
             yield return new WaitForSeconds(1);
@@ -149,8 +153,6 @@ public class PlayerPowerUp : MonoBehaviour
             }
             yield return new WaitForSeconds(0.25f);
         }
-
-
     }
 
     // Turn off powerup
@@ -162,12 +164,14 @@ public class PlayerPowerUp : MonoBehaviour
         {
             powerUp.isActivated = false;
         }
-        Debug.Log("POWERUP ENDED");
 
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             playerControllerScript.SlowDown();
         }
+        Debug.Log("POWERUP ENDED");
+
+
     }
 
 }

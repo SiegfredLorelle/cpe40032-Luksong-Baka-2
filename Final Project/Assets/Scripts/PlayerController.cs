@@ -34,11 +34,8 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Rigidbody playerRb;
     public float jumpForce;
-    //public float gravityModifier;
-    //public float walkSpeed;
     public Vector3 gravityConstant;
     public Vector3 introStartPosition;
-    //public Vector3 introDestinationPosition;
     private bool isInIntro;
     private bool isOnGround;
     private bool hasDoubleJumped;
@@ -370,29 +367,6 @@ public class PlayerController : MonoBehaviour
         playerAudio.PlayOneShot(crashSound);
     }
 
-
-
-
-    IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
-    {
-        while (!gameManagerScript.isGameStopped)
-        {
-            if (obstacle == null)
-            {
-                break;
-            }
-            if (rb.velocity.y < 3)
-            {
-                rb.AddForce(new Vector3(1, 2) * 150, ForceMode.Impulse);
-                rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
-
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-
-    }
-
     private void ThrowBomb()
     {
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
@@ -420,7 +394,6 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            //PlayerHitGround?.Invoke();
             TransitionToRunning();
         }
 
@@ -436,16 +409,9 @@ public class PlayerController : MonoBehaviour
             if (powerUpScript.powerUps["Strength"].isActivated)
             {
                 // Get the script of the obstacle and set isThrown to true
+                // (setting it to true will stop move left movement and enable move top right movement)
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;
-
-                //// Disable box collider
-                //BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
-                //boxCollider.enabled = !enabled;
-
-                // Throw obstacles since strength powerup is on
-                Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
-                StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
 
                 gameManagerScript.IncreaseScore(1);
             }
@@ -453,7 +419,6 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                //PlayerHitObstacle?.Invoke();
                 gameManagerScript.isGameStopped = true;
                 TransitionToDeath();
                 spawnManagerScript.GameOver();
@@ -461,14 +426,8 @@ public class PlayerController : MonoBehaviour
                 backgroundMusic.Stop();
                 playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
                 powerUpScript.TurnOffPowerUp();
-
             }
         }
-
-
-
-
-
     }
 
     // the only thing we care about exiting collision with is the ground,
@@ -480,7 +439,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
             !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            //PlayerLeftGround?.Invoke();
             TransitionToJumping();
         }
     }

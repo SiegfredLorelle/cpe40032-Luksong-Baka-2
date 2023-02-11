@@ -8,7 +8,7 @@ change difficulty scaling (not of arbitrary values)
 add lives
 connect bg music (from different scenes)
 place all physics/movements in fixed update instead of update
-use translate and rotate when throwing obstacles
+add cd to prevent spamming bomb
 
 powerup suggestions:
 - triple jump (timer)

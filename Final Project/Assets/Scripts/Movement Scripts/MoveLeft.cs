@@ -25,6 +25,7 @@ public class MoveLeft : MonoBehaviour
 
         moveSpeed = 20f;
         modifiedMoveSpeed = moveSpeed;
+        isThrown = false;
     }
 
     void Update()

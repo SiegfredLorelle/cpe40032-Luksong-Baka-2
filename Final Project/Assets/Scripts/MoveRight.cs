@@ -9,7 +9,7 @@ public class MoveRight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        moveSpeed = 30;
+        moveSpeed = 30.0f;
     }
 
     void FixedUpdate()
