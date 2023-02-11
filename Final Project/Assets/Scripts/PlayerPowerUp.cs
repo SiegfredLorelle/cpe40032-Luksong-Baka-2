@@ -29,6 +29,7 @@ public class PlayerPowerUp : MonoBehaviour
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
 
     GameManager gameManagerScript;
+    PlayerController playerControllerScript;
 
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
@@ -44,6 +45,7 @@ public class PlayerPowerUp : MonoBehaviour
     void Start()
     {
         playerAudio = gameObject.GetComponent<AudioSource>();
+        playerControllerScript = gameObject.GetComponent<PlayerController>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 
@@ -120,7 +122,11 @@ public class PlayerPowerUp : MonoBehaviour
 
             else if (cooldown == powerUpIndicatorBlinkDuration)
             {
+
+
                 StartCoroutine("BlinkPowerUpIndicator", powerUpIndicatorBlinkDuration);
+
+
             }
 
             yield return new WaitForSeconds(1);
@@ -147,8 +153,6 @@ public class PlayerPowerUp : MonoBehaviour
             }
             yield return new WaitForSeconds(0.25f);
         }
-
-
     }
 
     // Turn off powerup
@@ -160,7 +164,14 @@ public class PlayerPowerUp : MonoBehaviour
         {
             powerUp.isActivated = false;
         }
+
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            playerControllerScript.SlowDown();
+        }
         Debug.Log("POWERUP ENDED");
+
+
     }
 
 }

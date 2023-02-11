@@ -3,23 +3,21 @@ TODOs
 
 add sfx for dagger
 change particle effects for dagger???
+add powerup  indicator and number of projectiles (specifically dagger) left
 change difficulty scaling (not of arbitrary values)
 add lives
 connect bg music (from different scenes)
-make strength powerup to be always on dash
 place all physics/movements in fixed update instead of update
-speed up dirt particles on dash
+add cd to prevent spamming bomb
 
 powerup suggestions:
 - triple jump (timer)
 - fly (timer)
 
 shakescreen kapag nabangga
-lives (may tatlong buhay lang)
 
 
 different powerup indicator (change color maybe?)
-
 add ceiling
 bg change
 elevate floor

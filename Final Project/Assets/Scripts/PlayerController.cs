@@ -4,33 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // EVENTS
-    //
-    // the player has LOTS of events that other systems are
-    // interested in knowing about.
-    //
-    // the player also subscribes to some of its own events
-    // for the purposes of sound and animation.
-
-    //public delegate void PlayerHitObstacleEvent();
-    ////public static event PlayerHitObstacleEvent PlayerHitObstacle;
-
-    //public delegate void PlayerHitGroundEvent();
-    ////public static event PlayerHitGroundEvent PlayerHitGround;
-
-    //public delegate void PlayerLeftGroundEvent();
-    ////public static event PlayerLeftGroundEvent PlayerLeftGround;
-
-    //public delegate void PlayerFinishedIntroEvent();
-    ////public static event PlayerFinishedIntroEvent PlayerFinishedIntro;
-
-    //public delegate void PlayerStartDashingEvent();
-    ////public static event PlayerStartDashingEvent PlayerStartDashing;
-
-    //public delegate void PlayerStopDashingEvent();
-    ////public static event PlayerStopDashingEvent PlayerStopDashing;
-
-
     // References from other objects
     public PlayerPowerUp powerUpScript;
     public AudioSource backgroundMusic;
@@ -41,91 +14,52 @@ public class PlayerController : MonoBehaviour
     public GameObject bombPrefab;
     public GameObject daggerPrefab;
 
-
-
-    // ANIMATION AND SOUND
-    // we have modifiedRunningAnimationSpeed for when the player
-    // is using dash mode.
-
+    // Effects and Sounds
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+    private AudioSource playerAudio;
 
-
+    // Animation
+    public Animator playerAnim;
+    private string[] idleAnimations = { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
+    private float endTimeOfAnimation;
     public float runningAnimationSpeed;
     public float modifiedRunningAnimationSpeed;
     public float jumpingAnimationSpeed;
     public float walkingAnimationSpeed;
     public float deathAnimationSpeed;
 
-    public Animator playerAnim;
-    private string[] idleAnimations = new string[] { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
-    private float endTimeOfAnimation;
-
-    private AudioSource playerAudio;
-
-
-    // PLAYER MOVEMENT
-    //
-    // walkSpeed, introStartPosition and introDestinationPosition are used
-    // for when the player character is walking in from the left side of
-    // the screen.
-
+    // Movement
+    private Rigidbody playerRb;
     public float jumpForce;
-    public float gravityModifier;
-    public float walkSpeed;
     public Vector3 gravityConstant;
     public Vector3 introStartPosition;
-    public Vector3 introDestinationPosition;
-
-
-    // isInIntro is very important because we need to know whether or not
-    // the player is allowed to have control at the moment, and also
-    // how we should be moving the character in Update()
-
-    private Rigidbody playerRb;
     private bool isInIntro;
     private bool isOnGround;
     private bool hasDoubleJumped;
 
 
-
-
-
-
-
-
-
-
-
-    // grab all of our required components, get the intro rolling, and
-    // subscribe to a whole bunch of events (mostly our own)
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
+        // Components of other objects
         powerUpScript = GetComponent<PlayerPowerUp>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        // Component of player
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = gameObject.GetComponent<AudioSource>();
+
         Physics.gravity = gravityConstant;
 
+
         SetupIntro();
-
-
-
-        //GameManager.GameRestart += SetupIntro;
-        //PlayerFinishedIntro += ActivatePlayer;
-        //PlayerHitGround += TransitionToRunning;
-        //PlayerLeftGround += TransitionToJumping;
-        //PlayerHitObstacle += TransitionToDeath;
-        //PlayerStartDashing += SpeedUp;
-        //PlayerStopDashing += SlowDown;
     }
 
     // animation speed has to change in dash mode, but we only do this
@@ -133,27 +67,29 @@ public class PlayerController : MonoBehaviour
     // function while we're in the air or dead, we'd modify the speed
     // of those animations, and we don't want that.
 
-    private void SpeedUp()
+    public void SpeedUp()
     {
-        if (playerAnim.GetBool(GameManager.ANIM_DEATH_B))
-            return;
-
+        gameManagerScript.playerIsDashing = true;
         modifiedRunningAnimationSpeed = runningAnimationSpeed * 1.5f;
         if (isOnGround)
         {
+
             playerAnim.speed = modifiedRunningAnimationSpeed;
+            var dirtParticleMain = dirtParticle.main;
+            dirtParticleMain.simulationSpeed = 1.5f;
         }
     }
 
-    private void SlowDown()
+    public void SlowDown()
     {
-        if (playerAnim.GetBool(GameManager.ANIM_DEATH_B))
-            return;
-
+        gameManagerScript.playerIsDashing = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         if (isOnGround)
         {
+
             playerAnim.speed = modifiedRunningAnimationSpeed;
+            var dirtParticleMain = dirtParticle.main;
+            dirtParticleMain.simulationSpeed = 0.65f;
         }
     }
 
@@ -270,8 +206,6 @@ public class PlayerController : MonoBehaviour
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
         // let them jump as long as they are ALSO not dead and that the game is not paused
 
-        //Debug.Log("TEST?");
-
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
             && !gameManagerScript.isGamePaused
@@ -302,19 +236,16 @@ public class PlayerController : MonoBehaviour
         // keypress of shift, so we check instead for the discrete 'down'
         // and 'up'.
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
+        if ((Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped) || powerUpScript.powerUps["Strength"].isActivated)
         {
-
-            //PlayerStartDashing?.Invoke();
             SpeedUp();
-            gameManagerScript.playerIsDashing = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
+        else if ((Input.GetKeyUp(KeyCode.LeftShift) && !gameManagerScript.isGameStopped))
         {
-            //PlayerStopDashing?.Invoke();
             SlowDown();
-            gameManagerScript.playerIsDashing = false;
+
         }
+
 
         // Throw projectile when pressing E
         if (Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
@@ -413,20 +344,6 @@ public class PlayerController : MonoBehaviour
         dirtParticle.Play();
     }
 
-    // this is only called when the player is about to perform the
-    // intro. it's similar to TransitionToRunning, but without
-    // the dirt particles, and slower.
-
-    //private void TransitionToWalking()
-    //{
-    //    //playerAnim.SetBool(GameManager.STATIC_B, true);
-    //    //playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-    //    //playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
-    //    //playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
-    //    //playerAnim.speed = walkingAnimationSpeed;
-    //    //isOnGround = true;
-    //    //hasDoubleJumped = false;
-    //}
 
     // this handles the animation, particles and sound for death.
     //
@@ -450,44 +367,14 @@ public class PlayerController : MonoBehaviour
         playerAudio.PlayOneShot(crashSound);
     }
 
-
-
-
-    IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
-    {
-        while (!gameManagerScript.isGameStopped && powerUpScript.powerUps["Strength"].isActivated)
-        {
-            if (obstacle == null)
-            {
-                break;
-            }
-            if (rb.velocity.y < 1)
-            {
-                rb.AddForce(new Vector3(1, 2) * 150, ForceMode.Impulse);
-                rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
-
-            }
-
-            yield return new WaitForEndOfFrame();
-        }
-
-    }
-
     private void ThrowBomb()
     {
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-        //Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
-        //newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-        //Destroy(newBomb, 3.0f);
-
     }
 
     private void ThrowDagger()
     {
         GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
-        //Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
-        //newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
-        //Destroy(newDagger, 3.0f);
     }
 
 
@@ -507,7 +394,6 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            //PlayerHitGround?.Invoke();
             TransitionToRunning();
         }
 
@@ -523,16 +409,9 @@ public class PlayerController : MonoBehaviour
             if (powerUpScript.powerUps["Strength"].isActivated)
             {
                 // Get the script of the obstacle and set isThrown to true
+                // (setting it to true will stop move left movement and enable move top right movement)
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;
-
-                //// Disable box collider
-                //BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
-                //boxCollider.enabled = !enabled;
-
-                // Throw obstacles since strength powerup is on
-                Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
-                StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
 
                 gameManagerScript.IncreaseScore(1);
             }
@@ -540,7 +419,6 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                //PlayerHitObstacle?.Invoke();
                 gameManagerScript.isGameStopped = true;
                 TransitionToDeath();
                 spawnManagerScript.GameOver();
@@ -548,14 +426,8 @@ public class PlayerController : MonoBehaviour
                 backgroundMusic.Stop();
                 playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
                 powerUpScript.TurnOffPowerUp();
-
             }
         }
-
-
-
-
-
     }
 
     // the only thing we care about exiting collision with is the ground,
@@ -567,7 +439,6 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
             !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
-            //PlayerLeftGround?.Invoke();
             TransitionToJumping();
         }
     }
