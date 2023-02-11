@@ -4,33 +4,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // EVENTS
-    //
-    // the player has LOTS of events that other systems are
-    // interested in knowing about.
-    //
-    // the player also subscribes to some of its own events
-    // for the purposes of sound and animation.
-
-    //public delegate void PlayerHitObstacleEvent();
-    ////public static event PlayerHitObstacleEvent PlayerHitObstacle;
-
-    //public delegate void PlayerHitGroundEvent();
-    ////public static event PlayerHitGroundEvent PlayerHitGround;
-
-    //public delegate void PlayerLeftGroundEvent();
-    ////public static event PlayerLeftGroundEvent PlayerLeftGround;
-
-    //public delegate void PlayerFinishedIntroEvent();
-    ////public static event PlayerFinishedIntroEvent PlayerFinishedIntro;
-
-    //public delegate void PlayerStartDashingEvent();
-    ////public static event PlayerStartDashingEvent PlayerStartDashing;
-
-    //public delegate void PlayerStopDashingEvent();
-    ////public static event PlayerStopDashingEvent PlayerStopDashing;
-
-
     // References from other objects
     public PlayerPowerUp powerUpScript;
     public AudioSource backgroundMusic;
@@ -41,91 +14,55 @@ public class PlayerController : MonoBehaviour
     public GameObject bombPrefab;
     public GameObject daggerPrefab;
 
-
-
-    // ANIMATION AND SOUND
-    // we have modifiedRunningAnimationSpeed for when the player
-    // is using dash mode.
-
+    // Effects and Sounds
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+    private AudioSource playerAudio;
 
-
+    // Animation
+    public Animator playerAnim;
+    private string[] idleAnimations = { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
+    private float endTimeOfAnimation;
     public float runningAnimationSpeed;
     public float modifiedRunningAnimationSpeed;
     public float jumpingAnimationSpeed;
     public float walkingAnimationSpeed;
     public float deathAnimationSpeed;
 
-    public Animator playerAnim;
-    private string[] idleAnimations = new string[] { "Idle_WipeMouth", "Salute", "Idle_CheckWatch" };
-    private float endTimeOfAnimation;
-
-    private AudioSource playerAudio;
-
-
-    // PLAYER MOVEMENT
-    //
-    // walkSpeed, introStartPosition and introDestinationPosition are used
-    // for when the player character is walking in from the left side of
-    // the screen.
-
+    // Movement
+    private Rigidbody playerRb;
     public float jumpForce;
-    public float gravityModifier;
-    public float walkSpeed;
+    //public float gravityModifier;
+    //public float walkSpeed;
     public Vector3 gravityConstant;
     public Vector3 introStartPosition;
-    public Vector3 introDestinationPosition;
-
-
-    // isInIntro is very important because we need to know whether or not
-    // the player is allowed to have control at the moment, and also
-    // how we should be moving the character in Update()
-
-    private Rigidbody playerRb;
+    //public Vector3 introDestinationPosition;
     private bool isInIntro;
     private bool isOnGround;
     private bool hasDoubleJumped;
 
 
-
-
-
-
-
-
-
-
-
-    // grab all of our required components, get the intro rolling, and
-    // subscribe to a whole bunch of events (mostly our own)
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
+        // Components of other objects
         powerUpScript = GetComponent<PlayerPowerUp>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        // Component of player
         playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = gameObject.GetComponent<AudioSource>();
+
         Physics.gravity = gravityConstant;
 
+
         SetupIntro();
-
-
-
-        //GameManager.GameRestart += SetupIntro;
-        //PlayerFinishedIntro += ActivatePlayer;
-        //PlayerHitGround += TransitionToRunning;
-        //PlayerLeftGround += TransitionToJumping;
-        //PlayerHitObstacle += TransitionToDeath;
-        //PlayerStartDashing += SpeedUp;
-        //PlayerStopDashing += SlowDown;
     }
 
     // animation speed has to change in dash mode, but we only do this
@@ -135,25 +72,25 @@ public class PlayerController : MonoBehaviour
 
     private void SpeedUp()
     {
-        if (playerAnim.GetBool(GameManager.ANIM_DEATH_B))
-            return;
-
         modifiedRunningAnimationSpeed = runningAnimationSpeed * 1.5f;
         if (isOnGround)
         {
+
             playerAnim.speed = modifiedRunningAnimationSpeed;
+            var dirtParticleMain = dirtParticle.main;
+            dirtParticleMain.simulationSpeed = 1.5f;
         }
     }
 
     private void SlowDown()
     {
-        if (playerAnim.GetBool(GameManager.ANIM_DEATH_B))
-            return;
-
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         if (isOnGround)
         {
+
             playerAnim.speed = modifiedRunningAnimationSpeed;
+            var dirtParticleMain = dirtParticle.main;
+            dirtParticleMain.simulationSpeed = 0.65f;
         }
     }
 
@@ -270,8 +207,6 @@ public class PlayerController : MonoBehaviour
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
         // let them jump as long as they are ALSO not dead and that the game is not paused
 
-        //Debug.Log("TEST?");
-
         if (((Input.GetKeyDown(KeyCode.Space) && isOnGround)
             || (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !hasDoubleJumped))
             && !gameManagerScript.isGamePaused
@@ -302,16 +237,14 @@ public class PlayerController : MonoBehaviour
         // keypress of shift, so we check instead for the discrete 'down'
         // and 'up'.
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped)
         {
 
-            //PlayerStartDashing?.Invoke();
             SpeedUp();
             gameManagerScript.playerIsDashing = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && !playerAnim.GetBool(GameManager.ANIM_DEATH_B))
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && !gameManagerScript.isGameStopped)
         {
-            //PlayerStopDashing?.Invoke();
             SlowDown();
             gameManagerScript.playerIsDashing = false;
         }
@@ -413,20 +346,6 @@ public class PlayerController : MonoBehaviour
         dirtParticle.Play();
     }
 
-    // this is only called when the player is about to perform the
-    // intro. it's similar to TransitionToRunning, but without
-    // the dirt particles, and slower.
-
-    //private void TransitionToWalking()
-    //{
-    //    //playerAnim.SetBool(GameManager.STATIC_B, true);
-    //    //playerAnim.ResetTrigger(GameManager.ANIM_JUMP_TRIG);
-    //    //playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0.30f);
-    //    //playerAnim.SetBool(GameManager.ANIM_DEATH_B, false);
-    //    //playerAnim.speed = walkingAnimationSpeed;
-    //    //isOnGround = true;
-    //    //hasDoubleJumped = false;
-    //}
 
     // this handles the animation, particles and sound for death.
     //

@@ -2749,8 +2749,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1520633781}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -14.130733, y: -1.4204588, z: 4.0256534}
-  m_LocalScale: {x: 1, y: 0, z: 5}
+  m_LocalPosition: {x: -14.130733, y: -4, z: 4.0256534}
+  m_LocalScale: {x: 1, y: 0, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 90614657}
@@ -3667,6 +3667,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 139812, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 184530, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199476, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3774,18 +3786,15 @@ MonoBehaviour:
   dirtParticle: {fileID: 1209890967}
   jumpSound: {fileID: 8300000, guid: 8f9577cf22e058648810b520d3f50c2a, type: 3}
   crashSound: {fileID: 8300000, guid: c1a92236bcbcca24b81f19ee2b1e8cb0, type: 3}
+  playerAnim: {fileID: 1909851413}
   runningAnimationSpeed: 2.5
   modifiedRunningAnimationSpeed: 0
   jumpingAnimationSpeed: 0.5
   walkingAnimationSpeed: 1
   deathAnimationSpeed: 0.5
-  playerAnim: {fileID: 1909851413}
   jumpForce: 700
-  gravityModifier: 3
-  walkSpeed: 5
   gravityConstant: {x: 0, y: -29.5, z: 0}
   introStartPosition: {x: 0, y: 0, z: 0}
-  introDestinationPosition: {x: 2, y: 0, z: 0}
 --- !u!95 &1909851413 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
