@@ -65,7 +65,7 @@ public class MoveLeft : MonoBehaviour
         // If object is not background and is out of bounds, then destroy it
         if (!CompareTag(GameManager.TAG_BACKGROUND) && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -113,9 +113,11 @@ public class MoveLeft : MonoBehaviour
             // Create an explosion effects and destroy the obstacle hit
             Instantiate(explosionEffects, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
 
-
-
+        else if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
+        {
+            Destroy(gameObject);
         }
 
 

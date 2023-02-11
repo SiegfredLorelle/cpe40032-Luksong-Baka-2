@@ -457,9 +457,8 @@ public class PlayerController : MonoBehaviour
     {
         while (!gameManagerScript.isGameStopped && powerUpScript.powerUps["Strength"].isActivated)
         {
-            if (obstacle.transform.position.y >= 15.0f)
+            if (obstacle == null)
             {
-                Destroy(obstacle);
                 break;
             }
             if (rb.velocity.y < 1)
@@ -477,18 +476,18 @@ public class PlayerController : MonoBehaviour
     private void ThrowBomb()
     {
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-        Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
-        newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-        Destroy(newBomb, 3.0f);
+        //Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
+        //newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
+        //Destroy(newBomb, 3.0f);
 
     }
 
     private void ThrowDagger()
     {
         GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
-        Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
-        newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
-        Destroy(newDagger, 3.0f);
+        //Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
+        //newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
+        //Destroy(newDagger, 3.0f);
     }
 
 
@@ -523,13 +522,13 @@ public class PlayerController : MonoBehaviour
 
             if (powerUpScript.powerUps["Strength"].isActivated)
             {
-               // Get the script of the obstacle and set isThrown to true
+                // Get the script of the obstacle and set isThrown to true
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;
 
-                // Disable box collider
-                BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
-                boxCollider.enabled = !enabled;
+                //// Disable box collider
+                //BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
+                //boxCollider.enabled = !enabled;
 
                 // Throw obstacles since strength powerup is on
                 Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
