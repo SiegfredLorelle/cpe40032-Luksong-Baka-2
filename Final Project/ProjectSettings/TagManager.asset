@@ -9,6 +9,8 @@ TagManager:
   - Power Up
   - Projectile
   - Background
+  - Point Sensor
+  - Destroy Sensor
   layers:
   - Default
   - TransparentFX

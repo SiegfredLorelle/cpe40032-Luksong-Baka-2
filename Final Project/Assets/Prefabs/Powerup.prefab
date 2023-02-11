@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5617866634230601161}
   - component: {fileID: 5594865831348158102}
   - component: {fileID: 8018254009293402796}
+  - component: {fileID: -2934303643969523572}
   - component: {fileID: -8219469152233154863}
   - component: {fileID: -6087563907527708101}
   m_Layer: 0
@@ -100,9 +101,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
+  meatPrefab: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 0}
-  rend: {fileID: 0}
   audioExplosion: {fileID: 0}
 --- !u!114 &8018254009293402796
 MonoBehaviour:
@@ -116,6 +117,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d582434ab8adf2409c22965ee26c57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &-2934303643969523572
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5594087616614747747}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &-8219469152233154863
 BoxCollider:
   m_ObjectHideFlags: 0

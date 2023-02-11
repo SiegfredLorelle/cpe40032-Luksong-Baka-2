@@ -5,7 +5,10 @@ add sfx for dagger
 change particle effects for dagger???
 change difficulty scaling (not of arbitrary values)
 add lives
-fix point system (should not always be based on dash)
+connect bg music (from different scenes)
+make strength powerup to be always on dash
+place all physics/movements in fixed update instead of update
+speed up dirt particles on dash
 
 powerup suggestions:
 - triple jump (timer)

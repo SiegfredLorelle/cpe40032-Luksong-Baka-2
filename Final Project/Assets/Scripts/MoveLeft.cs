@@ -42,11 +42,11 @@ public class MoveLeft : MonoBehaviour
 
     // Increase or decrease speed (called on update method)
     void SpeedUp()
-    { 
+    {
         modifiedMoveSpeed = moveSpeed * 2f;
     }
     void SlowDown()
-    { 
+    {
         modifiedMoveSpeed = moveSpeed;
     }
 
@@ -59,18 +59,13 @@ public class MoveLeft : MonoBehaviour
             return;
         }
 
-         // Do actual movement, with modifiedMoveSpeed and relative to world (so that objects will always go left with respect to the world/camera regardless of their rotation)
-         transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, relativeTo: Space.World);
+        // Do actual movement, with modifiedMoveSpeed and relative to world (so that objects will always go left with respect to the world/camera regardless of their rotation)
+        transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, relativeTo: Space.World);
 
         // If object is not background and is out of bounds, then destroy it
         if (!CompareTag(GameManager.TAG_BACKGROUND) && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
         {
-            // Add score if it is an obstacle or meat 
-            if (gameObject.CompareTag(GameManager.TAG_OBSTACLE) || gameObject.name == GameManager.NAME_MEAT)
-            {
-                gameManagerScript.IncreaseScore();
-            }
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
@@ -95,7 +90,7 @@ public class MoveLeft : MonoBehaviour
 
             // If the projectile is a dagger
             else if (other.gameObject.name == GameManager.NAME_DAGGER)
-            {   
+            {
                 // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
                 other.gameObject.GetComponent<BoxCollider>().enabled = false;
 
@@ -105,6 +100,7 @@ public class MoveLeft : MonoBehaviour
                 if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
                 {
                     Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
+                    gameManagerScript.IncreaseScore(1);
                 }
             }
 
@@ -112,14 +108,33 @@ public class MoveLeft : MonoBehaviour
             other.gameObject.GetComponent<Renderer>().enabled = false;
 
             // Add score
-            gameManagerScript.IncreaseScore();
+            gameManagerScript.IncreaseScore(1);
 
             // Create an explosion effects and destroy the obstacle hit
             Instantiate(explosionEffects, transform.position, Quaternion.identity);
             Destroy(gameObject);
+        }
+
+        else if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
+        {
+            Destroy(gameObject);
+        }
 
 
+    }
 
+    private void OnTriggerExit(Collider other)
+    {
+       if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_POINTSENSOR))
+        {
+            if (gameManagerScript.playerIsDashing)
+            {
+                gameManagerScript.IncreaseScore(2);
+            }
+            else
+            {
+                gameManagerScript.IncreaseScore(1);
+            }
         }
     }
 }

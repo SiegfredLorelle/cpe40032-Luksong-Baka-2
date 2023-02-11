@@ -25,7 +25,7 @@ public class RotateInZAxis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Rotates the powerup, just for effects
+        // Rotates the object, just for effects
         transform.Rotate(Vector3.back * speed * Time.deltaTime);
     }
 }
