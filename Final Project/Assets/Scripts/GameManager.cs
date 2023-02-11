@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     public const string TAG_PLAYER = "Player";
     public const string TAG_PROJECTILE = "Projectile";
     public const string TAG_BACKGROUND = "Background";
+    public const string TAG_POINTSENSOR = "Point Sensor";
+    public const string TAG_DESTROYSENSOR = "Destroy Sensor";
 
     public const string NAME_MEAT = "Meat(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
@@ -72,50 +74,21 @@ public class GameManager : MonoBehaviour
     // the condition that causes the score to increase
 
 
-
     void Start()
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         moveBackgroundScript = GameObject.Find("Background").GetComponent<MoveBackground>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
 
-
         score = 0;
         isGamePaused = false;
         isGameStopped = true;
-
-
-        //RestartGame();
-
-        ////PlayerController.PlayerStartDashing += EnhanceScore;
-        ////PlayerController.PlayerStopDashing += DeEnhanceScore;
-        ////PlayerController.PlayerFinishedIntro += FinishedIntro;
-        ////PlayerController.PlayerHitObstacle += GameOver;
-
-        //MoveLeft.Despawn += IncreaseScore;
     }
 
-    // IncreaseScore looks at playerIsDashing, so we want the value
-    // to change accordingly based on what the player is doing
 
-    //private void EnhanceScore() => playerIsDashing = true;
-    //private void DeEnhanceScore() => playerIsDashing = false;
-
-    //private void GameOver() => isGameStopped = true;
-
-    // clearing obstacles is worth double if the player is currently
-    // in dash mode
-
-    public void IncreaseScore()
+    public void IncreaseScore(int additinalScore)
     {
-        if (playerIsDashing)
-        {
-            score += 2;
-        }
-        else if (!playerIsDashing)
-        {
-            score++;
-        }
+        score += additinalScore;
     }
 
     // MoveLeft asks about isGameStopped to know whether it needs to currently

@@ -457,8 +457,9 @@ public class PlayerController : MonoBehaviour
     {
         while (!gameManagerScript.isGameStopped && powerUpScript.powerUps["Strength"].isActivated)
         {
-            if (obstacle.transform.position.y >= 10.0f)
+            if (obstacle.transform.position.y >= 15.0f)
             {
+                Destroy(obstacle);
                 break;
             }
             if (rb.velocity.y < 1)
@@ -478,7 +479,7 @@ public class PlayerController : MonoBehaviour
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
         Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
         newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-        Destroy(newBomb, 5.0f);
+        Destroy(newBomb, 3.0f);
 
     }
 
@@ -487,7 +488,7 @@ public class PlayerController : MonoBehaviour
         GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
         Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
         newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
-        Destroy(newDagger, 5.0f);
+        Destroy(newDagger, 3.0f);
     }
 
 
@@ -505,8 +506,7 @@ public class PlayerController : MonoBehaviour
         // If we are dead or in the intro right now, an animation is already
         // playing of its own accord, and we don't want to interrupt it.
 
-        if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
-            !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
+        if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
             //PlayerHitGround?.Invoke();
             TransitionToRunning();
@@ -523,6 +523,7 @@ public class PlayerController : MonoBehaviour
 
             if (powerUpScript.powerUps["Strength"].isActivated)
             {
+               // Get the script of the obstacle and set isThrown to true
                 MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
                 moveLeftScript.isThrown = true;
 
@@ -530,10 +531,11 @@ public class PlayerController : MonoBehaviour
                 BoxCollider boxCollider = other.gameObject.GetComponent<BoxCollider>();
                 boxCollider.enabled = !enabled;
 
-
                 // Throw obstacles since strength powerup is on
                 Rigidbody obstacleRb = other.gameObject.GetComponent<Rigidbody>();
                 StartCoroutine(ThrowObstacles(other.gameObject, obstacleRb));
+
+                gameManagerScript.IncreaseScore(1);
             }
 
 
@@ -573,7 +575,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         // Enable powerup when collided with one
         if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
         {
