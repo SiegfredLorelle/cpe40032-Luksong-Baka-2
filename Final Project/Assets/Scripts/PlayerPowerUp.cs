@@ -29,6 +29,7 @@ public class PlayerPowerUp : MonoBehaviour
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
 
     GameManager gameManagerScript;
+    PlayerController playerControllerScript;
 
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
@@ -44,6 +45,7 @@ public class PlayerPowerUp : MonoBehaviour
     void Start()
     {
         playerAudio = gameObject.GetComponent<AudioSource>();
+        playerControllerScript = gameObject.GetComponent<PlayerController>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
 
@@ -79,7 +81,7 @@ public class PlayerPowerUp : MonoBehaviour
         int index = Random.Range(0, powerUps.Count);
         PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
 
-        //currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
+        currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
 
 
 
@@ -161,6 +163,11 @@ public class PlayerPowerUp : MonoBehaviour
             powerUp.isActivated = false;
         }
         Debug.Log("POWERUP ENDED");
+
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            playerControllerScript.SlowDown();
+        }
     }
 
 }

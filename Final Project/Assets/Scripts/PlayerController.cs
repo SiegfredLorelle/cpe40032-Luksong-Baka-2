@@ -70,8 +70,9 @@ public class PlayerController : MonoBehaviour
     // function while we're in the air or dead, we'd modify the speed
     // of those animations, and we don't want that.
 
-    private void SpeedUp()
+    public void SpeedUp()
     {
+        gameManagerScript.playerIsDashing = true;
         modifiedRunningAnimationSpeed = runningAnimationSpeed * 1.5f;
         if (isOnGround)
         {
@@ -82,8 +83,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void SlowDown()
+    public void SlowDown()
     {
+        gameManagerScript.playerIsDashing = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         if (isOnGround)
         {
@@ -237,17 +239,16 @@ public class PlayerController : MonoBehaviour
         // keypress of shift, so we check instead for the discrete 'down'
         // and 'up'.
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped) || powerUpScript.powerUps["Strength"].isActivated)
         {
-
             SpeedUp();
-            gameManagerScript.playerIsDashing = true;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && !gameManagerScript.isGameStopped)
+        else if ((Input.GetKeyUp(KeyCode.LeftShift) && !gameManagerScript.isGameStopped))
         {
             SlowDown();
-            gameManagerScript.playerIsDashing = false;
+
         }
+
 
         // Throw projectile when pressing E
         if (Input.GetKeyDown(KeyCode.E) && !gameManagerScript.isGameStopped && !gameManagerScript.isGamePaused)
@@ -374,13 +375,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ThrowObstacles(GameObject obstacle, Rigidbody rb)
     {
-        while (!gameManagerScript.isGameStopped && powerUpScript.powerUps["Strength"].isActivated)
+        while (!gameManagerScript.isGameStopped)
         {
             if (obstacle == null)
             {
                 break;
             }
-            if (rb.velocity.y < 1)
+            if (rb.velocity.y < 3)
             {
                 rb.AddForce(new Vector3(1, 2) * 150, ForceMode.Impulse);
                 rb.AddRelativeTorque(Vector3.right * 5000, ForceMode.Impulse);
@@ -395,18 +396,11 @@ public class PlayerController : MonoBehaviour
     private void ThrowBomb()
     {
         GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
-        //Rigidbody newBombRb = newBomb.GetComponent<Rigidbody>();
-        //newBombRb.AddForce(Vector3.right * 150.0f, ForceMode.Impulse);
-        //Destroy(newBomb, 3.0f);
-
     }
 
     private void ThrowDagger()
     {
         GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
-        //Rigidbody newDaggerRb = newDagger.GetComponent<Rigidbody>();
-        //newDaggerRb.AddForce(Vector3.right * 20, ForceMode.Impulse);
-        //Destroy(newDagger, 3.0f);
     }
 
 
