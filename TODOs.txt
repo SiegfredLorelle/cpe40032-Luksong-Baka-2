@@ -8,10 +8,14 @@ change difficulty scaling (not of arbitrary values)
 connect bg music (from different scenes)
 place all physics/movements in fixed update instead of update
 add cd to prevent spamming bomb
+add imgs showing what powerup is activated beside health
+fix bug where score is added when taking dmg
+
 
 powerup suggestions:
 - triple jump (timer)
 - fly (timer)
+- add heart
 
 shakescreen kapag nabangga
 
