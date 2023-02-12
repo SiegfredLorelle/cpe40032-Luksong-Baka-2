@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     public int score;
     public bool isGameStopped;
     public bool isGamePaused;
+    public bool recentlyDamaged;
     //public delegate void RestartAction();
     //public static event RestartAction GameRestart;
 
@@ -84,13 +85,42 @@ public class GameManager : MonoBehaviour
         score = 0;
         isGamePaused = false;
         isGameStopped = true;
+        recentlyDamaged = false;
     }
 
 
+    // can also be used to decrease score by using negative argument,
+    // called when obstacles hit score sensor and  player taking damage
     public void IncreaseScore(int additinalScore)
     {
-        score += additinalScore;
+        // additional score will be negative if called when taking damage
+        // sat recently damaged to true so the next obstacle won't add the score
+        if (additinalScore < 0)
+        {
+            recentlyDamaged = true;
+            score += additinalScore;
+            // ensures score will not be negative
+            if (score < 0)
+            {
+                score = 0;
+            }
+        }
+        // if not recently damaged, then add the score
+        else if (!recentlyDamaged)
+        {
+            score += additinalScore;
+        }
+        // if recently damaged, then just set recently damage to false so next obstacle can be added
+        else
+        {
+            recentlyDamaged = false;
+        }
     }
+
+
+
+    // Decrease score, called when taking damage
+
 
     // MoveLeft asks about isGameStopped to know whether it needs to currently
     // be moving or not. FinishedIntro() is fired when the player character
