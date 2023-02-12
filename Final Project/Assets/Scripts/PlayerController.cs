@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour
             {
                 healthScript.TakeDamage();
                 playerAudio.PlayOneShot(damageSound);
-
+                gameManagerScript.IncreaseScore(-3);
                 if (healthScript.currentLives == 0)
                 {
                     GameOver();
