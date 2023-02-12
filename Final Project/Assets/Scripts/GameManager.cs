@@ -140,11 +140,11 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        score = 0;
-        isGameStopped = true;
-        playerControllerScript.SetupIntro();
-        moveBackgroundScript.ResetBackground();
-        UIManagerScript.StartUI();
+        //score = 0;
+        //isGameStopped = true;
+        //playerControllerScript.SetupIntro();
+        //moveBackgroundScript.ResetBackground();
+        //UIManagerScript.StartUI();
 
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

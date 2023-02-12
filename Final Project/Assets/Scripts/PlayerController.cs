@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
         healthScript = GetComponent<PlayerHealth>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
-        backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
+        backgroundMusic = GameObject.FindGameObjectWithTag("Background Music").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // Component of player
@@ -121,7 +121,11 @@ public class PlayerController : MonoBehaviour
         SlowDown();
         PerformIntro();
         isInIntro = true;
-        backgroundMusic.Play();
+
+        if (!backgroundMusic.isPlaying)
+        {
+            backgroundMusic.Play();
+        }
 
 
     }

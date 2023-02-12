@@ -12,6 +12,7 @@ TagManager:
   - Point Sensor
   - Destroy Sensor
   - Heart
+  - Background Music
   layers:
   - Default
   - TransparentFX
