@@ -11,6 +11,7 @@ TagManager:
   - Background
   - Point Sensor
   - Destroy Sensor
+  - Heart
   layers:
   - Default
   - TransparentFX
