@@ -2280,7 +2280,7 @@ GameObject:
   - component: {fileID: 1316153059}
   m_Layer: 5
   m_Name: Heart1
-  m_TagString: Untagged
+  m_TagString: Heart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2325,7 +2325,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5378623fe09fd1a4f9281821ac3fd277, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2f430020e68ebd4581d27168865e438, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3237,7 +3237,7 @@ GameObject:
   - component: {fileID: 1629173949}
   m_Layer: 5
   m_Name: Heart2
-  m_TagString: Untagged
+  m_TagString: Heart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3282,7 +3282,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5378623fe09fd1a4f9281821ac3fd277, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2f430020e68ebd4581d27168865e438, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4058,6 +4058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpScript: {fileID: 1909851417}
+  healthScript: {fileID: 1909851418}
   backgroundMusic: {fileID: 534669906}
   spawnManagerScript: {fileID: 0}
   UIManagerScript: {fileID: 0}
@@ -4068,6 +4069,7 @@ MonoBehaviour:
   dirtParticle: {fileID: 1209890967}
   jumpSound: {fileID: 8300000, guid: 8f9577cf22e058648810b520d3f50c2a, type: 3}
   crashSound: {fileID: 8300000, guid: c1a92236bcbcca24b81f19ee2b1e8cb0, type: 3}
+  damageSound: {fileID: 8300000, guid: 853c59c51d7e8cd47889b7a685626770, type: 3}
   playerAnim: {fileID: 1909851413}
   runningAnimationSpeed: 2.5
   modifiedRunningAnimationSpeed: 0
@@ -4199,6 +4201,25 @@ MonoBehaviour:
   hasPowerUp: 0
   powerUpPickUpSound: {fileID: 8300000, guid: 42d23269f3ac3064f887f86c2759fab9, type: 3}
   powerUpPickUpEffects: {fileID: 1262544474120978219, guid: f8207af6abef93e418399f4f061a53fa, type: 3}
+--- !u!114 &1909851418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909851409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3dafd529c228d43a6682049765d5e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hearts:
+  - {fileID: 1316153059}
+  - {fileID: 1629173949}
+  - {fileID: 1977316680}
+  fullHeart: {fileID: 21300000, guid: 5378623fe09fd1a4f9281821ac3fd277, type: 3}
+  emptyHeart: {fileID: 21300000, guid: e2f430020e68ebd4581d27168865e438, type: 3}
+  currentLives: 0
 --- !u!1 &1974089038
 GameObject:
   m_ObjectHideFlags: 0
@@ -4324,7 +4345,7 @@ GameObject:
   - component: {fileID: 1977316680}
   m_Layer: 5
   m_Name: Heart3
-  m_TagString: Untagged
+  m_TagString: Heart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4369,7 +4390,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5378623fe09fd1a4f9281821ac3fd277, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e2f430020e68ebd4581d27168865e438, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

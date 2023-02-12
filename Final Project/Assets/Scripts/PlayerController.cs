@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // References from other objects
+    // References from other scripts
     public PlayerPowerUp powerUpScript;
+    public PlayerHealth healthScript;
     public AudioSource backgroundMusic;
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
+    public AudioClip damageSound;
     private AudioSource playerAudio;
 
     // Animation
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         // Components of other objects
         powerUpScript = GetComponent<PlayerPowerUp>();
+        healthScript = GetComponent<PlayerHealth>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.Find("Main Camera").GetComponent<AudioSource>();
@@ -183,7 +186,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("TESTHERE?");
 
 
         if (isInIntro)
@@ -192,7 +194,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        //Debug.Log("TESTDINE?");
 
         MovePlayer();
 
@@ -419,15 +420,27 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                gameManagerScript.isGameStopped = true;
-                TransitionToDeath();
-                spawnManagerScript.GameOver();
-                UIManagerScript.GameOver();
-                backgroundMusic.Stop();
-                playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
-                powerUpScript.TurnOffPowerUp();
+                healthScript.TakeDamage();
+                playerAudio.PlayOneShot(damageSound);
+
+                if (healthScript.currentLives == 0)
+                {
+                    GameOver();
+                }
             }
         }
+    }
+
+    public void GameOver()
+    {
+        gameManagerScript.isGameStopped = true;
+        TransitionToDeath();
+        spawnManagerScript.GameOver();
+        UIManagerScript.GameOver();
+        backgroundMusic.Stop();
+        playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
+        powerUpScript.TurnOffPowerUp();
+
     }
 
     // the only thing we care about exiting collision with is the ground,

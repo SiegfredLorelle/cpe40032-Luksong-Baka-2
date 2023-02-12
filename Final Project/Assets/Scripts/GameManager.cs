@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public const string TAG_BACKGROUND = "Background";
     public const string TAG_POINTSENSOR = "Point Sensor";
     public const string TAG_DESTROYSENSOR = "Destroy Sensor";
+    public const string TAG_HEART = "Heart";
 
     public const string NAME_MEAT = "Meat(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
