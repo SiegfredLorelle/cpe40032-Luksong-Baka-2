@@ -683,6 +683,7 @@ MonoBehaviour:
   score: 0
   isGameStopped: 0
   isGamePaused: 0
+  recentlyDamaged: 0
   playerIsDashing: 0
 --- !u!198 &318874665 stripped
 ParticleSystem:
@@ -4005,6 +4006,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 13717610, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -4214,9 +4227,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hearts:
-  - {fileID: 1316153059}
-  - {fileID: 1629173949}
   - {fileID: 1977316680}
+  - {fileID: 1629173949}
+  - {fileID: 1316153059}
   fullHeart: {fileID: 21300000, guid: 5378623fe09fd1a4f9281821ac3fd277, type: 3}
   emptyHeart: {fileID: 21300000, guid: e2f430020e68ebd4581d27168865e438, type: 3}
   currentLives: 0
