@@ -72,6 +72,11 @@ public class PlayerController : MonoBehaviour
 
     public void SpeedUp()
     {
+        // Don't do anything if game is stopped (this is necessary to prevent the user from affecting the speed of death animation)
+        if (gameManagerScript.isGameStopped)
+        {
+            return;
+        }
         gameManagerScript.playerIsDashing = true;
         modifiedRunningAnimationSpeed = runningAnimationSpeed * 1.5f;
         if (isOnGround)
@@ -85,6 +90,11 @@ public class PlayerController : MonoBehaviour
 
     public void SlowDown()
     {
+        // Don't do anything if game is stopped (this is necessary to prevent the user from affecting the speed of death animation)
+        if (gameManagerScript.isGameStopped)
+        {
+            return;
+        }
         gameManagerScript.playerIsDashing = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
         if (isOnGround)
@@ -108,9 +118,7 @@ public class PlayerController : MonoBehaviour
     {
 
         transform.position = introStartPosition;
-        //PlayerStopDashing?.Invoke();
         SlowDown();
-        //TransitionToWalking();
         PerformIntro();
         isInIntro = true;
         backgroundMusic.Play();
@@ -174,7 +182,6 @@ public class PlayerController : MonoBehaviour
 
     private void ActivatePlayer()
     {
-        //TransitionToWalking();
         isInIntro = false;
         gameManagerScript.isGameStopped = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
