@@ -1,5 +1,9 @@
 TODOs
 
+add sfx when powerup is gone
+increase next spawn interval when recently spawned a truck
+create truck with double trailer
+add shake screne when taking dmg/death
 
 add sfx when dagger hit other obstacle? (maybe metallic sound)
 add imgs showing what powerup is activated beside health
@@ -8,7 +12,9 @@ also change sfx not just bg music
 add powerup  indicator and number of projectiles (specifically dagger) left
 place all physics/movements in fixed update instead of update
 add cd to prevent spamming bomb
-shakescreen kapag nabangga
+
+
+
 
 
 powerup suggestions:
@@ -23,3 +29,7 @@ bg change
 elevate floor
 ui
 add git attributes
+
+
+
+aww
