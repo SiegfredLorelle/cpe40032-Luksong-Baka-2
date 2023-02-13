@@ -36,6 +36,7 @@ public class PlayerPowerUp : MonoBehaviour
 
     private AudioSource playerAudio;
     public AudioClip powerUpPickUpSound;
+    public AudioClip endOfPowerUpSound;
     public GameObject powerUpPickUpEffects;
 
     // Start is called before the first frame update
@@ -152,6 +153,7 @@ public class PlayerPowerUp : MonoBehaviour
     {
         hasPowerUp = false;
         powerUpIndicator.SetActive(false);
+        
         foreach (PowerUp powerUp in powerUps.Values)
         {
             powerUp.isActivated = false;
@@ -160,6 +162,12 @@ public class PlayerPowerUp : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             playerControllerScript.SlowDown();
+        }
+
+        if (!gameManagerScript.isGameStopped)
+        { 
+            playerAudio.PlayOneShot(endOfPowerUpSound);
+
         }
         Debug.Log("POWERUP ENDED");
 

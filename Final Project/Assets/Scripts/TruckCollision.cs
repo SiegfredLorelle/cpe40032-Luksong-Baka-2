@@ -43,7 +43,6 @@ public class TruckCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
         if (other.CompareTag(GameManager.TAG_PROJECTILE))
         {
             if (other.name == GameManager.NAME_BOMB)

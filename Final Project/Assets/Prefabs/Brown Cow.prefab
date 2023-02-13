@@ -1426,11 +1426,7 @@ MonoBehaviour:
   meatPrefab: {fileID: 2570286314141346061, guid: e84bf5799f5f51c4f992d0c149249acd, type: 3}
   isThrown: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
-  audioExplosion: {fileID: 0}
-  audioCowHurt: {fileID: 4968246748799513778}
-  mooSoundEffects:
-  - {fileID: 8300000, guid: f71054df18f5cb646b8f04bbc703d83d, type: 3}
-  - {fileID: 8300000, guid: 261ee3beb7e0ea746b412d955e473456, type: 3}
+  audioSrc: {fileID: 0}
 --- !u!114 &9117053497094102969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,7 +1479,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 472b94d70d08c5d44b12cdeb9eafa737, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

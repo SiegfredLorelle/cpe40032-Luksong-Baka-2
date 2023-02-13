@@ -4828,10 +4828,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Truck (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 5213191286279999573, guid: 0391577fe4e4f784fa61062ddc66e349, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0391577fe4e4f784fa61062ddc66e349, type: 3}
 --- !u!1001 &1823982797
@@ -5317,6 +5313,7 @@ MonoBehaviour:
   powerUpIndicator: {fileID: 941181306}
   hasPowerUp: 0
   powerUpPickUpSound: {fileID: 8300000, guid: 42d23269f3ac3064f887f86c2759fab9, type: 3}
+  endOfPowerUpSound: {fileID: 8300000, guid: 0faa9ddc4d589b74aafa87b7d33f89be, type: 3}
   powerUpPickUpEffects: {fileID: 1262544474120978219, guid: f8207af6abef93e418399f4f061a53fa, type: 3}
 --- !u!114 &1909851418
 MonoBehaviour:

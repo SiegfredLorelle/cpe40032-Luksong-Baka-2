@@ -74,7 +74,6 @@ public class MoveLeft : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"{ other.name }");
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
             // If this object is a cow and is by a dagger
