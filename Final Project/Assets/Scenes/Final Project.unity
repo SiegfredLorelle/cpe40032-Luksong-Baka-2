@@ -1148,7 +1148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76948d354a59e5443ad10baf5f86109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: 1
   curve:
     serializedVersion: 2
     m_Curve:
@@ -5176,6 +5175,7 @@ MonoBehaviour:
   spawnManagerScript: {fileID: 0}
   UIManagerScript: {fileID: 0}
   gameManagerScript: {fileID: 0}
+  shakeScreenScript: {fileID: 0}
   bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
   daggerPrefab: {fileID: 4736720416522279893, guid: c809056de18ac424b92e03ad422fa68d, type: 3}
   explosionParticle: {fileID: 318874665}
@@ -5313,6 +5313,7 @@ MonoBehaviour:
   powerUpIndicator: {fileID: 941181306}
   hasPowerUp: 0
   powerUpPickUpSound: {fileID: 8300000, guid: 42d23269f3ac3064f887f86c2759fab9, type: 3}
+  endOfPowerUpSound: {fileID: 8300000, guid: 0faa9ddc4d589b74aafa87b7d33f89be, type: 3}
   powerUpPickUpEffects: {fileID: 1262544474120978219, guid: f8207af6abef93e418399f4f061a53fa, type: 3}
 --- !u!114 &1909851418
 MonoBehaviour:

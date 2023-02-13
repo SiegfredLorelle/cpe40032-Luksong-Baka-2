@@ -4,28 +4,9 @@ using UnityEngine;
 
 public class ShakeScreen : MonoBehaviour
 {
-    // Shakescreen
-    public bool start = false;
     public AnimationCurve curve;
     public float duration = 1f;
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (start)
-        {
-            start = false;
-            StartCoroutine(Shaking());
-        }
-    }
     // shakescreen
     IEnumerator Shaking()
     {
@@ -40,5 +21,11 @@ public class ShakeScreen : MonoBehaviour
             yield return null;
         }
         transform.position = startPosition;
+    }
+
+    public void StartShaking()
+    { 
+            StartCoroutine(Shaking());
+
     }
 }

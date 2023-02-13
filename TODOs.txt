@@ -1,9 +1,14 @@
 TODOs
 
-add sfx when powerup is gone
-increase next spawn interval when recently spawned a truck
 create truck with double trailer
-add shake screne when taking dmg/death
+ignore physics after the first contact with truck to prevent it from messing with player animation
+adjust frequency of powerup?
+adjust game over screen to fit death sfx
+add lives to trucks
+create calf
+fix bug where escape can be preseed when confirmation prompt is active
+
+
 
 add sfx when dagger hit other obstacle? (maybe metallic sound)
 add imgs showing what powerup is activated beside health

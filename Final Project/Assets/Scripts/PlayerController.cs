@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
     public GameManager gameManagerScript;
+    public ShakeScreen shakeScreenScript;
 
     public GameObject bombPrefab;
     public GameObject daggerPrefab;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.FindGameObjectWithTag("Background Music").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        shakeScreenScript = GameObject.Find("Main Camera").GetComponent<ShakeScreen>();
 
         // Component of player
         playerRb = GetComponent<Rigidbody>();
@@ -271,13 +273,7 @@ public class PlayerController : MonoBehaviour
             else if (powerUpScript.powerUps["Dagger"].isActivated && powerUpScript.powerUps["Dagger"].numberLeft > 0)
             {
                 ThrowDagger();
-                powerUpScript.powerUps["Dagger"].numberLeft--;
-                Debug.Log($"NUMBER OF DAGGERS LEFT: {powerUpScript.powerUps["Dagger"].numberLeft}");
 
-                if (powerUpScript.powerUps["Dagger"].numberLeft == 0)
-                {
-                    powerUpScript.TurnOffPowerUp();
-                }
             }
         }
     }
@@ -386,7 +382,15 @@ public class PlayerController : MonoBehaviour
 
     private void ThrowDagger()
     {
-         Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
+        Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
+
+        powerUpScript.powerUps["Dagger"].numberLeft--;
+        Debug.Log($"NUMBER OF DAGGERS LEFT: {powerUpScript.powerUps["Dagger"].numberLeft}");
+
+        if (powerUpScript.powerUps["Dagger"].numberLeft == 0)
+        {
+            powerUpScript.TurnOffPowerUp();
+        }
     }
 
 
@@ -416,6 +420,7 @@ public class PlayerController : MonoBehaviour
         //
         // Spoiler alert: This kills the player.
 
+        // Must not be truck, because truck has a seperate script for its collider
         if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE) && other.gameObject.name != "TruckCollider")
         {            
             // Get the script of the obstacle and set isThrown to true
@@ -440,6 +445,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             healthScript.TakeDamage();
+            shakeScreenScript.StartShaking();
             playerAudio.PlayOneShot(damageSound);
             gameManagerScript.IncreaseScore(-3);
             if (healthScript.currentLives == 0)
@@ -452,11 +458,11 @@ public class PlayerController : MonoBehaviour
     {
         gameManagerScript.isGameStopped = true;
         TransitionToDeath();
+        powerUpScript.TurnOffPowerUp();
         spawnManagerScript.GameOver();
         UIManagerScript.GameOver();
         backgroundMusic.Stop();
         playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
-        powerUpScript.TurnOffPowerUp();
         
     }
 
