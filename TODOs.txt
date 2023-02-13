@@ -1,12 +1,13 @@
 TODOs
 
 create truck with double trailer
-ignore physics after the first contact with truck to prevent it from messing with player animation
-adjust frequency of powerup?
+adjust frequency of powerup spawn?
 adjust game over screen to fit death sfx
 add lives to trucks
 create calf
 fix bug where escape can be preseed when confirmation prompt is active
+fix bug where screne shake even on pause
+remove dirt when running on top of trucks
 
 
 

@@ -9,6 +9,10 @@ public class TruckCollision : MonoBehaviour
     public PlayerController playerControllerScript;
     public PlayerPowerUp powerupScript;
 
+    private Collider truckCollider;
+    private Collider trailerCollider;
+    private Collider trailerTopCollider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +20,10 @@ public class TruckCollision : MonoBehaviour
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         powerupScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
+
+        trailerCollider = gameObject.transform.parent.Find("TrailerCollider").GetComponent<Collider>();
+        trailerTopCollider = gameObject.transform.parent.Find("TrailerTopCollider").GetComponent<Collider>();
+        truckCollider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -37,8 +45,8 @@ public class TruckCollision : MonoBehaviour
             }
             //MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
             playerControllerScript.CollidingWithObstacles();
+            IgnoreCollisionWithPlayer(collision.gameObject);
         }
-
 
 
 
@@ -47,6 +55,15 @@ public class TruckCollision : MonoBehaviour
         {
             Destroy(transform.parent.gameObject);
         }
+
+
+    }
+
+    private void IgnoreCollisionWithPlayer(GameObject player)
+    {
+        Physics.IgnoreCollision(truckCollider, player.GetComponent<Collider>());
+        Physics.IgnoreCollision(trailerCollider, player.GetComponent<Collider>());
+        Physics.IgnoreCollision(trailerTopCollider, player.GetComponent<Collider>());
 
 
     }
