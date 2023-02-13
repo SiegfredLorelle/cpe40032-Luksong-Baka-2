@@ -442,8 +442,9 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-    }
+    }    
 
+    
     public void GameOver()
     {
         gameManagerScript.isGameStopped = true;
@@ -453,7 +454,7 @@ public class PlayerController : MonoBehaviour
         backgroundMusic.Stop();
         playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
         powerUpScript.TurnOffPowerUp();
-
+        
     }
 
     // the only thing we care about exiting collision with is the ground,

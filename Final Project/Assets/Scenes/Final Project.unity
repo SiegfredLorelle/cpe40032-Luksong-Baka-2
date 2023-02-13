@@ -889,6 +889,7 @@ GameObject:
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
+  - component: {fileID: 534669907}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1058,6 +1059,53 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &534669907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76948d354a59e5443ad10baf5f86109a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  start: 1
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1.5882354
+      outSlope: 1.5882354
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.17
+      value: 0.27
+      inSlope: -0.037143674
+      outSlope: -0.037143674
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.094749235
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.32530123
+      outSlope: -0.32530123
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  duration: 1
 --- !u!1 &556498015
 GameObject:
   m_ObjectHideFlags: 0
@@ -4246,7 +4294,7 @@ MonoBehaviour:
   explosionParticle: {fileID: 318874665}
   dirtParticle: {fileID: 1209890967}
   jumpSound: {fileID: 8300000, guid: 8f9577cf22e058648810b520d3f50c2a, type: 3}
-  crashSound: {fileID: 8300000, guid: c1a92236bcbcca24b81f19ee2b1e8cb0, type: 3}
+  crashSound: {fileID: 8300000, guid: a0706374e62a5d4419606430f4fe7551, type: 3}
   damageSound: {fileID: 8300000, guid: 853c59c51d7e8cd47889b7a685626770, type: 3}
   playerAnim: {fileID: 1909851413}
   runningAnimationSpeed: 2.5
