@@ -191,6 +191,7 @@ public class PlayerController : MonoBehaviour
         isInIntro = false;
         gameManagerScript.isGameStopped = false;
         modifiedRunningAnimationSpeed = runningAnimationSpeed;
+        dirtParticle.Play();
         TransitionToRunning();
     }
 
@@ -351,7 +352,7 @@ public class PlayerController : MonoBehaviour
         playerAnim.speed = modifiedRunningAnimationSpeed;
         isOnGround = true;
         hasDoubleJumped = false;
-        dirtParticle.Play();
+        //dirtParticle.Play();
     }
 
 
@@ -409,12 +410,17 @@ public class PlayerController : MonoBehaviour
         //
         // If we are dead or in the intro right now, an animation is already
         // playing of its own accord, and we don't want to interrupt it.
-        //Debug.Log($"{other.gameObject.name} + {playerAnim.speed}");
 
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
             TransitionToRunning();
+
+            // Only play the dirt particles when on ground (not when running on top of trucks)
+            if (other.gameObject.name == "Ground")
+            { 
+                dirtParticle.Play();
+            }
 
         }
 
@@ -426,21 +432,22 @@ public class PlayerController : MonoBehaviour
         // Must not be truck, because truck has a seperate script for its collider
         if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE) && other.gameObject.name != "TruckCollider")
         {            
-            // Get the script of the obstacle and set isThrown to true
-            // (setting it to true will stop move left movement and enable move top right movement)
-            MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
-            moveLeftScript.isThrown = true;
 
-            CollidingWithObstacles();
+
+            CollidingWithObstacle(other.gameObject);
 
         }
     }
 
 
-    public void CollidingWithObstacles()
+    public void CollidingWithObstacle(GameObject obstacle)
     {
         if (powerUpScript.powerUps["Strength"].isActivated)
         {
+            // Get the script of the obstacle and set isThrown to true
+            // (setting it to true will stop move left movement and enable move top right movement)
+            MoveLeft moveLeftScript = obstacle.gameObject.GetComponent<MoveLeft>();
+            moveLeftScript.isThrown = true;
             gameManagerScript.IncreaseScore(1);
         }
 
