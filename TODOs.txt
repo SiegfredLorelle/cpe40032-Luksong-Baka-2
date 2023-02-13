@@ -1,7 +1,7 @@
 TODOs
 
-increase next spawn interval when recently spawned a truck
 create truck with double trailer
+ignore physics after the first contact with truck to prevent it from messing with player animation
 adjust frequency of powerup?
 adjust game over screen to fit death sfx
 add lives to trucks

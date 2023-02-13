@@ -15,9 +15,7 @@ public class TruckCollision : MonoBehaviour
         moveLeftScript = GetComponentInParent<MoveLeft>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
-        powerupScript= GameObject.Find("Player").GetComponent<PlayerPowerUp>();
-
-        Debug.Log(moveLeftScript);
+        powerupScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
     }
 
     // Update is called once per frame
@@ -40,7 +38,19 @@ public class TruckCollision : MonoBehaviour
             //MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
             playerControllerScript.CollidingWithObstacles();
         }
+
+
+
+
+        // Prevents overlapping trucks (happens when consecutive trucks spawn at small interval)
+        if (collision.gameObject.name == "TrailerCollider")
+        {
+            Destroy(transform.parent.gameObject);
+        }
+
+
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(GameManager.TAG_PROJECTILE))

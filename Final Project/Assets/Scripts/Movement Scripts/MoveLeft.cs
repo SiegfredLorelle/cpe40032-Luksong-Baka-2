@@ -61,15 +61,19 @@ public class MoveLeft : MonoBehaviour
         {
             return;
         }
-
         // Do actual movement, with modifiedMoveSpeed and relative to world (so that objects will always go left with respect to the world/camera regardless of their rotation)
-        transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, relativeTo: Space.World);
+        transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, Space.World);
 
-        //// If object is not background and is out of bounds, then destroy it
-        //if (!CompareTag(GameManager.TAG_BACKGROUND) && (transform.position.x < -10 || transform.position.y < -2 || transform.position.y > 10))
-        //{
-        //    //Destroy(gameObject);
-        //}
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // If this obstacle spawned at a position that overlaps the truck (trailer) then delete this object
+        if (collision.gameObject.name == "TrailerCollider")
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
