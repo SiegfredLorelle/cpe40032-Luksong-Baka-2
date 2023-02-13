@@ -194,11 +194,11 @@ public class SpawnManager : MonoBehaviour
                     _upperFuzz = 1.50f;
                     break;
                 case int score when score < 40:
-                    _lowerFuzz = 0.25f;
+                    _lowerFuzz = 0.45f;
                     _upperFuzz = 1.25f;
                     break;
                 default:
-                    _lowerFuzz = 0.25f;
+                    _lowerFuzz = 0.40f;
                     _upperFuzz = 1.0f;
                     break;
             }
@@ -228,7 +228,12 @@ public class SpawnManager : MonoBehaviour
     {
 
         int _choice = Random.Range(0, obstaclePrefabs.Length);
-        GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
+        // UNCOMMENT TO RANDOMIZE ALL
+        //GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, obstaclePrefabs[_choice].transform.position.y, 0), obstaclePrefabs[_choice].transform.rotation);
+
+        // FOR TESTING ONLY
+        GameObject _newObstacle = Instantiate(obstaclePrefabs[5], new Vector3(25, obstaclePrefabs[5].transform.position.y, 0), obstaclePrefabs[5].transform.rotation); 
+
 
         if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {

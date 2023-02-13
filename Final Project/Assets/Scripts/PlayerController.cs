@@ -381,12 +381,12 @@ public class PlayerController : MonoBehaviour
 
     private void ThrowBomb()
     {
-        GameObject newBomb = Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
+        Instantiate(bombPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), Quaternion.identity);
     }
 
     private void ThrowDagger()
     {
-        GameObject newDagger = Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
+         Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
     }
 
 
@@ -403,10 +403,12 @@ public class PlayerController : MonoBehaviour
         //
         // If we are dead or in the intro right now, an animation is already
         // playing of its own accord, and we don't want to interrupt it.
+        //Debug.Log($"{other.gameObject.name}");
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
             TransitionToRunning();
+
         }
 
         // If the player has hit an obstacle,
@@ -414,35 +416,38 @@ public class PlayerController : MonoBehaviour
         //
         // Spoiler alert: This kills the player.
 
-        if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE))
+        if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE) && other.gameObject.name != "TruckCollider")
+        {            
+            // Get the script of the obstacle and set isThrown to true
+            // (setting it to true will stop move left movement and enable move top right movement)
+            MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
+            moveLeftScript.isThrown = true;
+
+            CollidingWithObstacles();
+
+        }
+    }
+
+
+    public void CollidingWithObstacles()
+    {
+        if (powerUpScript.powerUps["Strength"].isActivated)
         {
+            gameManagerScript.IncreaseScore(1);
+        }
 
 
-            if (powerUpScript.powerUps["Strength"].isActivated)
+        else
+        {
+            healthScript.TakeDamage();
+            playerAudio.PlayOneShot(damageSound);
+            gameManagerScript.IncreaseScore(-3);
+            if (healthScript.currentLives == 0)
             {
-                // Get the script of the obstacle and set isThrown to true
-                // (setting it to true will stop move left movement and enable move top right movement)
-                MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
-                moveLeftScript.isThrown = true;
-
-                gameManagerScript.IncreaseScore(1);
-            }
-
-
-            else
-            {
-                healthScript.TakeDamage();
-                playerAudio.PlayOneShot(damageSound);
-                gameManagerScript.IncreaseScore(-3);
-                if (healthScript.currentLives == 0)
-                {
-                    GameOver();
-                }
+                GameOver();
             }
         }
-    }    
-
-    
+    }
     public void GameOver()
     {
         gameManagerScript.isGameStopped = true;
