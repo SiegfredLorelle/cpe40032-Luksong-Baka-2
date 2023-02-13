@@ -105,6 +105,7 @@ MonoBehaviour:
   isThrown: 0
   explosionEffects: {fileID: 0}
   audioExplosion: {fileID: 0}
+  audioCowHurt: {fileID: 0}
 --- !u!114 &8018254009293402796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +154,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5594087616614747747}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}

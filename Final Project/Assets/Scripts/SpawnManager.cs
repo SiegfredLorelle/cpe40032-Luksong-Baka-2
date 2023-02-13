@@ -39,7 +39,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject powerUpPrefab;
 
     public List<AudioClip> mooSoundEffects;
-    private AudioSource Audio;
 
     public GameObject player;
     public PlayerPowerUp playerPowerUpScript;
@@ -62,7 +61,7 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
 
-        Audio = GetComponent<AudioSource>();
+        //Audio = GetComponent<AudioSource>();
 
         player = GameObject.Find("Player");
         playerPowerUpScript = player.GetComponent<PlayerPowerUp>();
@@ -233,8 +232,9 @@ public class SpawnManager : MonoBehaviour
 
         if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {
+            AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
             int index = Random.Range(0, mooSoundEffects.Count);
-            Audio.PlayOneShot(mooSoundEffects[index]);
+            audioSrc.PlayOneShot(mooSoundEffects[index]);
         }
 
 

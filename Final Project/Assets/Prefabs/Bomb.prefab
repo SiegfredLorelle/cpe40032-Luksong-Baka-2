@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 1324883827118361365}
   - component: {fileID: 1396649269207678491}
   - component: {fileID: 4145812651662882240}
-  - component: {fileID: 8933741510130710238}
   - component: {fileID: 9024825601374013402}
   - component: {fileID: 4108901331702734831}
   - component: {fileID: 8915394471618750719}
+  - component: {fileID: -5549224223994631784}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Projectile
@@ -125,20 +125,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &8933741510130710238
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312437311016454683}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.22399747
-  m_Height: 0.60958624
-  m_Direction: 1
-  m_Center: {x: -0.000000014901161, y: 0.08079566, z: 0.000000052154064}
 --- !u!82 &9024825601374013402
 AudioSource:
   m_ObjectHideFlags: 0
@@ -260,3 +246,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 30
+--- !u!65 &-5549224223994631784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312437311016454683}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.42606845, y: 0.60958624, z: 0.44799495}
+  m_Center: {x: -0.000000014901161, y: 0.08079566, z: 0.000000052154064}
