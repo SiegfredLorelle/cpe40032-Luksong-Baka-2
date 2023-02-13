@@ -16,6 +16,10 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         maximumLives = 3;
+
+        // FOR TESTING ONLY
+        //maximumLives = 100;
+
         currentLives = maximumLives;
 
         SetupHearts();

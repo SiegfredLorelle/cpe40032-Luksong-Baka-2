@@ -216,6 +216,8 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
+
+         //Debug.Log($"{playerAnim.speed}");
         // if player presses space and is on the ground,
         // OR if player presses space, is NOT on the ground, and has NOT double jumped yet,
         // let them jump as long as they are ALSO not dead and that the game is not paused
@@ -407,7 +409,8 @@ public class PlayerController : MonoBehaviour
         //
         // If we are dead or in the intro right now, an animation is already
         // playing of its own accord, and we don't want to interrupt it.
-        //Debug.Log($"{other.gameObject.name}");
+        //Debug.Log($"{other.gameObject.name} + {playerAnim.speed}");
+
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
