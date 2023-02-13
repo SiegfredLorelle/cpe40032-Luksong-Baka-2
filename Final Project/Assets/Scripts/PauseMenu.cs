@@ -65,7 +65,7 @@ public class PauseMenu : MonoBehaviour
 
      public void LoadMenu()
     {
-        SceneManager.LoadScene("ConfirmationDialogue");
+        SceneManager.LoadScene("Menu");
         
     }
      public void Restart()
