@@ -4,34 +4,25 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
-//public class ConfirmationUI : MonoBehaviour
-//{
-//    private TextMeshProUGUI textMeshPro;
-//    private Button yesBtn;
-//    private Button noBtn;
+public class ConfirmationUI : MonoBehaviour
+{
+    public GameObject ConfirmUI;
 
-//    private void Awake()
-//    {
-//        textMeshPro = transform.find("Text").GetComponent<TextMeshProUGUI>();
-//        yesBtn = transform.find("YesBtn").GetComponent<TextMeshProUGUI>();
-//        noBtn = transform.find("NoBtn").GetComponent<TextMeshProUGUI>();
+    public void ExitGameFromPause()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
-//        ShowQuestion("Do you really want to quit the game?", () =>
-//        {
-//            Debug.Log("Yes");
-//        }, () =>
-//        {
-//            Debug.Log("No");
-//        });
-//    }
+    public void OpenConfirmation()
+    {
+        ConfirmUI.SetActive(true);
+    }
 
-//    public void ShowQuestion(string questionText, Action yesAction, Action noAction)
-//    {
-//        textMeshPro.text = questionText;
-//        yesBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(yesAction));
-//        noBtn.onClick.AddListener(new UnityEngine.Events.UnityAction(noAction));
+    public void DontWantToExitGame()
+    {
+        ConfirmUI.SetActive(false);
+    }
 
-//    }
-
-//}
+}
