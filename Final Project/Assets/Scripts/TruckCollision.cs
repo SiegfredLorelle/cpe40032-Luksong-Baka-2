@@ -44,7 +44,7 @@ public class TruckCollision : MonoBehaviour
                 moveLeftScript.isThrown = true;
             }
             //MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
-            playerControllerScript.CollidingWithObstacles();
+            playerControllerScript.CollidingWithObstacle(collision.gameObject);
             IgnoreCollisionWithPlayer(collision.gameObject);
         }
 

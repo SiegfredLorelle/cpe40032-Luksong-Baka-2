@@ -7,7 +7,7 @@ add lives to trucks
 create calf
 fix bug where escape can be preseed when confirmation prompt is active
 fix bug where screne shake even on pause
-remove dirt when running on top of trucks
+prevent powerup from spawning overlap of obstacle (mainly truck)
 
 
 
