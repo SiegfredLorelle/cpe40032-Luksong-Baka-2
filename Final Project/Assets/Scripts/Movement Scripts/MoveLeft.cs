@@ -16,7 +16,9 @@ public class MoveLeft : MonoBehaviour
 
     // Variables used by some but not all objects
     public ParticleSystem explosionEffects;
-    public AudioSource audioExplosion;
+    //public AudioSource audioExplosion;
+    //public AudioSource audioCowHurt;
+    public AudioSource audioSrc;
 
 
     void Start()
@@ -72,70 +74,103 @@ public class MoveLeft : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Catches trigger collision between obstacle and projectiles
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
-            // If the projectile is a bomb
-            if (other.gameObject.name == GameManager.NAME_BOMB)
+            // If this object is a cow and is by a dagger
+            if (other.name == GameManager.NAME_DAGGER)
             {
-                // Get Audio Source and play the explosion clip assigned to it
-                audioExplosion = other.GetComponent<AudioSource>();
-                audioExplosion.Play();
-
-                // Turn off render and collider, to prevent it from affecting other objects while the explosion sfx is still playing
-                other.gameObject.GetComponent<CapsuleCollider>().enabled = false;
-
-                // Destroy bomb as soon as its explosion sfx is finished (TODO: bring down below so that it also destroys for dagger)
-                Destroy(other.gameObject, audioExplosion.clip.length);
-            }
-
-            // If the projectile is a dagger
-            else if (other.gameObject.name == GameManager.NAME_DAGGER)
-            {
-                // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
-                other.gameObject.GetComponent<BoxCollider>().enabled = false;
-
-                Destroy(other.gameObject); // TODO: Remove later since the destroy after sfx will be used when dagger has sfx
-
-                // If the obstacle hit by dagger is a cow, then turn it into meat (TODO: Add aditional score when turning cow to meat)
                 if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
                 {
-                    Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
-                    gameManagerScript.IncreaseScore(1);
+                    DaggerHitCow(other.gameObject);
+                }
+                else
+                { 
+                    DaggerHitObstacle(other.gameObject);
                 }
             }
 
-            // Turn of render so it appears destroyed, then actually destroy it after playing sfx
-            other.gameObject.GetComponent<Renderer>().enabled = false;
+            else if (other.name == GameManager.NAME_BOMB)
+            {
+                BombExplosion(other.gameObject);
+            }
 
-            // Add score
-            gameManagerScript.IncreaseScore(1);
-
-            // Create an explosion effects and destroy the obstacle hit
-            Instantiate(explosionEffects, transform.position, Quaternion.identity);
-            Destroy(gameObject);
         }
-
-        else if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
-        {
-            Destroy(gameObject);
-        }
-
 
     }
 
+    private void BombExplosion(GameObject bomb)
+    {
+
+        audioSrc = bomb.GetComponent<AudioSource>();
+        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
+        bomb.GetComponent<Renderer>().enabled = false;
+        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
+        bomb.GetComponent<BoxCollider>().enabled = false;
+
+        // Add score
+        gameManagerScript.IncreaseScore(1);
+
+        // Create an explosion effects and destroy the obstacle hit
+        Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+
+        audioSrc.Play();
+        Destroy(bomb, audioSrc.clip.length);
+    }
+
+    private void DaggerHitCow(GameObject dagger)
+    {
+        audioSrc = dagger.GetComponent<AudioSource>();
+        Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
+        audioSrc.Play();
+        Destroy(gameObject);
+
+        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
+        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
+        dagger.GetComponent<Renderer>().enabled = false;
+        dagger.GetComponent<BoxCollider>().enabled = false;
+        Destroy(dagger, audioSrc.clip.length);
+
+        Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        gameManagerScript.IncreaseScore(2);
+
+    }
+
+    private void DaggerHitObstacle(GameObject dagger)
+    {
+        Destroy(gameObject);
+        Destroy(dagger);
+        Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        gameManagerScript.IncreaseScore(1);
+    }
+
+
     private void OnTriggerExit(Collider other)
     {
-       if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_POINTSENSOR))
+        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
         {
-            if (gameManagerScript.playerIsDashing)
+            Destroy(gameObject);
+        }
+
+        else if (CompareTag(GameManager.TAG_OBSTACLE))
+        {
+            if (other.CompareTag(GameManager.TAG_POINTSENSOR))
             {
-                gameManagerScript.IncreaseScore(2);
+                AddScoreBaseOnDash();
             }
-            else
-            {
-                gameManagerScript.IncreaseScore(1);
-            }
+
+        }
+    }
+
+    private void AddScoreBaseOnDash()
+    {
+        if (gameManagerScript.playerIsDashing)
+        {
+            gameManagerScript.IncreaseScore(2);
+        }
+        else
+        {
+            gameManagerScript.IncreaseScore(1);
         }
     }
 }

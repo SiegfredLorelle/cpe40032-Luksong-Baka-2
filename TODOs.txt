@@ -1,22 +1,20 @@
 TODOs
 
 
-add sfx for dagger
-change particle effects for dagger???
+add sfx when dagger hit other obstacle? (maybe metallic sound)
+add imgs showing what powerup is activated beside health
+rotate powerup indicator for effects lang
+also change sfx not just bg music
 add powerup  indicator and number of projectiles (specifically dagger) left
-change difficulty scaling (not of arbitrary values)
-connect bg music (from different scenes)
 place all physics/movements in fixed update instead of update
 add cd to prevent spamming bomb
-add imgs showing what powerup is activated beside health
+shakescreen kapag nabangga
 
 
 powerup suggestions:
 - triple jump (timer)
 - fly (timer)
 - add heart
-
-shakescreen kapag nabangga
 
 
 different powerup indicator (change color maybe?)

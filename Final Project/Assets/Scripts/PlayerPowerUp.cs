@@ -20,9 +20,6 @@ public class PlayerPowerUp : MonoBehaviour
             this.cooldown = cooldown;
             this.numberLeft = 0;
         }
-
-
-
     }
 
 
@@ -53,11 +50,6 @@ public class PlayerPowerUp : MonoBehaviour
         powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
         powerUps.Add("Bomb", new PowerUp("Bomb", 7.0f));
         powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
-
-
-
-
-
 
     }
 
