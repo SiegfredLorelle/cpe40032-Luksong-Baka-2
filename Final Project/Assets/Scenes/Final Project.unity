@@ -1148,7 +1148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76948d354a59e5443ad10baf5f86109a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  start: 1
   curve:
     serializedVersion: 2
     m_Curve:
@@ -4829,6 +4828,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Truck (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5213191286279999573, guid: 0391577fe4e4f784fa61062ddc66e349, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0391577fe4e4f784fa61062ddc66e349, type: 3}
 --- !u!1001 &1823982797
@@ -5176,6 +5179,7 @@ MonoBehaviour:
   spawnManagerScript: {fileID: 0}
   UIManagerScript: {fileID: 0}
   gameManagerScript: {fileID: 0}
+  shakeScreenScript: {fileID: 0}
   bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
   daggerPrefab: {fileID: 4736720416522279893, guid: c809056de18ac424b92e03ad422fa68d, type: 3}
   explosionParticle: {fileID: 318874665}

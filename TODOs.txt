@@ -3,7 +3,7 @@ TODOs
 add sfx when powerup is gone
 increase next spawn interval when recently spawned a truck
 create truck with double trailer
-add shake screne when taking dmg/death
+adjust frequency of powerup?
 
 add sfx when dagger hit other obstacle? (maybe metallic sound)
 add imgs showing what powerup is activated beside health

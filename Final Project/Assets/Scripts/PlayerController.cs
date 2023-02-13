@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
     public GameManager gameManagerScript;
+    public ShakeScreen shakeScreenScript;
 
     public GameObject bombPrefab;
     public GameObject daggerPrefab;
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
         backgroundMusic = GameObject.FindGameObjectWithTag("Background Music").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        shakeScreenScript = GameObject.Find("Main Camera").GetComponent<ShakeScreen>();
 
         // Component of player
         playerRb = GetComponent<Rigidbody>();
@@ -440,6 +442,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             healthScript.TakeDamage();
+            shakeScreenScript.StartShaking();
             playerAudio.PlayOneShot(damageSound);
             gameManagerScript.IncreaseScore(-3);
             if (healthScript.currentLives == 0)
