@@ -228,7 +228,12 @@ public class SpawnManager : MonoBehaviour
     {
 
         int _choice = Random.Range(0, obstaclePrefabs.Length);
+        // UNCOMMENT TO RANDOMIZE ALL
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, 0, 0), obstaclePrefabs[_choice].transform.rotation);
+
+        // FOR TESTING ONLY
+        //GameObject _newObstacle = Instantiate(obstaclePrefabs[5], new Vector3(25, obstaclePrefabs[5].transform.position.y, 0), obstaclePrefabs[5].transform.rotation); 
+
 
         if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {

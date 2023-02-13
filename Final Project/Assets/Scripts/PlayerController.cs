@@ -403,10 +403,12 @@ public class PlayerController : MonoBehaviour
         //
         // If we are dead or in the intro right now, an animation is already
         // playing of its own accord, and we don't want to interrupt it.
+        Debug.Log($"{other.gameObject.name}");
 
         if (other.gameObject.tag == GameManager.TAG_WALKABLE && !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
         {
             TransitionToRunning();
+
         }
 
         // If the player has hit an obstacle,
