@@ -133,6 +133,9 @@ MonoBehaviour:
   isThrown: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
   audioSrc: {fileID: 0}
+  explosionSound: {fileID: 8300000, guid: 1a768320275347b4e8ff037e9d4edd14, type: 3}
+  cowHurtSound: {fileID: 8300000, guid: 68117fa21472d444a902e3529707e77a, type: 3}
+  metalHitSound: {fileID: 8300000, guid: 0b526a2b5d5963d4588559f50dfa29f3, type: 3}
 --- !u!114 &-5743240949355891141
 MonoBehaviour:
   m_ObjectHideFlags: 0

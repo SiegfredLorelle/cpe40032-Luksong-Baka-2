@@ -1984,6 +1984,9 @@ MonoBehaviour:
   isThrown: 0
   explosionEffects: {fileID: 0}
   audioSrc: {fileID: 0}
+  explosionSound: {fileID: 0}
+  cowHurtSound: {fileID: 0}
+  metalHitSound: {fileID: 0}
 --- !u!114 &835818923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3839,6 +3842,67 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1001 &1497417037
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7756810733588918142, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_Name
+      value: Barrel
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733588918142, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756810733589146800, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b88717d82148cc047bcbf30bf971fcf1, type: 3}
 --- !u!1 &1520633781
 GameObject:
   m_ObjectHideFlags: 0
@@ -4868,9 +4932,10 @@ MonoBehaviour:
   - {fileID: 512409598207987287, guid: fa3e198482672fb41af310828349c907, type: 3}
   - {fileID: 3905482517356816269, guid: 774b75b23ee11d04f9ba3fba941c1fa0, type: 3}
   powerUpPrefab: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
-  mooSoundEffects:
-  - {fileID: 8300000, guid: f0ce9d26c67529d45a1acd923a9cebd0, type: 3}
-  - {fileID: 8300000, guid: 7f3fe1691cd260c4294922b5ba08dad3, type: 3}
+  mooSounds:
+  - {fileID: 8300000, guid: f71054df18f5cb646b8f04bbc703d83d, type: 3}
+  - {fileID: 8300000, guid: 261ee3beb7e0ea746b412d955e473456, type: 3}
+  truckHornSound: {fileID: 8300000, guid: a6dbaa796ca085e40b879ef5f8a822da, type: 3}
   player: {fileID: 0}
   playerPowerUpScript: {fileID: 0}
 --- !u!4 &1734187969
