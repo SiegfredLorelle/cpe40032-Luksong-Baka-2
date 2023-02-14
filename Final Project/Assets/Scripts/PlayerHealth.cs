@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,11 +48,33 @@ public class PlayerHealth : MonoBehaviour
 
     private void RemoveAHeart()
     {
-        foreach (Image heart in hearts)
+        foreach (Image heart in hearts.Reverse())
         {
             if (heart.sprite == fullHeart)
             {
                 heart.sprite = emptyHeart;
+                break;
+            }
+        }
+    }
+
+    public void Heal()
+    {
+        if (currentLives < 3)
+        { 
+            currentLives++;
+            AddAHeart();
+        }
+        
+    }
+
+    private void AddAHeart()
+    {
+        foreach (Image heart in hearts)
+        {
+            if (heart.sprite == emptyHeart)
+            {
+                heart.sprite = fullHeart;
                 break;
             }
         }

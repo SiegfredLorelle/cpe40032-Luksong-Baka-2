@@ -66,7 +66,7 @@ public class PlayerPowerUp : MonoBehaviour
     {
         hasPowerUp = true;
         playerAudio.PlayOneShot(powerUpPickUpSound);
-        Instantiate(powerUpPickUpEffects, new Vector3(powerUpBox.transform.position.x, powerUpBox.transform.position.y, powerUpBox.transform.position.z), Quaternion.identity);
+        Instantiate(powerUpPickUpEffects, powerUpBox.transform.position, Quaternion.identity);
         Destroy(powerUpBox);
 
 

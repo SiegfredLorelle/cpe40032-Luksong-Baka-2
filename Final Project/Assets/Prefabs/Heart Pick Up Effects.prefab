@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2572228798955615222}
   - component: {fileID: 5031562683627855506}
   m_Layer: 0
-  m_Name: Powerup Pickup Effects
+  m_Name: Heart Pick Up Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
