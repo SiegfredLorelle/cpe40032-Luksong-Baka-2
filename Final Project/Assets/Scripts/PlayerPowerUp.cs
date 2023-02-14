@@ -49,7 +49,7 @@ public class PlayerPowerUp : MonoBehaviour
 
         // Create all the powerups with their respective cooldowns
         powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
-        powerUps.Add("Bomb", new PowerUp("Bomb", 7.0f));
+        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f));
         powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
 
     }

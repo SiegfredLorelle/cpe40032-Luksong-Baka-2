@@ -1,7 +1,5 @@
 TODOs
 
-create truck with double trailer
-adjust frequency of powerup?
 adjust game over screen to fit death sfx
 add lives to trucks
 create calf
