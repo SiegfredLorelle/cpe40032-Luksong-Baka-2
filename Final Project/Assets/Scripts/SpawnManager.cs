@@ -5,27 +5,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    /** BEGIN SINGLETON DECLARATION **/
-    //private SpawnManager _instance;
-    //public SpawnManager Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            Debug.LogError("SpawnManager doesn't exist!");
-    //        }
-    //        return _instance;
-    //    }
-    //}
-
-    //void Awake() => _instance = this;
-    /** END SINGLETON DECLARATION **/
-
-
-
-
-
     // there are three objects that we CAN make obstacles out of,
     // and then an object pool that we assign them to.
 
@@ -33,16 +12,22 @@ public class SpawnManager : MonoBehaviour
     // by reusing the same GameObjects over and over again.
 
     public GameManager gameManagerScript;
+    public PlayerPowerUp playerPowerUpScript;
 
-
-    public GameObject[] obstaclePrefabs = new GameObject[5];
+    public GameObject[] obstaclePrefabs;
     public GameObject powerUpPrefab;
+    public GameObject heartPrefab;
 
     public List<AudioClip> mooSounds;
     public AudioClip truckHornSound;
 
-    public GameObject player;
-    public PlayerPowerUp playerPowerUpScript;
+    private float minSpawnInterval;
+    private float middleSpawnInterval;
+    private float maxSpawnInterval;
+
+
+    private float SpawnPosX = 25.0f;
+
     // we need to subscribe to three events: one to tell us when to
     // prepare the object pool, one to tell us when the player intro
     // has finished and the player is now actively running, and one to
@@ -61,18 +46,13 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
+        SpawnPosX = 25.0f;
+        minSpawnInterval = 5.0f;
+        middleSpawnInterval = 8.0f;
+        maxSpawnInterval = 13.0f;
 
-        //Audio = GetComponent<AudioSource>();
-
-        player = GameObject.Find("Player");
-        playerPowerUpScript = player.GetComponent<PlayerPowerUp>();
+        playerPowerUpScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-
-
-
-        ////PlayerController.PlayerFinishedIntro += StartSpawner;
-        ////PlayerController.PlayerHitObstacle += GameOver;
-
     }
 
     private void Update()
@@ -91,8 +71,8 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawner()
     {
         StartCoroutine("CycleObstacles");
-
         StartCoroutine("PowerUpSpawnRoutine");
+        StartCoroutine("HeartSpawnRoutine");
     }
 
     // this is fired when the player hits an obstacle; it destroys all
@@ -101,8 +81,9 @@ public class SpawnManager : MonoBehaviour
 
     public void GameOver()
     {
-        StopCoroutine("CycleObstacles");
-        StopCoroutine("SpawnPowerUp");
+        //StopCoroutine("CycleObstacles");
+        //StopCoroutine("SpawnPowerUp");
+        StopAllCoroutines();
 
         GameObject[] obstaclesOnScene = GameObject.FindGameObjectsWithTag("Obstacle");
         foreach (GameObject obstacle in obstaclesOnScene)
@@ -117,7 +98,7 @@ public class SpawnManager : MonoBehaviour
     // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after that spawn powerup at random intervals
     IEnumerator PowerUpSpawnRoutine()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(Random.Range(minSpawnInterval, middleSpawnInterval));
 
         while (!gameManagerScript.isGameStopped)
         {
@@ -136,22 +117,36 @@ public class SpawnManager : MonoBehaviour
             // If the player picked up the most recent powerup, then spawn the next one a little longer
             if (playerPowerUpScript.hasPowerUp)
             {
-                yield return new WaitForSeconds(Random.Range(8.0f, 13.0f));
+                yield return new WaitForSeconds(Random.Range(middleSpawnInterval, maxSpawnInterval));
             }
             // If player did not picked up the most recent powerup, then shorten the delay for the next powerup
             else
             {
-                yield return new WaitForSeconds(Random.Range(5.0f, 8.0f));
+                yield return new WaitForSeconds(Random.Range(minSpawnInterval, middleSpawnInterval));
             }
         }
-
     }
+
+    IEnumerator HeartSpawnRoutine()
+    {
+        while (!gameManagerScript.isGameStopped)
+        {
+            yield return new WaitForSeconds(Random.Range(minSpawnInterval, maxSpawnInterval));
+            SpawnHeart();
+        }
+    }
+
 
     // Spawn a powerup at random height
     public void SpawnPowerUp()
     {                 
         float randomSpawnHeight = Random.Range(4.0f, 7.5f);
-        Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
+        Instantiate(powerUpPrefab, new Vector3(SpawnPosX, randomSpawnHeight), powerUpPrefab.transform.rotation);
+    }
+    public void SpawnHeart()
+    {
+        float randomSpawnHeight = Random.Range(4.0f, 7.5f);
+        Instantiate(heartPrefab, new Vector3(SpawnPosX, randomSpawnHeight), powerUpPrefab.transform.rotation);
 
     }
 
@@ -202,11 +197,11 @@ public class SpawnManager : MonoBehaviour
                     _upperFuzz = 1.50f;
                     break;
                 case int score when score < 40:
-                    _lowerFuzz = 0.45f;
+                    _lowerFuzz = 0.25f;
                     _upperFuzz = 1.25f;
                     break;
                 default:
-                    _lowerFuzz = 0.40f;
+                    _lowerFuzz = 0.25f;
                     _upperFuzz = 1.0f;
                     break;
             }
@@ -237,7 +232,7 @@ public class SpawnManager : MonoBehaviour
 
         int _choice = Random.Range(0, obstaclePrefabs.Length);
         // UNCOMMENT TO RANDOMIZE ALL
-        GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, obstaclePrefabs[_choice].transform.position.y, 0), obstaclePrefabs[_choice].transform.rotation);
+        GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(SpawnPosX, obstaclePrefabs[_choice].transform.position.y), obstaclePrefabs[_choice].transform.rotation);
 
         // FOR TESTING ONLY
         //GameObject _newObstacle = Instantiate(obstaclePrefabs[7], new Vector3(25, obstaclePrefabs[7].transform.position.y, 0), obstaclePrefabs[7].transform.rotation);

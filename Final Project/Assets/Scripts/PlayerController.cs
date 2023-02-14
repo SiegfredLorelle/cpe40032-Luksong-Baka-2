@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     // Effects and Sounds
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
+    public GameObject heartPickUpParticle;
     public AudioClip jumpSound;
     public AudioClip crashSound;
     public AudioClip damageSound;
@@ -503,6 +504,13 @@ public class PlayerController : MonoBehaviour
 
             powerUpScript.EnablePowerUp(other.gameObject);
 
+        }
+
+        else if (other.CompareTag(GameManager.TAG_HEART))
+        {
+            Instantiate(heartPickUpParticle, other.gameObject.transform.position, Quaternion.identity);
+            Destroy(other.gameObject);
+            healthScript.Heal();
         }
     }
 }
