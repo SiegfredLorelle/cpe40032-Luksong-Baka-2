@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class ShakeScreen : MonoBehaviour
 {
+    public GameManager gameManagerScript;
     public AnimationCurve curve;
     public float duration = 1f;
+
+
+    private void Start()
+    {
+        gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     // shakescreen
     IEnumerator Shaking()
@@ -14,11 +21,14 @@ public class ShakeScreen : MonoBehaviour
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            float strength = curve.Evaluate(elapsedTime / duration);
-            transform.position = startPosition + Random.insideUnitSphere * strength;
-            yield return null;
+        {  
+            //if (!gameManagerScript.isGamePaused)
+            //{ 
+                elapsedTime += Time.deltaTime;
+                float strength = curve.Evaluate(elapsedTime / duration);
+                transform.position = startPosition + Random.insideUnitSphere * strength;
+                yield return null;
+            //}
         }
         transform.position = startPosition;
     }
