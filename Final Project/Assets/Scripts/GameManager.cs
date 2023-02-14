@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public const string TAG_BACKGROUND = "Background";
     public const string TAG_POINTSENSOR = "Point Sensor";
     public const string TAG_DESTROYSENSOR = "Destroy Sensor";
+    public const string TAG_HEIGHTLIMIT = "Height Limit Sensor";
     public const string TAG_HEART = "Heart";
 
     public const string NAME_MEAT = "Meat(Clone)";
@@ -140,15 +141,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        //score = 0;
-        //isGameStopped = true;
-        //playerControllerScript.SetupIntro();
-        //moveBackgroundScript.ResetBackground();
-        //UIManagerScript.StartUI();
-
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        //GameRestart?.Invoke();
     }
 
 

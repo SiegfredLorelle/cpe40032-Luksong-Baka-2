@@ -6,8 +6,6 @@ adjust game over screen to fit death sfx
 add lives to trucks
 create calf
 fix bug where escape can be preseed when confirmation prompt is active
-fix bug where screne shake even on pause
-add ceiling to prevent player from jumping too high when running on top of trucks
 volume settings in pause menu
 
 

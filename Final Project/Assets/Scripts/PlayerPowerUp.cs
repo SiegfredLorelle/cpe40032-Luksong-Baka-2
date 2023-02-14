@@ -115,17 +115,12 @@ public class PlayerPowerUp : MonoBehaviour
 
             else if (cooldown == powerUpIndicatorBlinkDuration)
             {
-
-
                 StartCoroutine("BlinkPowerUpIndicator", powerUpIndicatorBlinkDuration);
-
-
             }
 
             yield return new WaitForSeconds(1);
             cooldown--;
         }
-
     }
 
     // Routine for blinking the powerup indicator, called when powerup duration has 3 seconds left
@@ -159,19 +154,20 @@ public class PlayerPowerUp : MonoBehaviour
             powerUp.isActivated = false;
         }
 
+        // If the player lost while having a powerup,
+        // don't play the sfx so it will not overlap with game over sfx
+        if (!gameManagerScript.isGameStopped)
+        {
+            playerAudio.PlayOneShot(endOfPowerUpSound);
+        }
+
+        // This is only necessary if the powerup was strength
+        // While on strength, dash is always active regardless if Shift Key is hold,
+        // so slow down if player is not holding Shift
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             playerControllerScript.SlowDown();
         }
-
-        if (!gameManagerScript.isGameStopped)
-        { 
-            playerAudio.PlayOneShot(endOfPowerUpSound);
-
-        }
-        Debug.Log("POWERUP ENDED");
-
-
     }
 
 }
