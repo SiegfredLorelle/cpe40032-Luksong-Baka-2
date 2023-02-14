@@ -21,14 +21,17 @@ public class ShakeScreen : MonoBehaviour
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
-        {  
-            //if (!gameManagerScript.isGamePaused)
-            //{ 
-                elapsedTime += Time.deltaTime;
+        {
+            elapsedTime += Time.deltaTime;
+            if (gameManagerScript.isGamePaused)
+                yield return new WaitForEndOfFrame();
+            else
+            { 
                 float strength = curve.Evaluate(elapsedTime / duration);
                 transform.position = startPosition + Random.insideUnitSphere * strength;
                 yield return null;
-            //}
+            }
+            
         }
         transform.position = startPosition;
     }
