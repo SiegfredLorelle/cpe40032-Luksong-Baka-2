@@ -91,7 +91,7 @@ public class SpawnManager : MonoBehaviour
     {
         StartCoroutine("CycleObstacles");
 
-        StartCoroutine("SpawnPowerUp");
+        StartCoroutine("PowerUpSpawnRoutine");
     }
 
     // this is fired when the player hits an obstacle; it destroys all
@@ -113,22 +113,21 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after than randomly spawn powerup between 5-10 secs randomly
-    IEnumerator SpawnPowerUp()
+    // Routine for spawning powerups, do not spawn at the first 5 seconds of the game, after that spawn powerup at random intervals
+    IEnumerator PowerUpSpawnRoutine()
     {
         yield return new WaitForSeconds(5);
 
-        while (true)
+        while (!gameManagerScript.isGameStopped)
         {
             if (playerPowerUpScript.hasPowerUp)
             {
-                yield return new WaitForEndOfFrame();
+                yield return new WaitForSeconds(3);
+                continue;
             }
-            else if (!gameManagerScript.isGameStopped)
+            else
             {
-                // Spawn a powerup at random height
-                float randomSpawnHeight = Random.Range(4.0f, 7.5f);
-                Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
+                SpawnPowerUp();
             }
 
             yield return new WaitForSeconds(1.5f);
@@ -144,6 +143,14 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(5.0f, 8.0f));
             }
         }
+
+    }
+
+    // Spawn a powerup at random height
+    public void SpawnPowerUp()
+    {                 
+        float randomSpawnHeight = Random.Range(4.0f, 7.5f);
+        Instantiate(powerUpPrefab, new Vector3(25, randomSpawnHeight, 0), powerUpPrefab.transform.rotation);
 
     }
 
@@ -232,7 +239,7 @@ public class SpawnManager : MonoBehaviour
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(25, obstaclePrefabs[_choice].transform.position.y, 0), obstaclePrefabs[_choice].transform.rotation);
 
         // FOR TESTING ONLY
-        //GameObject _newObstacle = Instantiate(obstaclePrefabs[6], new Vector3(25, obstaclePrefabs[6].transform.position.y, 0), obstaclePrefabs[6].transform.rotation);
+        //GameObject _newObstacle = Instantiate(obstaclePrefabs[7], new Vector3(25, obstaclePrefabs[7].transform.position.y, 0), obstaclePrefabs[7].transform.rotation);
 
 
         if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))

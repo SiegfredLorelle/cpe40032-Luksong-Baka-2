@@ -104,8 +104,7 @@ MonoBehaviour:
   meatPrefab: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 0}
-  audioExplosion: {fileID: 0}
-  audioCowHurt: {fileID: 0}
+  audioSrc: {fileID: 0}
 --- !u!114 &8018254009293402796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d582434ab8adf2409c22965ee26c57b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 90
 --- !u!54 &-2934303643969523572
 Rigidbody:
   m_ObjectHideFlags: 0

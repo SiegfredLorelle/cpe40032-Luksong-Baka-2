@@ -16,8 +16,6 @@ public class MoveLeft : MonoBehaviour
 
     // Variables used by some but not all objects
     public ParticleSystem explosionEffects;
-    //public AudioSource audioExplosion;
-    //public AudioSource audioCowHurt;
     public AudioSource audioSrc;
 
 
@@ -80,10 +78,11 @@ public class MoveLeft : MonoBehaviour
     {
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
-            // If this object is a cow and is by a dagger
+            // If this object was hit by a dagger
             if (other.name == GameManager.NAME_DAGGER)
             {
-                if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
+                // this object is a cow/calf 
+                if (gameManagerScript.NAME_COWS.Contains(gameObject.name) || gameManagerScript.NAME_CALVES.Contains(gameObject.name))
                 {
                     DaggerHitCow(other.gameObject);
                 }
@@ -93,6 +92,7 @@ public class MoveLeft : MonoBehaviour
                 }
             }
 
+            // If this object was hit by a bomb
             else if (other.name == GameManager.NAME_BOMB)
             {
                 BombExplosion(other.gameObject);
@@ -125,7 +125,7 @@ public class MoveLeft : MonoBehaviour
     private void DaggerHitCow(GameObject dagger)
     {
         audioSrc = dagger.GetComponent<AudioSource>();
-        Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
+        GameObject meat = Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
         audioSrc.Play();
         Destroy(gameObject);
 
@@ -138,6 +138,11 @@ public class MoveLeft : MonoBehaviour
         Instantiate(explosionEffects, transform.position, Quaternion.identity);
         gameManagerScript.IncreaseScore(2);
 
+        // Scale down the meat by half, if it is from a calf
+        if (gameManagerScript.NAME_CALVES.Contains(gameObject.name))
+        {
+            meat.transform.localScale = meatPrefab.transform.lossyScale * 0.5f;
+        }
     }
 
     public void DaggerHitObstacle(GameObject dagger)
