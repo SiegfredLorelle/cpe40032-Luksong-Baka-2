@@ -242,7 +242,7 @@ public class SpawnManager : MonoBehaviour
         //GameObject _newObstacle = Instantiate(obstaclePrefabs[7], new Vector3(25, obstaclePrefabs[7].transform.position.y, 0), obstaclePrefabs[7].transform.rotation);
 
 
-        if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name) || gameManagerScript.NAME_CALVES.Contains(_newObstacle.name))
+        if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {
             AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
             int index = Random.Range(0, mooSoundEffects.Count);
