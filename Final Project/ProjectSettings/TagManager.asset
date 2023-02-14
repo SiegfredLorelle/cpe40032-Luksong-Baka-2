@@ -13,6 +13,7 @@ TagManager:
   - Destroy Sensor
   - Heart
   - Background Music
+  - Height Limit Sensor
   layers:
   - Default
   - TransparentFX

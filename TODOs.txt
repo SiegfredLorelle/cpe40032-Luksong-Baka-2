@@ -1,16 +1,15 @@
 TODOs
 
 create truck with double trailer
-adjust frequency of powerup spawn?
+adjust frequency of powerup?
 adjust game over screen to fit death sfx
 add lives to trucks
 create calf
 fix bug where escape can be preseed when confirmation prompt is active
-fix bug where screne shake even on pause
-prevent powerup from spawning overlap of obstacle (mainly truck)
+volume settings in pause menu
 
 
-
+add sfx when spawning trucks maybe (horn?)
 add sfx when dagger hit other obstacle? (maybe metallic sound)
 add imgs showing what powerup is activated beside health
 rotate powerup indicator for effects lang
@@ -30,7 +29,6 @@ powerup suggestions:
 
 
 different powerup indicator (change color maybe?)
-add ceiling
 bg change
 elevate floor
 ui
