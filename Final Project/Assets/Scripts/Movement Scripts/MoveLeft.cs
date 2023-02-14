@@ -80,10 +80,11 @@ public class MoveLeft : MonoBehaviour
     {
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
-            // If this object is a cow and is by a dagger
+            // If this object was hit by a dagger
             if (other.name == GameManager.NAME_DAGGER)
             {
-                if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
+                // this object is a cow/calf 
+                if (gameManagerScript.NAME_COWS.Contains(gameObject.name) || gameManagerScript.NAME_CALVES.Contains(gameObject.name))
                 {
                     DaggerHitCow(other.gameObject);
                 }
@@ -93,6 +94,7 @@ public class MoveLeft : MonoBehaviour
                 }
             }
 
+            // If this object was hit by a bomb
             else if (other.name == GameManager.NAME_BOMB)
             {
                 BombExplosion(other.gameObject);
