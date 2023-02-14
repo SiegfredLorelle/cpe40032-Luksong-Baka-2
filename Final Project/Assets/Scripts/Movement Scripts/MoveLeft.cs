@@ -17,6 +17,9 @@ public class MoveLeft : MonoBehaviour
     // Variables used by some but not all objects
     public ParticleSystem explosionEffects;
     public AudioSource audioSrc;
+    public AudioClip explosionSound;
+    public AudioClip cowHurtSound;
+    public AudioClip metalHitSound;
 
 
     void Start()
@@ -118,22 +121,23 @@ public class MoveLeft : MonoBehaviour
         Instantiate(explosionEffects, transform.position, Quaternion.identity);
         Destroy(gameObject);
 
-        audioSrc.Play();
-        Destroy(bomb, audioSrc.clip.length);
+        audioSrc = bomb.GetComponent<AudioSource>();
+        audioSrc.PlayOneShot(explosionSound);
+        Destroy(bomb, explosionSound.length);
     }
 
     private void DaggerHitCow(GameObject dagger)
     {
         audioSrc = dagger.GetComponent<AudioSource>();
         GameObject meat = Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
-        audioSrc.Play();
+        audioSrc.PlayOneShot(cowHurtSound);
         Destroy(gameObject);
 
         // Turn of render so it appears destroyed, then actually destroy it after playing sfx
         // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
         dagger.GetComponent<Renderer>().enabled = false;
         dagger.GetComponent<BoxCollider>().enabled = false;
-        Destroy(dagger, audioSrc.clip.length);
+        Destroy(dagger, cowHurtSound.length);
 
         Instantiate(explosionEffects, transform.position, Quaternion.identity);
         gameManagerScript.IncreaseScore(2);
@@ -147,8 +151,17 @@ public class MoveLeft : MonoBehaviour
 
     public void DaggerHitObstacle(GameObject dagger)
     {
+        audioSrc = dagger.GetComponent<AudioSource>();
+        audioSrc.PlayOneShot(metalHitSound);
+
+        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
+        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
+        dagger.GetComponent<Renderer>().enabled = false;
+        dagger.GetComponent<BoxCollider>().enabled = false;
+        Destroy(dagger, metalHitSound.length);
+
         Destroy(gameObject);
-        Destroy(dagger);
+
         Instantiate(explosionEffects, transform.position, Quaternion.identity);
         gameManagerScript.IncreaseScore(1);
     }
