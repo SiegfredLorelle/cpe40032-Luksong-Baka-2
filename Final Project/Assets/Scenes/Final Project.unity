@@ -4932,9 +4932,10 @@ MonoBehaviour:
   - {fileID: 512409598207987287, guid: fa3e198482672fb41af310828349c907, type: 3}
   - {fileID: 3905482517356816269, guid: 774b75b23ee11d04f9ba3fba941c1fa0, type: 3}
   powerUpPrefab: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
-  mooSoundEffects:
+  mooSounds:
   - {fileID: 8300000, guid: f71054df18f5cb646b8f04bbc703d83d, type: 3}
   - {fileID: 8300000, guid: 261ee3beb7e0ea746b412d955e473456, type: 3}
+  truckHornSound: {fileID: 8300000, guid: a6dbaa796ca085e40b879ef5f8a822da, type: 3}
   player: {fileID: 0}
   playerPowerUpScript: {fileID: 0}
 --- !u!4 &1734187969

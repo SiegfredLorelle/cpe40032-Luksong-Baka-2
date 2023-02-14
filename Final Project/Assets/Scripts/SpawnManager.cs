@@ -38,7 +38,8 @@ public class SpawnManager : MonoBehaviour
     public GameObject[] obstaclePrefabs = new GameObject[5];
     public GameObject powerUpPrefab;
 
-    public List<AudioClip> mooSoundEffects;
+    public List<AudioClip> mooSounds;
+    public AudioClip truckHornSound;
 
     public GameObject player;
     public PlayerPowerUp playerPowerUpScript;
@@ -245,8 +246,14 @@ public class SpawnManager : MonoBehaviour
         if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
         {
             AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
-            int index = Random.Range(0, mooSoundEffects.Count);
-            audioSrc.PlayOneShot(mooSoundEffects[index]);
+            int index = Random.Range(0, mooSounds.Count);
+            audioSrc.PlayOneShot(mooSounds[index]);
+        }
+
+        else if (gameManagerScript.NAME_TRUCKS.Contains(_newObstacle.name))
+        {
+            AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
+            audioSrc.PlayOneShot(truckHornSound);
         }
 
 

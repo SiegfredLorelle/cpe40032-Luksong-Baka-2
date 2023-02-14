@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public const string NAME_MEAT = "Meat(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
     public readonly string[] NAME_CALVES = { "Brown Calf(Clone)", "White Calf(Clone)" };
+    public readonly string[] NAME_TRUCKS = { "Truck(Clone)", "Two Trailer Truck(Clone)" };
 
     public const string NAME_BOMB = "Bomb(Clone)";
     public const string NAME_DAGGER = "Dagger(Clone)";
