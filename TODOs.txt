@@ -2,7 +2,7 @@ TODOs
 
 adjust game over screen to fit death sfx
 add lives to trucks
-create calf
+create calf wip, use different moo sfx when calf
 fix bug where escape can be preseed when confirmation prompt is active
 volume settings in pause menu
 

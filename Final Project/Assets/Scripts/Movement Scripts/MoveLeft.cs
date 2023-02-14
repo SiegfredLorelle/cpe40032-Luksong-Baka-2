@@ -16,8 +16,6 @@ public class MoveLeft : MonoBehaviour
 
     // Variables used by some but not all objects
     public ParticleSystem explosionEffects;
-    //public AudioSource audioExplosion;
-    //public AudioSource audioCowHurt;
     public AudioSource audioSrc;
 
 
@@ -127,7 +125,7 @@ public class MoveLeft : MonoBehaviour
     private void DaggerHitCow(GameObject dagger)
     {
         audioSrc = dagger.GetComponent<AudioSource>();
-        Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
+        GameObject meat = Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
         audioSrc.Play();
         Destroy(gameObject);
 
@@ -140,6 +138,11 @@ public class MoveLeft : MonoBehaviour
         Instantiate(explosionEffects, transform.position, Quaternion.identity);
         gameManagerScript.IncreaseScore(2);
 
+        // Scale down the meat by half, if it is from a calf
+        if (gameManagerScript.NAME_CALVES.Contains(gameObject.name))
+        {
+            meat.transform.localScale = meatPrefab.transform.lossyScale * 0.5f;
+        }
     }
 
     public void DaggerHitObstacle(GameObject dagger)
