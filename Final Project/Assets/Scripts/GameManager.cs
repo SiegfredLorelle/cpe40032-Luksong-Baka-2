@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     public const string TAG_POINTSENSOR = "Point Sensor";
     public const string TAG_DESTROYSENSOR = "Destroy Sensor";
     public const string TAG_HEIGHTLIMIT = "Height Limit Sensor";
+    public const string TAG_WITHINCAMERA = "Within Camera Sensor";
+
     public const string TAG_HEART = "Heart";
 
     public const string NAME_MEAT = "Meat(Clone)";

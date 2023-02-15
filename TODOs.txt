@@ -1,15 +1,13 @@
 TODOs
 
 adjust game over screen to fit death sfx
-add lives to trucks
+bring effects in powerup script to player controller
 fix bug where escape can be preseed when confirmation prompt is active
 volume settings in pause menu
-stop all obstacles when game is over (instead of deleting all)
 add sfx when a heart is picked up
-add flying obstacles
-prevent overlapping powerup, heart and/or obstacle
-create seperate script when deleting obstacles vie destroy sensor
-
+add flying obstacles?
+create seperate script when deleting obstacles via destroy sensor
+add lives to trucks
 
 blink powerup indicator when only 1 dagger is left
 add imgs showing what powerup is activated beside health
@@ -20,16 +18,8 @@ add cd to prevent spamming bomb (or turn off bomb powerup when missed 1)
 create 1 game over method in spawn manager that calls all game over from other scripts
 
 
-
-
-
 powerup suggestions:
 - triple jump (timer)
 - fly (timer)
 
-
-different powerup indicator (change color maybe?)
-bg change
-elevate floor
-ui
 add git attributes

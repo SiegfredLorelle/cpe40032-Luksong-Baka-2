@@ -14,6 +14,7 @@ TagManager:
   - Heart
   - Background Music
   - Height Limit Sensor
+  - Within Camera Sensor
   layers:
   - Default
   - TransparentFX

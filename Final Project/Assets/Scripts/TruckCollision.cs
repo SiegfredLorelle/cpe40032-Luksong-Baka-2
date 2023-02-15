@@ -13,10 +13,15 @@ public class TruckCollision : MonoBehaviour
     private Collider trailerCollider;
     private Collider trailerTopCollider;
 
+    public AudioSource truckAudio;
+    public AudioClip truckHornSound;
+
+
     // Start is called before the first frame update
     void Start()
     {
         moveLeftScript = GetComponentInParent<MoveLeft>();
+        truckAudio = GetComponentInParent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         powerupScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
@@ -40,7 +45,6 @@ public class TruckCollision : MonoBehaviour
             // (setting it to true will stop move left movement and enable move top right movement)
             if (powerupScript.powerUps["Strength"].isActivated)
             { 
-            
                 moveLeftScript.isThrown = true;
             }
             //MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
@@ -51,10 +55,11 @@ public class TruckCollision : MonoBehaviour
 
 
         // Prevents overlapping trucks (happens when consecutive trucks spawn at small interval)
-        if (collision.gameObject.name == "TrailerCollider")
+        if (collision.gameObject.name == "TrailerCollider" && !moveLeftScript.isThrown && !moveLeftScript.isWithinScreen)
         {
             Destroy(transform.parent.gameObject);
         }
+
 
 
     }
@@ -81,6 +86,13 @@ public class TruckCollision : MonoBehaviour
                 moveLeftScript.DaggerHitObstacle(other.gameObject);
             }
         }
+
+        else if (other.CompareTag(GameManager.TAG_WITHINCAMERA))
+        {
+            truckAudio.PlayOneShot(truckHornSound);
+            moveLeftScript.isWithinScreen = true;
+        }
+
     }
 
     private void OnTriggerExit(Collider other)
