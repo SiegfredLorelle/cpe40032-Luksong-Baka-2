@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip crashSound;
     public AudioClip damageSound;
+    public AudioClip healSound;
+    public AudioClip throwCowsSound;
+    public AudioClip throwObstacleSound;
     private AudioSource playerAudio;
 
     // Animation
@@ -444,9 +448,7 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag(GameManager.TAG_OBSTACLE) && other.gameObject.name != "TruckCollider")
         {            
 
-
             CollidingWithObstacle(other.gameObject);
-
         }
 
         if (other.gameObject.CompareTag(GameManager.TAG_HEIGHTLIMIT))
@@ -465,6 +467,16 @@ public class PlayerController : MonoBehaviour
             MoveLeft moveLeftScript = obstacle.gameObject.GetComponent<MoveLeft>();
             moveLeftScript.isThrown = true;
             gameManagerScript.IncreaseScore(1);
+
+            // Play different sfx depending if it the object thrown is a cow or not
+            if (gameManagerScript.NAME_COWS.Concat(gameManagerScript.NAME_CALVES).Contains(obstacle.gameObject.name))
+            {
+                playerAudio.PlayOneShot(throwCowsSound);
+            }
+            else
+            {
+                playerAudio.PlayOneShot(throwObstacleSound);
+            }
         }
 
 
@@ -498,8 +510,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag == GameManager.TAG_WALKABLE &&
-            !playerAnim.GetBool(GameManager.ANIM_DEATH_B) && !isInIntro)
+        if ((other.gameObject.tag == GameManager.TAG_WALKABLE || other.gameObject.CompareTag(GameManager.TAG_HEIGHTLIMIT)) &&
+            !gameManagerScript.isGameStopped)
         {
             TransitionToJumping();
         }
@@ -520,6 +532,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(heartPickUpParticle, other.gameObject.transform.position, Quaternion.identity);
             Destroy(other.gameObject);
             healthScript.Heal();
+            playerAudio.PlayOneShot(healSound, 2.0f);
         }
     }
 }

@@ -133,11 +133,10 @@ public class MoveLeft : MonoBehaviour
 
     }
 
-    // plays a random moo sfx, called when entering player screen
+    // plays a random moo sfx, called when cows enter player screen
     // (note: sfx for trucks when entering screen is in truck collision script)
     public void PlayMooSoundEffects()
     {
-
             audioSrc = GetComponent<AudioSource>();
             int index = Random.Range(0, mooSounds.Count);
             audioSrc.PlayOneShot(mooSounds[index]);
