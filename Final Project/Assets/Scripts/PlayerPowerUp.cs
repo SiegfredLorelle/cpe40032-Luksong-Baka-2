@@ -65,7 +65,7 @@ public class PlayerPowerUp : MonoBehaviour
     public void EnablePowerUp(GameObject powerUpBox)
     {
         hasPowerUp = true;
-        playerAudio.PlayOneShot(powerUpPickUpSound);
+        playerAudio.PlayOneShot(powerUpPickUpSound, 0.5f);
         Instantiate(powerUpPickUpEffects, powerUpBox.transform.position, Quaternion.identity);
         Destroy(powerUpBox);
 
