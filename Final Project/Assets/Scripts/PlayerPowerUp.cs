@@ -115,7 +115,7 @@ public class PlayerPowerUp : MonoBehaviour
 
             else if (cooldown == powerUpIndicatorBlinkDuration)
             {
-                StartCoroutine("BlinkPowerUpIndicator", powerUpIndicatorBlinkDuration);
+                StartCoroutine("BlinkPowerUpIndicator");
             }
 
             yield return new WaitForSeconds(1);
@@ -123,13 +123,13 @@ public class PlayerPowerUp : MonoBehaviour
         }
     }
 
-    // Routine for blinking the powerup indicator, called when powerup duration has 3 seconds left
-    IEnumerator BlinkPowerUpIndicator(float duration)
+    // Routine for blinking the powerup indicator, called when powerup duration has 3 seconds left or 1 dagger is left
+    public IEnumerator BlinkPowerUpIndicator()
     {
-        float endTime = Time.time + duration;
+        //float endTime = Time.time + duration;
 
         // Turn on and off the powerup indicator until time is up
-        while (Time.time < endTime)
+        while (hasPowerUp)
         {
             if (powerUpIndicator.activeSelf)
             {
