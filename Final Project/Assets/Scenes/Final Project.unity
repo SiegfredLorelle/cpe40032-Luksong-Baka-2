@@ -2145,7 +2145,7 @@ GameObject:
   - component: {fileID: 691155129}
   - component: {fileID: 691155128}
   m_Layer: 5
-  m_Name: BulletPopUp
+  m_Name: DaggerPopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5920,7 +5920,7 @@ GameObject:
   - component: {fileID: 1587133820}
   - component: {fileID: 1587133819}
   m_Layer: 5
-  m_Name: BulletPOPUP
+  m_Name: DaggerPOPUP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
