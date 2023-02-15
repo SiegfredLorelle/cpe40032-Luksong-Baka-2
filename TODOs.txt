@@ -1,6 +1,5 @@
 TODOs
 
-adjust game over screen to fit death sfx
 bring effects in powerup script to player controller
 add lives to trucks
 fix bug where escape can be preseed when confirmation prompt is active

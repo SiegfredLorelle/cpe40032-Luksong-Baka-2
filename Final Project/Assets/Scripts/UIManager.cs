@@ -4,24 +4,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    ///** BEGIN SINGLETON DECLARATION **/
-
-    //private UIManager _instance;
-    //public UIManager Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            Debug.LogError("The UIManager doesn't exist!");
-    //        }
-    //        return _instance;
-    //    }
-    //}
-
-    //void Awake() => _instance = this;
-    /** END SINGLETON DECLARATION **/
-
 
     public GameManager gameManagerScript;
 
@@ -82,11 +64,10 @@ public class UIManager : MonoBehaviour
 
     IEnumerator DeathScreen()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(3f);
         scoreDisplay.SetActive(false);
         finalScoreDisplay.SetActive(true);
-        finalScoreDisplay.GetComponent<Text>().text = "FINAL SCORE: "
-            + gameManagerScript.score;
+        finalScoreDisplay.GetComponent<Text>().text = $"FINAL SCORE: {gameManagerScript.score}";
         restartButton.SetActive(true);
         bg.SetActive(true);
     }
