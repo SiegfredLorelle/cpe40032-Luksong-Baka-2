@@ -53,10 +53,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
+  spawnManagerScript: {fileID: 0}
   meatPrefab: {fileID: 0}
   isThrown: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
   audioSrc: {fileID: 0}
+  mooSounds: []
   explosionSound: {fileID: 8300000, guid: 1a768320275347b4e8ff037e9d4edd14, type: 3}
   cowHurtSound: {fileID: 8300000, guid: 68117fa21472d444a902e3529707e77a, type: 3}
   metalHitSound: {fileID: 8300000, guid: 0b526a2b5d5963d4588559f50dfa29f3, type: 3}
@@ -277,6 +279,8 @@ MonoBehaviour:
   gameManagerScript: {fileID: 0}
   playerControllerScript: {fileID: 0}
   powerupScript: {fileID: 0}
+  truckAudio: {fileID: 0}
+  truckHornSound: {fileID: 8300000, guid: a6dbaa796ca085e40b879ef5f8a822da, type: 3}
 --- !u!54 &5184176132927655371
 Rigidbody:
   m_ObjectHideFlags: 0

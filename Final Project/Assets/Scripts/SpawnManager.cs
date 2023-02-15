@@ -18,15 +18,15 @@ public class SpawnManager : MonoBehaviour
     public GameObject powerUpPrefab;
     public GameObject heartPrefab;
 
-    public List<AudioClip> mooSounds;
-    public AudioClip truckHornSound;
+    //public List<AudioClip> mooSounds;
+    //public AudioClip truckHornSound;
 
     private float minSpawnInterval;
     private float middleSpawnInterval;
     private float maxSpawnInterval;
 
 
-    private float SpawnPosX = 25.0f;
+    private float SpawnPosX = 60.0f;
 
     // we need to subscribe to three events: one to tell us when to
     // prepare the object pool, one to tell us when the player intro
@@ -46,7 +46,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        SpawnPosX = 25.0f;
+        SpawnPosX = 60.0f;
         minSpawnInterval = 5.0f;
         middleSpawnInterval = 8.0f;
         maxSpawnInterval = 13.0f;
@@ -235,26 +235,12 @@ public class SpawnManager : MonoBehaviour
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(SpawnPosX, obstaclePrefabs[_choice].transform.position.y), obstaclePrefabs[_choice].transform.rotation);
 
         // FOR TESTING ONLY
-        //GameObject _newObstacle = Instantiate(obstaclePrefabs[7], new Vector3(25, obstaclePrefabs[7].transform.position.y, 0), obstaclePrefabs[7].transform.rotation);
-
-
-        if (gameManagerScript.NAME_COWS.Contains(_newObstacle.name))
-        {
-            AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
-            int index = Random.Range(0, mooSounds.Count);
-            audioSrc.PlayOneShot(mooSounds[index]);
-        }
-
-        else if (gameManagerScript.NAME_TRUCKS.Contains(_newObstacle.name))
-        {
-            AudioSource audioSrc = _newObstacle.GetComponent<AudioSource>();
-            audioSrc.PlayOneShot(truckHornSound);
-        }
-
-
+        //GameObject _newObstacle = Instantiate(obstaclePrefabs[4], new Vector3(SpawnPosX, obstaclePrefabs[4].transform.position.y, 0), obstaclePrefabs[4].transform.rotation);
 
 
     }
+
+
 
 
 }

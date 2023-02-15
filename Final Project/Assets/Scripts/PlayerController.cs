@@ -441,7 +441,6 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag(GameManager.TAG_HEIGHTLIMIT))
         {
-            Debug.Log("HIT CEILING");
             playerRb.velocity = Vector3.zero;
         }
     }

@@ -20,7 +20,7 @@ public class MoveRight : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
+        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR) || other.gameObject.name == "ProjectileXLimitSensor")
         {
             Destroy(gameObject);
         }

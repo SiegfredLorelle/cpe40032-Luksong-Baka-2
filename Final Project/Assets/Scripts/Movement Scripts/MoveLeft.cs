@@ -8,8 +8,10 @@ public class MoveLeft : MonoBehaviour
     // Attached to most objects in the scene including obstacles, powerups, and background
 
     public GameManager gameManagerScript;
+    public SpawnManager spawnManagerScript;
     public GameObject meatPrefab;
     public bool isThrown;
+    public bool isWithinScreen;
 
     private float moveSpeed;
     private float modifiedMoveSpeed;
@@ -17,6 +19,7 @@ public class MoveLeft : MonoBehaviour
     // Variables used by some but not all objects
     public ParticleSystem explosionEffects;
     public AudioSource audioSrc;
+    public List<AudioClip> mooSounds;
     public AudioClip explosionSound;
     public AudioClip cowHurtSound;
     public AudioClip metalHitSound;
@@ -25,10 +28,12 @@ public class MoveLeft : MonoBehaviour
     void Start()
     {
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+        spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
 
         moveSpeed = 20f;
         modifiedMoveSpeed = moveSpeed;
         isThrown = false;
+        isWithinScreen = false;
     }
 
     void Update()
@@ -71,7 +76,7 @@ public class MoveLeft : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // If this obstacle spawned at a position that overlaps the truck (trailer) then delete this object
-        if (collision.gameObject.name == "TrailerCollider")
+        if (collision.gameObject.name == "TrailerCollider" && !isThrown && !isWithinScreen)
         {
             Destroy(gameObject);
         }
@@ -90,7 +95,7 @@ public class MoveLeft : MonoBehaviour
                     DaggerHitCow(other.gameObject);
                 }
                 else
-                { 
+                {
                     DaggerHitObstacle(other.gameObject);
                 }
             }
@@ -102,6 +107,40 @@ public class MoveLeft : MonoBehaviour
             }
 
         }
+
+        else if ((gameObject.CompareTag(GameManager.TAG_POWERUP) || gameObject.CompareTag(GameManager.TAG_HEART))  && !isWithinScreen)
+        {
+            if ((other.gameObject.name == "TrailerTopCollider" && !other.transform.parent.gameObject.GetComponent<MoveLeft>().isThrown))
+            {
+                Destroy(other.transform.parent.gameObject);
+            }
+            else if (other.gameObject.CompareTag(GameManager.TAG_POWERUP) || other.gameObject.CompareTag(GameManager.TAG_HEART))
+            {
+
+                Destroy(other.gameObject);
+            }
+        }
+
+        else if (other.gameObject.CompareTag(GameManager.TAG_WITHINCAMERA))
+        {
+            if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
+            PlayMooSoundEffects();
+
+            isWithinScreen = true;
+        }
+
+        
+
+    }
+
+    // plays a random moo sfx, called when entering player screen
+    // (note: sfx for trucks when entering screen is in truck collision script)
+    public void PlayMooSoundEffects()
+    {
+
+            audioSrc = GetComponent<AudioSource>();
+            int index = Random.Range(0, mooSounds.Count);
+            audioSrc.PlayOneShot(mooSounds[index]);
 
     }
 
