@@ -37,7 +37,7 @@ public class BackgroundMusic : MonoBehaviour
     private void SetupBackgroundMusic()
     {
         audioSrc = GetComponent<AudioSource>();
-        audioSrc.volume = PlayerPrefs.GetFloat("volume");
+        audioSrc.volume = PlayerPrefs.GetFloat("volume", 1.0f);
     }
 
     public void PlayBackgroundMusic()

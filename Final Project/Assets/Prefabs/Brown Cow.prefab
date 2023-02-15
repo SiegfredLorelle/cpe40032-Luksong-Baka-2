@@ -1426,12 +1426,12 @@ MonoBehaviour:
   spawnManagerScript: {fileID: 0}
   meatPrefab: {fileID: 2570286314141346061, guid: e84bf5799f5f51c4f992d0c149249acd, type: 3}
   isThrown: 0
+  isWithinScreen: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
   audioSrc: {fileID: 0}
   mooSounds:
   - {fileID: 8300000, guid: f71054df18f5cb646b8f04bbc703d83d, type: 3}
   - {fileID: 8300000, guid: 261ee3beb7e0ea746b412d955e473456, type: 3}
-  truckHornSound: {fileID: 0}
   explosionSound: {fileID: 8300000, guid: 1a768320275347b4e8ff037e9d4edd14, type: 3}
   cowHurtSound: {fileID: 8300000, guid: 68117fa21472d444a902e3529707e77a, type: 3}
   metalHitSound: {fileID: 8300000, guid: 0b526a2b5d5963d4588559f50dfa29f3, type: 3}
@@ -1486,7 +1486,7 @@ AudioSource:
   m_GameObject: {fileID: 1615528869221070883}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7409571751659574776, guid: 17f286a851c4864408b684662b6769c9, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
