@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     // References from other scripts
     public PlayerPowerUp powerUpScript;
     public PlayerHealth healthScript;
-    public AudioSource backgroundMusic;
+    public BackgroundMusic backgroundMusicScript;
     public SpawnManager spawnManagerScript;
     public UIManager UIManagerScript;
     public GameManager gameManagerScript;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         healthScript = GetComponent<PlayerHealth>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
-        backgroundMusic = GameObject.FindGameObjectWithTag("Background Music").GetComponent<AudioSource>();
+        backgroundMusicScript = GameObject.FindGameObjectWithTag("Background Music").GetComponent<BackgroundMusic>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         shakeScreenScript = GameObject.Find("Main Camera").GetComponent<ShakeScreen>();
 
@@ -129,11 +129,7 @@ public class PlayerController : MonoBehaviour
         PerformIntro();
         isInIntro = true;
 
-        if (!backgroundMusic.isPlaying)
-        {
-            backgroundMusic.Play();
-        }
-
+        backgroundMusicScript.PlayBackgroundMusic();
 
     }
 
@@ -499,7 +495,7 @@ public class PlayerController : MonoBehaviour
         powerUpScript.TurnOffPowerUp();
         spawnManagerScript.GameOver();
         UIManagerScript.GameOver();
-        backgroundMusic.Stop();
+        backgroundMusicScript.StopBackgroundMusic();
         playerAnim.SetFloat(GameManager.ANIM_SPEED_F, 0);
         
     }

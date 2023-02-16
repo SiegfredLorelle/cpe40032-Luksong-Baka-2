@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class PlayerPowerUp : MonoBehaviour
 {
+    public GameObject strengthPopUp;
+    public GameObject BombPopUp;
+    public GameObject DaggerPopUp;
+
     public class PowerUp
     {
         public string name;
@@ -14,14 +18,13 @@ public class PlayerPowerUp : MonoBehaviour
         public int numberLeft;
         public GameObject popUpCanvas;
 
-        public PowerUp(string name, float cooldown=0.0f, int numberLeft=0)
+        public PowerUp(string name, float cooldown, int numberLeft, GameObject popUpCanvas)
         {
             this.name = name;
             this.isActivated = false;
             this.cooldown = cooldown;
             this.numberLeft = numberLeft;
-            this.popUpCanvas = GameObject.Find($"{name}PopUp");
-            Debug.Log(popUpCanvas);
+            this.popUpCanvas = popUpCanvas;
         }
     }
 
@@ -51,9 +54,11 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Create all the powerups with their respective cooldowns
-        powerUps.Add("Strength", new PowerUp("Strength", 5.0f, 0));
-        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f, 0));
-        powerUps.Add("Dagger", new PowerUp("Dagger", 0f, 5));
+        powerUps.Add("Strength", new PowerUp("Strength", 5.0f, 0, strengthPopUp));
+        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f, 0, BombPopUp));
+        powerUps.Add("Dagger", new PowerUp("Dagger", 0f, 5, DaggerPopUp));
+
+        TurnOffPowerUp();
 
     }
 
@@ -100,8 +105,7 @@ public class PlayerPowerUp : MonoBehaviour
 
         }
         currentPowerUp.isActivated = true;
-        Debug.Log($"PICKED UP {currentPowerUp.name} POWERUP");
-
+        currentPowerUp.popUpCanvas.SetActive(true);
     }
 
 
@@ -155,6 +159,7 @@ public class PlayerPowerUp : MonoBehaviour
         foreach (PowerUp powerUp in powerUps.Values)
         {
             powerUp.isActivated = false;
+            powerUp.popUpCanvas.SetActive(false);
         }
 
         // If the player lost while having a powerup,
