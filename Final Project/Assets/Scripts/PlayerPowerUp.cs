@@ -12,13 +12,16 @@ public class PlayerPowerUp : MonoBehaviour
         public bool isActivated;
         public float cooldown;
         public int numberLeft;
+        public GameObject popUpCanvas;
 
-        public PowerUp(string name, float cooldown)
+        public PowerUp(string name, float cooldown=0.0f, int numberLeft=0)
         {
             this.name = name;
             this.isActivated = false;
             this.cooldown = cooldown;
-            this.numberLeft = 0;
+            this.numberLeft = numberLeft;
+            this.popUpCanvas = GameObject.Find($"{name}PopUp");
+            Debug.Log(popUpCanvas);
         }
     }
 
@@ -48,9 +51,9 @@ public class PlayerPowerUp : MonoBehaviour
 
 
         // Create all the powerups with their respective cooldowns
-        powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
-        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f));
-        powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
+        powerUps.Add("Strength", new PowerUp("Strength", 5.0f, 0));
+        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f, 0));
+        powerUps.Add("Dagger", new PowerUp("Dagger", 0f, 5));
 
     }
 
