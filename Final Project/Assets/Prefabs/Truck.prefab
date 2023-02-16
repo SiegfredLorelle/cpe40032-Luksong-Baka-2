@@ -226,6 +226,7 @@ MonoBehaviour:
   spawnManagerScript: {fileID: 0}
   meatPrefab: {fileID: 0}
   isThrown: 0
+  isWithinScreen: 0
   explosionEffects: {fileID: 5576739473509862791, guid: 3e55a4fd4e7eecb409cc5c8083f592f4, type: 3}
   audioSrc: {fileID: 0}
   mooSounds: []
@@ -254,7 +255,7 @@ AudioSource:
   m_GameObject: {fileID: 5213191286279999573}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7409571751659574776, guid: 17f286a851c4864408b684662b6769c9, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

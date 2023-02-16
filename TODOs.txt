@@ -8,6 +8,7 @@ volume settings in pause menu
 flying obstacles?
 create seperate script when deleting obstacles via destroy sensor
 check for bug where object thrown is destroyed uppon collision with powerup/heart
+rename ui manager to ui manager in game
 
 
 
