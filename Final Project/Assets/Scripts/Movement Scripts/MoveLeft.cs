@@ -116,7 +116,6 @@ public class MoveLeft : MonoBehaviour
             }
             else if (other.gameObject.CompareTag(GameManager.TAG_POWERUP) || other.gameObject.CompareTag(GameManager.TAG_HEART))
             {
-
                 Destroy(other.gameObject);
             }
         }
@@ -207,7 +206,7 @@ public class MoveLeft : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR) || other.CompareTag(GameManager.TAG_HEART))
+        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
         {
             Destroy(gameObject);
         }

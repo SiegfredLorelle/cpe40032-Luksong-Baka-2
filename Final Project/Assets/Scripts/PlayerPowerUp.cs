@@ -85,11 +85,10 @@ public class PlayerPowerUp : MonoBehaviour
         Destroy(powerUpBox);
 
 
-        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
         int index = Random.Range(0, powerUps.Count);
         currentPowerUp = powerUps.ElementAt(index).Value;
 
-        //currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
+        //currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
 
 
 

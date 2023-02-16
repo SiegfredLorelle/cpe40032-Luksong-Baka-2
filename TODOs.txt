@@ -4,22 +4,17 @@ add imgs showing what powerup is activated beside health
 bring effects in powerup script to player controller
 add lives to trucks
 volume settings in pause menu
-check for bug where object thrown is destroyed uppon collision with powerup/heart
 rename ui manager to ui manager in game
 rename Final Project Scene to Luksong Baka
 test building the game
-add prompt when quiting game
-
+remove unused imports (using on top of scripts)
+stop dash when strength is about to be over
 
 add powerup  indicator and number of projectiles (specifically dagger) left
 place all physics/movements in fixed update instead of update
 add cd to prevent spamming bomb (or turn off bomb powerup when missed 1)
 create 1 game over method in spawn manager that calls all game over from other scripts
 
-
-powerup suggestions:
-- triple jump (timer)
-- fly (timer)
 
 
 add git attributes
