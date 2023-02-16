@@ -8316,7 +8316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5594087616614747747, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5599269946976184333, guid: e69682f6fd183c04eb6dca0469d1d6bb, type: 3}
       propertyPath: m_RootOrder
@@ -8980,6 +8980,7 @@ MonoBehaviour:
   DaggerPopUp: {fileID: 1279419307}
   powerUpIndicator: {fileID: 941181306}
   hasPowerUp: 0
+  powerUpAboutToRunOut: 0
   powerUpPickUpSound: {fileID: 8300000, guid: 83436e3f862877248996bc595f89238f, type: 3}
   endOfPowerUpSound: {fileID: 8300000, guid: 0faa9ddc4d589b74aafa87b7d33f89be, type: 3}
   powerUpPickUpEffects: {fileID: 6648586046031106063, guid: 1dccbc53bb50f0a449d2509092387dcc, type: 3}

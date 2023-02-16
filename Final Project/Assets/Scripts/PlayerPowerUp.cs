@@ -41,7 +41,8 @@ public class PlayerPowerUp : MonoBehaviour
     public GameObject powerUpIndicator;
     public bool hasPowerUp = false;
 
-    private float powerUpIndicatorBlinkDuration = 2.0f;
+    private float powerUpIndicatorBlinkDuration;
+    public bool powerUpAboutToRunOut;
 
 
     private AudioSource playerAudio;
@@ -56,14 +57,16 @@ public class PlayerPowerUp : MonoBehaviour
         playerControllerScript = gameObject.GetComponent<PlayerController>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        daggerPopUpText= DaggerPopUp.GetComponentInChildren<TextMeshProUGUI>();
-
-
+        daggerPopUpText = DaggerPopUp.GetComponentInChildren<TextMeshProUGUI>();
 
         // Create all the powerups with their respective cooldowns
         powerUps.Add("Strength", new PowerUp("Strength", 5.0f, 0, strengthPopUp));
         powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f, 0, BombPopUp));
         powerUps.Add("Dagger", new PowerUp("Dagger", 0f, 5, DaggerPopUp));
+
+        // Set values to other variables
+        powerUpIndicatorBlinkDuration = 2.0f;
+        powerUpAboutToRunOut = false;
 
         TurnOffPowerUp();
 
@@ -85,6 +88,7 @@ public class PlayerPowerUp : MonoBehaviour
         Destroy(powerUpBox);
 
 
+        // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
         int index = Random.Range(0, powerUps.Count);
         currentPowerUp = powerUps.ElementAt(index).Value;
 
@@ -92,7 +96,6 @@ public class PlayerPowerUp : MonoBehaviour
 
 
 
-        // CHANGE POWERUP INDICATOR FOR EACH POWERUP
         switch (currentPowerUp.name)
         {
             case "Strength":
@@ -130,6 +133,11 @@ public class PlayerPowerUp : MonoBehaviour
             else if (cooldown == powerUpIndicatorBlinkDuration)
             {
                 StartCoroutine("BlinkPowerUpIndicator");
+                powerUpAboutToRunOut = true;
+                if (powerUps["Strength"].isActivated)
+                {
+                    SlowDown();
+                }
             }
 
             yield return new WaitForSeconds(1);
@@ -140,7 +148,8 @@ public class PlayerPowerUp : MonoBehaviour
     // Routine for blinking the powerup indicator, called when powerup duration has 3 seconds left or 1 dagger is left
     public IEnumerator BlinkPowerUpIndicator()
     {
-        //float endTime = Time.time + duration;
+
+
 
         // Turn on and off the powerup indicator until time is up
         while (hasPowerUp)
@@ -157,10 +166,22 @@ public class PlayerPowerUp : MonoBehaviour
         }
     }
 
+    // Called when powerup strength is about to run out,
+    // slows down the player if left shift is not hold
+    // (acts as buffer so player has time to react before losing the powerup)
+    private void SlowDown()
+    {
+        if (!Input.GetKey(KeyCode.LeftShift))
+        {
+            playerControllerScript.SlowDown();
+        }
+    }
+
     // Turn off powerup
     public void TurnOffPowerUp()
     {
         hasPowerUp = false;
+        powerUpAboutToRunOut = false;
         powerUpIndicator.SetActive(false);
         
         foreach (PowerUp powerUp in powerUps.Values)
@@ -179,10 +200,10 @@ public class PlayerPowerUp : MonoBehaviour
         // This is only necessary if the powerup was strength
         // While on strength, dash is always active regardless if Shift Key is hold,
         // so slow down if player is not holding Shift
-        if (!Input.GetKey(KeyCode.LeftShift))
-        {
-            playerControllerScript.SlowDown();
-        }
+        //if (!Input.GetKey(KeyCode.LeftShift))
+        //{
+        //    playerControllerScript.SlowDown();
+        //}
     }
 
     public void ReduceDagger()
