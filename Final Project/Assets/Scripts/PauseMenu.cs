@@ -17,8 +17,6 @@ public class PauseMenu : MonoBehaviour
 
         // Ensures timescale is normal when reloading scenes
         Time.timeScale = 1.0f;
-
-
     }
 
     // Update is called once per frame
@@ -29,7 +27,8 @@ public class PauseMenu : MonoBehaviour
             if (gameManagerScript.isGamePaused)
             {
                 Resume();
-            } else
+            } 
+            else
             {
                 Pause();
             }

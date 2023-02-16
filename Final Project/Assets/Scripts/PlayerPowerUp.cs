@@ -2,6 +2,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerPowerUp : MonoBehaviour
@@ -9,6 +11,8 @@ public class PlayerPowerUp : MonoBehaviour
     public GameObject strengthPopUp;
     public GameObject BombPopUp;
     public GameObject DaggerPopUp;
+
+    TextMeshProUGUI daggerPopUpText;
 
     public class PowerUp
     {
@@ -29,8 +33,8 @@ public class PlayerPowerUp : MonoBehaviour
     }
 
 
+    public PowerUp currentPowerUp;
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
-
     GameManager gameManagerScript;
     PlayerController playerControllerScript;
 
@@ -51,6 +55,9 @@ public class PlayerPowerUp : MonoBehaviour
         playerAudio = gameObject.GetComponent<AudioSource>();
         playerControllerScript = gameObject.GetComponent<PlayerController>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        daggerPopUpText= DaggerPopUp.GetComponentInChildren<TextMeshProUGUI>();
+
 
 
         // Create all the powerups with their respective cooldowns
@@ -80,9 +87,9 @@ public class PlayerPowerUp : MonoBehaviour
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
         int index = Random.Range(0, powerUps.Count);
-        PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
+        currentPowerUp = powerUps.ElementAt(index).Value;
 
-        //currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
+        //currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
 
 
 
@@ -101,6 +108,7 @@ public class PlayerPowerUp : MonoBehaviour
             case "Dagger":
                 powerUpIndicator.SetActive(true);
                 currentPowerUp.numberLeft = 5;
+                UpdateNumOfDaggersInUI();
                 break;
 
         }
@@ -175,6 +183,39 @@ public class PlayerPowerUp : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             playerControllerScript.SlowDown();
+        }
+    }
+
+    public void ReduceDagger()
+    {
+        powerUps["Dagger"].numberLeft--;
+        UpdateNumOfDaggersInUI();
+        CheckNumOfDaggers();
+    }
+
+    private void UpdateNumOfDaggersInUI()
+    {
+        if (powerUps["Dagger"].numberLeft != 1)
+        { 
+            daggerPopUpText.text = $"Press E to attack the obstacles using {powerUps["Dagger"].numberLeft} daggers";
+        }
+        else 
+        {
+            daggerPopUpText.text = $"Press E to attack the obstacles using {powerUps["Dagger"].numberLeft} dagger";
+        }
+    }
+
+    private void CheckNumOfDaggers()
+    {
+        if (powerUps["Dagger"].numberLeft == 1)
+        {
+            StartCoroutine(BlinkPowerUpIndicator());
+
+        }
+        else if (powerUps["Dagger"].numberLeft == 0)
+        {
+            TurnOffPowerUp();
+
         }
     }
 

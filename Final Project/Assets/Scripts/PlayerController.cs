@@ -388,24 +388,10 @@ public class PlayerController : MonoBehaviour
     {
         Instantiate(daggerPrefab, new Vector3(transform.position.x + 1.5f, transform.position.y + 1.5f, transform.position.z), daggerPrefab.transform.rotation);
 
-        powerUpScript.powerUps["Dagger"].numberLeft--;
-        CheckNumOfDaggers();
+        powerUpScript.ReduceDagger();
 
     }
 
-    private void CheckNumOfDaggers()
-    {
-        Debug.Log($"NUMBER OF DAGGERS LEFT: {powerUpScript.powerUps["Dagger"].numberLeft}");
-
-        if (powerUpScript.powerUps["Dagger"].numberLeft == 1)
-        {
-            powerUpScript.StartCoroutine(powerUpScript.BlinkPowerUpIndicator());
-        }
-        else if (powerUpScript.powerUps["Dagger"].numberLeft == 0)
-        {
-            powerUpScript.TurnOffPowerUp();
-        }
-    }
 
 
 
