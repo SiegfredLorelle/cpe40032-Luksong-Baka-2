@@ -659,7 +659,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1.02e-43, y: 0, z: 0, w: 0.00000002627148}
+  m_BoundingSphereOverride: {x: 8.31e-42, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -2380,7 +2380,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press E to attack the obstacles using bullet
+  m_text: Press E to attack the obstacles using 5 daggers
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52cd83890f0a86f4fab0968e57733c2d, type: 2}
   m_sharedMaterial: {fileID: -4377303565789794494, guid: 52cd83890f0a86f4fab0968e57733c2d, type: 2}
@@ -6708,9 +6708,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1390805749}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: LoadMenu
+      - m_Target: {fileID: 1390805750}
+        m_TargetAssemblyTypeName: ConfirmationUI, Assembly-CSharp
+        m_MethodName: OpenConfirmation
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
