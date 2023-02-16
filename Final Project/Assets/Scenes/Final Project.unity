@@ -5604,6 +5604,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManagerScript: {fileID: 0}
   pauseMenuUI: {fileID: 1465227152}
+  confirmationMenuUI: {fileID: 1071407660}
   audioSources: []
 --- !u!114 &1390805750
 MonoBehaviour:

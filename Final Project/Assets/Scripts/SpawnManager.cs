@@ -18,9 +18,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject powerUpPrefab;
     public GameObject heartPrefab;
 
-    //public List<AudioClip> mooSounds;
-    //public AudioClip truckHornSound;
-
     private float minSpawnInterval;
     private float middleSpawnInterval;
     private float maxSpawnInterval;

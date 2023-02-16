@@ -10,6 +10,13 @@ public class ConfirmationUI : MonoBehaviour
 {
     public GameObject ConfirmUI;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            DontWantToExitGame();
+
+
+    }
     public void ExitGameFromPause()
     {
         SceneManager.LoadScene("Menu");

@@ -5,14 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class BackOnEscape : MonoBehaviour
 {
+    // Attached to UI Manager of Menu and Help Scene
+
     public GameObject mainMenu;
     public GameObject optionsMenu;
     public GameObject helpMenu;
 
-    //void Start()
-    //{
-    //    CheckOpenMenus();
-    //}
     // Update is called once per frame
     void Update()
     {

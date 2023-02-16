@@ -11,23 +11,16 @@ public class AdjustVolume : MonoBehaviour
     public Slider musicSlider;
     public Slider SFXSlider;
 
-
     public const string MIXER_MUSIC = "MusicVolume";
     public const string MIXER_SFX = "SFXVolume";
 
 
-    //private AudioSource backgroundMusic;
 
     // Start is called before the first frame update
     void Start()
     {
-        //backgroundMusic = GameObject.FindGameObjectWithTag("Background Music").GetComponent<AudioSource>();
-
-        //SetupSlider();
-
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
-
     }
 
     // Update is called once per frame
