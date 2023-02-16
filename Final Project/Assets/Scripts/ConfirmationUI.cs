@@ -15,6 +15,11 @@ public class ConfirmationUI : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void ExitGameFromGameOver()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void OpenConfirmation()
     {
         ConfirmUI.SetActive(true);
