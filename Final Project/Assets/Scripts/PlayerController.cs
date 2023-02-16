@@ -254,7 +254,7 @@ public class PlayerController : MonoBehaviour
         // keypress of shift, so we check instead for the discrete 'down'
         // and 'up'.
 
-        if ((Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped) || powerUpScript.powerUps["Strength"].isActivated)
+        if ((Input.GetKeyDown(KeyCode.LeftShift) && !gameManagerScript.isGameStopped) ||  (powerUpScript.powerUps["Strength"].isActivated && !powerUpScript.powerUpAboutToRunOut))
         {
             SpeedUp();
         }
