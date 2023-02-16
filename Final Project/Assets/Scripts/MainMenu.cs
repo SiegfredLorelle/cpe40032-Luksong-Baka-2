@@ -11,11 +11,8 @@ public class MainMenu : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject optionMenu;
+    public GameObject confirmationMenu;
 
-    //private void Awake()
-    //{
-    //    Instantiate(musicPlayer);
-    //}
 
     private void Start()
     {
@@ -30,11 +27,12 @@ public class MainMenu : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionMenu.SetActive(false);
+        confirmationMenu.SetActive(false);
 
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             if (SceneManager.GetSceneAt(i).name == "Help")
-                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i).name);
+                SceneManager.UnloadSceneAsync("Help");
             break;
         }
     }
@@ -42,12 +40,6 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Final Project");
-    }
-
-    public void QuitGame()
-    {
-        Debug.Log("QUIT!");
-        Application.Quit();
     }
 
     public void LoadHelp()

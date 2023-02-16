@@ -3,7 +3,6 @@ TODOs
 add imgs showing what powerup is activated beside health
 bring effects in powerup script to player controller
 add lives to trucks
-fix bug where escape can be preseed when confirmation prompt is active
 volume settings in pause menu
 check for bug where object thrown is destroyed uppon collision with powerup/heart
 rename ui manager to ui manager in game

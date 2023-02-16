@@ -14,8 +14,6 @@ public class ConfirmationUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             DontWantToExitGame();
-
-
     }
     public void ExitGameFromPause()
     {
@@ -35,6 +33,17 @@ public class ConfirmationUI : MonoBehaviour
     public void DontWantToExitGame()
     {
         ConfirmUI.SetActive(false);
+    }
+
+    public void ExitGameFromMenu()
+    {
+        QuitGame();
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("QUIT!");
+        Application.Quit();
     }
 
 }
