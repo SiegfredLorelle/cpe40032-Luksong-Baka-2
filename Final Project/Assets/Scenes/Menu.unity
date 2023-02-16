@@ -783,7 +783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc34e0ec662a31544b31f8754bea134b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjustVolumeScript: {fileID: 0}
 --- !u!4 &464902154
 Transform:
   m_ObjectHideFlags: 0
@@ -792,12 +791,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464902151}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 614, y: 336.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1011693510}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &471952986
 GameObject:
@@ -2212,7 +2211,8 @@ Transform:
   m_LocalPosition: {x: 614, y: 336.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 464902154}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2324,7 +2324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ada36bedcbec4149b9462426ae3eb59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  adjustVolumeScript: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 17f286a851c4864408b684662b6769c9, type: 2}
 --- !u!114 &1011693513
 MonoBehaviour:
   m_ObjectHideFlags: 0

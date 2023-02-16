@@ -12,11 +12,11 @@ public class AdjustVolume : MonoBehaviour
     public Slider SFXSlider;
 
 
-    const string MIXER_MUSIC = "MusicVolume";
-    const string MIXER_SFX = "SFXVolume";
+    public const string MIXER_MUSIC = "MusicVolume";
+    public const string MIXER_SFX = "SFXVolume";
 
 
-    private AudioSource backgroundMusic;
+    //private AudioSource backgroundMusic;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +27,9 @@ public class AdjustVolume : MonoBehaviour
 
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
+
     }
-        
+
     // Update is called once per frame
     void Update()
     {
@@ -43,6 +44,35 @@ public class AdjustVolume : MonoBehaviour
     public void SetSFXVolume(float vol)
     {
         mixer.SetFloat(MIXER_SFX, Mathf.Log10(vol) * 20);
+    }
+
+    public void OnDisable()
+    {
+        SaveVolumeSetting();
+    }
+
+    public void OnEnable()
+    {
+        SetUpVolumeSlider();
+    }
+
+    private void SetUpVolumeSlider()
+    {
+        float musicVolume = PlayerPrefs.GetFloat(MIXER_MUSIC, 1.0f);
+        float SFXVolume = PlayerPrefs.GetFloat(MIXER_SFX, 1.0f);
+
+        musicSlider.value = musicVolume;
+        SFXSlider.value = SFXVolume;
+    }
+
+
+
+    private void SaveVolumeSetting()
+    {
+        PlayerPrefs.SetFloat(MIXER_MUSIC, musicSlider.value);
+        PlayerPrefs.SetFloat(MIXER_SFX, SFXSlider.value);
+        //PlayerPrefs.SetFloat(MIXER_MUSIC, 1.0f);
+        //PlayerPrefs.SetFloat(MIXER_SFX, 1.0f);
     }
 
 
