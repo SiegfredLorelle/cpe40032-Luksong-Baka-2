@@ -8,9 +8,9 @@ public class PauseMenu : MonoBehaviour
     public GameManager gameManagerScript;
 
     public GameObject pauseMenuUI;
+    public GameObject confirmationMenuUI;
     public AudioSource[] audioSources;
 
-    // Start is called before the first frame update
     private void Start()
     {
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !gameManagerScript.isGameStopped)
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameManagerScript.isGameStopped && !confirmationMenuUI.activeSelf)
         {
             if (gameManagerScript.isGamePaused)
             {
