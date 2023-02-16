@@ -54,4 +54,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Help", LoadSceneMode.Additive);
     }
+
+     public void LoadScore()
+    {
+        SceneManager.LoadScene("Score", LoadSceneMode.Additive);
+    }
 }
