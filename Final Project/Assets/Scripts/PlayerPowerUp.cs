@@ -2,29 +2,39 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 
 public class PlayerPowerUp : MonoBehaviour
 {
+    public GameObject strengthPopUp;
+    public GameObject BombPopUp;
+    public GameObject DaggerPopUp;
+
+    TextMeshProUGUI daggerPopUpText;
+
     public class PowerUp
     {
         public string name;
         public bool isActivated;
         public float cooldown;
         public int numberLeft;
+        public GameObject popUpCanvas;
 
-        public PowerUp(string name, float cooldown)
+        public PowerUp(string name, float cooldown, int numberLeft, GameObject popUpCanvas)
         {
             this.name = name;
             this.isActivated = false;
             this.cooldown = cooldown;
-            this.numberLeft = 0;
+            this.numberLeft = numberLeft;
+            this.popUpCanvas = popUpCanvas;
         }
     }
 
 
+    public PowerUp currentPowerUp;
     public Dictionary<string, PowerUp> powerUps = new Dictionary<string, PowerUp>();
-
     GameManager gameManagerScript;
     PlayerController playerControllerScript;
 
@@ -46,11 +56,16 @@ public class PlayerPowerUp : MonoBehaviour
         playerControllerScript = gameObject.GetComponent<PlayerController>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
+        daggerPopUpText= DaggerPopUp.GetComponentInChildren<TextMeshProUGUI>();
+
+
 
         // Create all the powerups with their respective cooldowns
-        powerUps.Add("Strength", new PowerUp("Strength", 5.0f));
-        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f));
-        powerUps.Add("Dagger", new PowerUp("Dagger", 0.0f));
+        powerUps.Add("Strength", new PowerUp("Strength", 5.0f, 0, strengthPopUp));
+        powerUps.Add("Bomb", new PowerUp("Bomb", 5.0f, 0, BombPopUp));
+        powerUps.Add("Dagger", new PowerUp("Dagger", 0f, 5, DaggerPopUp));
+
+        TurnOffPowerUp();
 
     }
 
@@ -72,9 +87,9 @@ public class PlayerPowerUp : MonoBehaviour
 
         // Randomize to include other powerups later, JUST TESTING ONE POWERUP AT A TIEM, CHANGE 2 TO powerUps.Count
         int index = Random.Range(0, powerUps.Count);
-        PowerUp currentPowerUp = powerUps.ElementAt(index).Value;
+        currentPowerUp = powerUps.ElementAt(index).Value;
 
-        //currentPowerUp = powerUps.ElementAt(0).Value; //REMOVE FOR TESTING ONLY
+        //currentPowerUp = powerUps.ElementAt(2).Value; //REMOVE FOR TESTING ONLY
 
 
 
@@ -93,12 +108,12 @@ public class PlayerPowerUp : MonoBehaviour
             case "Dagger":
                 powerUpIndicator.SetActive(true);
                 currentPowerUp.numberLeft = 5;
+                UpdateNumOfDaggersInUI();
                 break;
 
         }
         currentPowerUp.isActivated = true;
-        Debug.Log($"PICKED UP {currentPowerUp.name} POWERUP");
-
+        currentPowerUp.popUpCanvas.SetActive(true);
     }
 
 
@@ -152,6 +167,7 @@ public class PlayerPowerUp : MonoBehaviour
         foreach (PowerUp powerUp in powerUps.Values)
         {
             powerUp.isActivated = false;
+            powerUp.popUpCanvas.SetActive(false);
         }
 
         // If the player lost while having a powerup,
@@ -167,6 +183,39 @@ public class PlayerPowerUp : MonoBehaviour
         if (!Input.GetKey(KeyCode.LeftShift))
         {
             playerControllerScript.SlowDown();
+        }
+    }
+
+    public void ReduceDagger()
+    {
+        powerUps["Dagger"].numberLeft--;
+        UpdateNumOfDaggersInUI();
+        CheckNumOfDaggers();
+    }
+
+    private void UpdateNumOfDaggersInUI()
+    {
+        if (powerUps["Dagger"].numberLeft != 1)
+        { 
+            daggerPopUpText.text = $"Press E to attack the obstacles using {powerUps["Dagger"].numberLeft} daggers";
+        }
+        else 
+        {
+            daggerPopUpText.text = $"Press E to attack the obstacles using {powerUps["Dagger"].numberLeft} dagger";
+        }
+    }
+
+    private void CheckNumOfDaggers()
+    {
+        if (powerUps["Dagger"].numberLeft == 1)
+        {
+            StartCoroutine(BlinkPowerUpIndicator());
+
+        }
+        else if (powerUps["Dagger"].numberLeft == 0)
+        {
+            TurnOffPowerUp();
+
         }
     }
 
