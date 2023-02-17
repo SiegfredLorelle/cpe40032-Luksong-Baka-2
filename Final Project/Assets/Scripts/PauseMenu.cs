@@ -73,5 +73,10 @@ public class PauseMenu : MonoBehaviour
         
     }
 
+    public void LoadHelp()
+    {
+        SceneManager.LoadScene(GameManager.SCENE_HELP, LoadSceneMode.Additive);
+    }
+
     
 }
