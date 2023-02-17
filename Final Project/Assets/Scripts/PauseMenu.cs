@@ -34,7 +34,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    public void Resume ()
+    public void Resume()
     {
         gameManagerScript.isGamePaused = false;
         pauseMenuUI.SetActive(false);
@@ -47,13 +47,13 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    public void Pause ()
+    public void Pause()
     {
         gameManagerScript.isGamePaused = true;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
 
-        // Find all audio sources then pause them
+        // Find all audio sources and pause each one of  them
         audioSources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource audioSource in audioSources)
         {
@@ -64,12 +64,12 @@ public class PauseMenu : MonoBehaviour
 
      public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(GameManager.SCENE_MENU);
         
     }
      public void Restart()
     {
-        SceneManager.LoadScene("Final Project");
+        SceneManager.LoadScene(GameManager.SCENE_LUKSONGBAKA);
         
     }
 

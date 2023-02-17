@@ -4,26 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    ///** BEGIN SINGLETON DECLARATION **/
-
-    //private GameManager _instance;
-    //public GameManager Instance
-    //{
-    //    get
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            Debug.LogError("The GameManager doesn't exist!");
-    //        }
-    //        return _instance;
-    //    }
-    //}
-
-    //private void Awake() => _instance = this;
-    /** END SINGLETON DECLARATION **/
-
-    /** GLOBAL CONSTANTS **/
-
     public PlayerController playerControllerScript;
     public MoveBackground moveBackgroundScript;
     public UIManager UIManagerScript;
@@ -48,13 +28,18 @@ public class GameManager : MonoBehaviour
     public const string TAG_DESTROYSENSOR = "Destroy Sensor";
     public const string TAG_HEIGHTLIMIT = "Height Limit Sensor";
     public const string TAG_WITHINCAMERA = "Within Camera Sensor";
-
     public const string TAG_HEART = "Heart";
+
+    public const string SCENE_LUKSONGBAKA = "Luksong Baka";
+    public const string SCENE_MENU = "Menu";
+    public const string SCENE_HELP = "Help";
+
 
     public const string NAME_MEAT = "Meat(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
     public readonly string[] NAME_CALVES = { "Brown Calf(Clone)", "White Calf(Clone)" };
     public readonly string[] NAME_TRUCKS = { "Truck(Clone)", "Two Trailer Truck(Clone)" };
+
 
     public const string NAME_BOMB = "Bomb(Clone)";
     public const string NAME_DAGGER = "Dagger(Clone)";

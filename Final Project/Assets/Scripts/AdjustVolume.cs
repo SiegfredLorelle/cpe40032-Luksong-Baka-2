@@ -64,17 +64,5 @@ public class AdjustVolume : MonoBehaviour
     {
         PlayerPrefs.SetFloat(MIXER_MUSIC, musicSlider.value);
         PlayerPrefs.SetFloat(MIXER_SFX, SFXSlider.value);
-        //PlayerPrefs.SetFloat(MIXER_MUSIC, 1.0f);
-        //PlayerPrefs.SetFloat(MIXER_SFX, 1.0f);
     }
-
-
-
-
-    //public void SetupSlider()
-    //{
-    //    musicSlider = GetComponent<Slider>();
-    //    SFXSlider.value = PlayerPrefs.GetFloat("volume");
-    //}
-
 }
