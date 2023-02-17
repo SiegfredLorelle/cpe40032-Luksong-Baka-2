@@ -1,10 +1,7 @@
 TODOs
 
-bring effects in powerup script to player controller
-volume settings in pause menu
 test building the game
 remove unused imports (using on top of scripts)
-remove score scene, btn, script
 refactor scripts, add comments
 delete todos and changes txt file
 rename repo name
