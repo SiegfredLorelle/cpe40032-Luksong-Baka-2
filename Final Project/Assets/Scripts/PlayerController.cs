@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public PlayerHealth healthScript;
     public BackgroundMusic backgroundMusicScript;
     public SpawnManager spawnManagerScript;
-    public UIManager UIManagerScript;
+    public UIManagerInGame UIManagerScript;
     public GameManager gameManagerScript;
     public ShakeScreen shakeScreenScript;
 
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
         powerUpScript = GetComponent<PlayerPowerUp>();
         healthScript = GetComponent<PlayerHealth>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
+        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManagerInGame>();
         backgroundMusicScript = GameObject.FindGameObjectWithTag("Background Music").GetComponent<BackgroundMusic>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         shakeScreenScript = GameObject.Find("Main Camera").GetComponent<ShakeScreen>();
