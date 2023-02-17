@@ -12,10 +12,6 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenu;
     public GameObject optionMenu;
 
-    //private void Awake()
-    //{
-    //    Instantiate(musicPlayer);
-    //}
 
     private void Start()
     {
@@ -41,7 +37,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Final Project");
+        SceneManager.LoadScene(GameManager.SCENE_LUKSONGBAKA);
     }
 
     public void QuitGame()
@@ -52,10 +48,11 @@ public class MainMenu : MonoBehaviour
 
     public void LoadHelp()
     {
-        SceneManager.LoadScene("Help", LoadSceneMode.Additive);
+        SceneManager.LoadScene(GameManager.SCENE_HELP, LoadSceneMode.Additive);
     }
 
-     public void LoadScore()
+    // REMOVE THIS IF LEADERBOARD IS NOT WORKING
+    public void LoadScore()
     {
         SceneManager.LoadScene("Score", LoadSceneMode.Additive);
     }

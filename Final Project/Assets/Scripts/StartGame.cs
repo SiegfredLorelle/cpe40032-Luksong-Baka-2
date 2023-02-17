@@ -8,6 +8,6 @@ public class StartGame : MonoBehaviour
 
     public void BeginGame()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(GameManager.SCENE_MENU);
     }
 }

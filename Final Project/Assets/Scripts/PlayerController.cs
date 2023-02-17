@@ -504,9 +504,7 @@ public class PlayerController : MonoBehaviour
         // Enable powerup when collided with one
         if (other.gameObject.CompareTag(GameManager.TAG_POWERUP))
         {
-
             powerUpScript.EnablePowerUp(other.gameObject);
-
         }
 
         else if (other.CompareTag(GameManager.TAG_HEART))

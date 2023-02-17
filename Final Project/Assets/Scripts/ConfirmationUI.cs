@@ -17,12 +17,12 @@ public class ConfirmationUI : MonoBehaviour
     }
     public void ExitGameFromPause()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(GameManager.SCENE_MENU);
     }
 
     public void ExitGameFromGameOver()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(GameManager.SCENE_MENU);
     }
 
     public void OpenConfirmation()
