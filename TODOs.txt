@@ -2,10 +2,10 @@ TODOs
 
 bring effects in powerup script to player controller
 volume settings in pause menu
-rename ui manager to ui manager in game
 test building the game
 remove unused imports (using on top of scripts)
-place all physics/movements in fixed update instead of update
+remove score scene, btn, script
+refactor scripts, add comments
 
 
 add git attributes

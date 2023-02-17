@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManagerInGame : MonoBehaviour
 {
 
     public GameManager gameManagerScript;

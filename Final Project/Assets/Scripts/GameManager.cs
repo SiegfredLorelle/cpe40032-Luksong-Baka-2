@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public PlayerController playerControllerScript;
     public MoveBackground moveBackgroundScript;
-    public UIManager UIManagerScript;
+    public UIManagerInGame UIManagerScript;
 
     // I really dislike the way having strings right in my function calls
     // looks, so I prefer to use constants for things like this - helps
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         moveBackgroundScript = GameObject.Find("Background").GetComponent<MoveBackground>();
-        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManager>();
+        UIManagerScript = GameObject.Find("UIManager").GetComponent<UIManagerInGame>();
 
         score = 0;
         isGamePaused = false;
