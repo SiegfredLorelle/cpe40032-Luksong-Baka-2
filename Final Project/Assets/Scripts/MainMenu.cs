@@ -26,13 +26,11 @@ public class MainMenu : MonoBehaviour
     {
         mainMenu.SetActive(true);
         optionMenu.SetActive(false);
-
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            if (SceneManager.GetSceneAt(i).name == "Help")
-                SceneManager.UnloadSceneAsync(SceneManager.GetSceneAt(i).name);
-            break;
+        if (SceneManager.GetSceneByName(GameManager.SCENE_HELP).isLoaded)
+        { 
+            SceneManager.UnloadSceneAsync(GameManager.SCENE_HELP);
         }
+
     }
 
     public void PlayGame()
