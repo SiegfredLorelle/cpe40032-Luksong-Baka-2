@@ -231,13 +231,6 @@ public class SpawnManager : MonoBehaviour
         // UNCOMMENT TO RANDOMIZE ALL
         GameObject _newObstacle = Instantiate(obstaclePrefabs[_choice], new Vector3(SpawnPosX, obstaclePrefabs[_choice].transform.position.y), obstaclePrefabs[_choice].transform.rotation);
 
-        // FOR TESTING ONLY
-        //GameObject _newObstacle = Instantiate(obstaclePrefabs[4], new Vector3(SpawnPosX, obstaclePrefabs[4].transform.position.y, 0), obstaclePrefabs[4].transform.rotation);
-
-
     }
-
-
-
 
 }

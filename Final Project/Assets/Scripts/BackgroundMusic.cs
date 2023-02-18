@@ -5,22 +5,6 @@ using UnityEngine.SceneManagement;
 public class BackgroundMusic : MonoBehaviour 
 {
     //Ensures only one instance of music player exists
-    //(prevents recreating another music player when loading menu scene)
-    //private static BackgroundMusic instance;
-    //void Awake()
-    //{
-    //    if (instance != null && instance != this)
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //    {
-    //        instance = this;
-    //    }
-    //}
-
-
-    //public AdjustVolume adjustVolumeScript;
 
     // Reference to Audio Source component
     private AudioSource audioSrc;

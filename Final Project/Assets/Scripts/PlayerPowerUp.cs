@@ -197,13 +197,6 @@ public class PlayerPowerUp : MonoBehaviour
             playerAudio.PlayOneShot(endOfPowerUpSound);
         }
 
-        // This is only necessary if the powerup was strength
-        // While on strength, dash is always active regardless if Shift Key is hold,
-        // so slow down if player is not holding Shift
-        //if (!Input.GetKey(KeyCode.LeftShift))
-        //{
-        //    playerControllerScript.SlowDown();
-        //}
     }
 
     public void ReduceDagger()
@@ -240,6 +233,3 @@ public class PlayerPowerUp : MonoBehaviour
     }
 
 }
-
-
-

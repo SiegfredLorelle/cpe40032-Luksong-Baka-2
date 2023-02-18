@@ -21,8 +21,6 @@ public class UIManagerInGame : MonoBehaviour
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         StartUI();
-        ////PlayerController.PlayerHitObstacle += GameOver;
-        ////GameManager.GameRestart += StartUI;
     }
 
     // when the game is started or restarted, we make sure the death
