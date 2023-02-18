@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
@@ -15,15 +13,12 @@ public class AdjustVolume : MonoBehaviour
     public const string MIXER_SFX = "SFXVolume";
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         SFXSlider.onValueChanged.AddListener(SetSFXVolume);
     }
 
-    // Update is called once per frame
     void Update()
     {
 

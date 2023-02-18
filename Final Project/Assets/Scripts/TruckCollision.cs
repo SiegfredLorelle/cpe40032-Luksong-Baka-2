@@ -3,6 +3,7 @@ using UnityEngine;
 public class TruckCollision : MonoBehaviour
 {
     // Attached to trucks (including truck and two trailer truck)
+    // Controls all collision to trucks
 
     public MoveLeft moveLeftScript;
     public GameManager gameManagerScript;
