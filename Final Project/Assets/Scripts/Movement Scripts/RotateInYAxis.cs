@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateInYAxis : MonoBehaviour
@@ -10,10 +8,9 @@ public class RotateInYAxis : MonoBehaviour
     // (base on the speed entered in the objects inspector)
     public float rotateSpeed;
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // Rotates the object
+        // Rotates the object in the y axis
         transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
     }
 }

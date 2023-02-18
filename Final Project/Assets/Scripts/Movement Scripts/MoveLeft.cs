@@ -20,13 +20,13 @@ public class MoveLeft : MonoBehaviour
     public AudioClip cowHurtSound;
     public AudioClip metalHitSound;
 
-    public bool isThrown;
-    public bool isWithinScreen;
+    public bool isThrown = false;
+    public bool isWithinScreen = false;
 
-    private float moveSpeed;
+    private float moveSpeed = 20f;
     private float modifiedMoveSpeed;
 
-    private Vector3 meatSpawnOffset;
+    private Vector3 meatSpawnOffset = new Vector3(0, 3.0f, 1.5f);
 
     // Assign values to variables
     void Start()
@@ -35,11 +35,7 @@ public class MoveLeft : MonoBehaviour
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
 
-        moveSpeed = 20f;
         modifiedMoveSpeed = moveSpeed;
-        isThrown = false;
-        isWithinScreen = false;
-        meatSpawnOffset = new Vector3(0, 3.0f, 1.5f);
     }
 
     // Speeds up this object when playing is on dash, else slow down to normal speed
@@ -66,7 +62,6 @@ public class MoveLeft : MonoBehaviour
         modifiedMoveSpeed = moveSpeed;
     }
 
-    // 
     void FixedUpdate()
     {
         // Do nothing if the game is stopped or if the object is being thrown (by strength powerup)
@@ -77,7 +72,6 @@ public class MoveLeft : MonoBehaviour
         // Do actual movement, using from relative to world
         // (so that objects will always go left with respect to the world/camera regardless of their rotation)
         transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, Space.World);
-
     }
 
 
@@ -101,7 +95,6 @@ public class MoveLeft : MonoBehaviour
                 // this object is a cow/calf 
                 if (gameManagerScript.NAME_COWS.Contains(gameObject.name) || gameManagerScript.NAME_CALVES.Contains(gameObject.name))
                 {
-                    //DaggerHitCow(other.gameObject);
                     ObstacleProjectileCollision(other.gameObject, cowHurtSound, 2);
                     TurnCowToMeat();
                 }

@@ -1,26 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveRight : MonoBehaviour
 {
-    public float moveSpeed;
+    // Attached to projectiles, specifically bombs and daggers
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        moveSpeed = 30.0f;
-    }
+    public float moveSpeed = 30.0f;
 
     void FixedUpdate()
     {
+        // Moves the projectile to right
         transform.Translate(Vector3.right * Time.fixedDeltaTime * moveSpeed, relativeTo: Space.World);
-
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR) || other.gameObject.name == "ProjectileXLimitSensor")
+        // Destroys the projectile upon reaching destroy sensor or projectile x limit sensor
+        if (other.CompareTag(GameManager.TAG_DESTROYSENSOR) || other.gameObject.name == GameManager.NAME_PROJECTILEXLIMIT)
         {
             Destroy(gameObject);
         }
