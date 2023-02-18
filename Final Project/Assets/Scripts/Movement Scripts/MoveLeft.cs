@@ -15,7 +15,7 @@ public class MoveLeft : MonoBehaviour
     // Effects
     public ParticleSystem explosionEffects;
     public List<AudioClip> mooSounds;
-    public AudioSource sfxPlayer;
+    private AudioSource sfxPlayer;
     public AudioClip explosionSound;
     public AudioClip cowHurtSound;
     public AudioClip metalHitSound;

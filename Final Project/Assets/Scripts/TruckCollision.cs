@@ -1,9 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TruckCollision : MonoBehaviour
 {
+    // Attached to trucks (including truck and two trailer truck)
+
     public MoveLeft moveLeftScript;
     public GameManager gameManagerScript;
     public PlayerController playerControllerScript;
@@ -19,14 +19,13 @@ public class TruckCollision : MonoBehaviour
     public AudioClip explosionSound;
 
 
-    // Start is called before the first frame update
     void Start()
     {
         moveLeftScript = GetComponentInParent<MoveLeft>();
-        sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         powerupScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
+        sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
 
         trailerCollider = gameObject.transform.parent.Find("TrailerCollider").GetComponent<Collider>();
         trailerTopCollider = gameObject.transform.parent.Find("TrailerTopCollider").GetComponent<Collider>();
@@ -35,15 +34,12 @@ public class TruckCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // If this truck collided with player
         if (collision.gameObject.CompareTag(GameManager.TAG_PLAYER))
         {
-            // Get the script of the obstacle and set isThrown to true
-            // (setting it to true will stop move left movement and enable move top right movement)
-            if (powerupScript.powerUps["Strength"].isActivated)
-            {
-                moveLeftScript.isThrown = true;
-            }
+            // Call colliding with obstacles method to play effects, add score or throw obstacle if has strength powerup
             playerControllerScript.CollidingWithObstacle(transform.parent.gameObject);
+            // Upon this initial collision with player, ignore succeeding collisions
             IgnoreCollisionWithPlayer(collision.gameObject);
         }
 
@@ -54,6 +50,7 @@ public class TruckCollision : MonoBehaviour
         }
     }
 
+    // Called upon initial collision with player, prevents this truck from affecting player's movement
     private void IgnoreCollisionWithPlayer(GameObject player)
     {
         Physics.IgnoreCollision(truckCollider, player.GetComponent<Collider>());
@@ -63,6 +60,8 @@ public class TruckCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // If this truck collided with a projectile (dagger/bomb), then call obstacle projectile collision method passing the sfx to play
+        // obstacle projetile collision method will play effects, add score, and delete both objects
         if (other.CompareTag(GameManager.TAG_PROJECTILE))
         {
             if (other.name == GameManager.NAME_BOMB)
@@ -72,10 +71,10 @@ public class TruckCollision : MonoBehaviour
             else if (other.name == GameManager.NAME_DAGGER)
             {
                 moveLeftScript.ObstacleProjectileCollision(other.gameObject, metalHitSound, 1);
-
             }
         }
 
+        // If this truck collided with the within camera sensor, then play truck horn sfx and set is within screen to true
         else if (other.CompareTag(GameManager.TAG_WITHINCAMERA))
         {
             sfxPlayer.PlayOneShot(truckHornSound);
@@ -85,11 +84,12 @@ public class TruckCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        // If tis truck passes destroy sensor, then destroy this truck
         if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
         {
             Destroy(transform.parent.gameObject);
         }
-
+        // If tis truck passes point sensor, then add score base on dash
         else if (other.CompareTag(GameManager.TAG_POINTSENSOR))
         {
             moveLeftScript.AddScoreBaseOnDash();
