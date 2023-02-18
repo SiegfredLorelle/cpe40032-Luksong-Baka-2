@@ -25,7 +25,6 @@ public class BackOnEscape : MonoBehaviour
                 ExitOptions();
             }
         }
-
     }
 
     public void CheckOpenMenus()

@@ -13,13 +13,10 @@ public class UIManagerInGame : MonoBehaviour
     public GameObject restartButton;
     public GameObject bg;
 
-    // UI manager only needs to know about GameOver and GameRestart
-    // events, and switches which elements are displayed accordingly
 
     void Start()
     {
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         StartUI();
     }
 
