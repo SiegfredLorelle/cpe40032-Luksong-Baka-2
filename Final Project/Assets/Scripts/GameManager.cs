@@ -1,23 +1,17 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class GameManager : MonoBehaviour
 {
-    public PlayerController playerControllerScript;
-    public MoveBackground moveBackgroundScript;
-    public UIManagerInGame UIManagerScript;
-
-    // I really dislike the way having strings right in my function calls
-    // looks, so I prefer to use constants for things like this - helps
-    // enforce consistency and reduce issues with potential typos, too
-
+    // These constants ensures consistency and prevents typo issues
+    /** START OF GLOBAL STRING CONSTANTS **/
+    // Animations
     public const string ANIM_JUMP_TRIG = "Jump_trig";
     public const string ANIM_DEATH_B = "Death_b";
     public const string ANIM_SPEED_F = "Speed_f";
     public const string ANIM_INT = "Animation_int";
     public const string STATIC_B = "Static_b";
 
+    // Tags
     public const string TAG_WALKABLE = "Walkable";
     public const string TAG_OBSTACLE = "Obstacle";
     public const string TAG_POWERUP = "Power Up";
@@ -30,43 +24,31 @@ public class GameManager : MonoBehaviour
     public const string TAG_WITHINCAMERA = "Within Camera Sensor";
     public const string TAG_HEART = "Heart";
 
+    // Scene names
     public const string SCENE_LUKSONGBAKA = "Luksong Baka";
     public const string SCENE_MENU = "Menu";
     public const string SCENE_HELP = "Help";
 
-
+    // Object/prefab names
     public const string NAME_PROJECTILEXLIMIT = "ProjectileXLimitSensor";
     public const string NAME_MEAT = "Meat(Clone)";
+    public const string NAME_BOMB = "Bomb(Clone)";
+    public const string NAME_DAGGER = "Dagger(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
     public readonly string[] NAME_CALVES = { "Brown Calf(Clone)", "White Calf(Clone)" };
     public readonly string[] NAME_TRUCKS = { "Truck(Clone)", "Two Trailer Truck(Clone)" };
+    /** END OF GLOBAL STRING CONSTANTS **/
 
-
-    public const string NAME_BOMB = "Bomb(Clone)";
-    public const string NAME_DAGGER = "Dagger(Clone)";
-
-    /** END GLOBAL CONSTANTS **/
+    // Values are assign at the start method
+    public PlayerController playerControllerScript;
+    public MoveBackground moveBackgroundScript;
+    public UIManagerInGame UIManagerScript;
 
     public int score;
     public bool isGameStopped;
     public bool isGamePaused;
     public bool recentlyDamaged;
-    //public delegate void RestartAction();
-    //public static event RestartAction GameRestart;
-
-    // in a perfect world, i probably wouldn't need the below bool, but
-    // i'm running out of time and it's a quick hack
-
     public bool playerIsDashing;
-
-    // lots of events to subscribe to here - we want to know when the
-    // player is dashing so that we know whether to enhance their score,
-    // when they've finished the intro animation so we can initialize
-    // the game, and when they've hit an obstacle so we can stop the game.
-
-    // we also want to know when an object has despawned itself, as that is
-    // the condition that causes the score to increase
-
 
     void Start()
     {
@@ -78,62 +60,36 @@ public class GameManager : MonoBehaviour
         isGamePaused = false;
         isGameStopped = true;
         recentlyDamaged = false;
+        playerIsDashing = false;
     }
 
 
-    // can also be used to decrease score by using negative argument,
-    // called when obstacles hit score sensor and  player taking damage
+    // Called when obstacles hit score sensor and player taking damage
+    // Can also be used to decrease score by having negative parameters
     public void IncreaseScore(int additinalScore)
     {
-        // additional score will be negative if called when taking damage
-        // sat recently damaged to true so the next obstacle won't add the score
+        // When called when taking damage, additional score will be negative
+        // Set recently damaged to true so the next obstacle passing the point sensor won't receive score
         if (additinalScore < 0)
         {
             recentlyDamaged = true;
             score += additinalScore;
-            // ensures score will not be negative
+            // Ensures score will not be negative
             if (score < 0)
             {
                 score = 0;
             }
         }
+        // When called from obstacle passing point sensor or projectile-obstacle collision, then additional score will be positive
         // if not recently damaged, then add the score
         else if (!recentlyDamaged)
         {
             score += additinalScore;
         }
-        // if recently damaged, then just set recently damage to false so next obstacle can be added
+        // if recently damaged, then just set recently damage to false so next score will be added
         else
         {
             recentlyDamaged = false;
         }
     }
-
-
-
-    // Decrease score, called when taking damage
-
-
-    // MoveLeft asks about isGameStopped to know whether it needs to currently
-    // be moving or not. FinishedIntro() is fired when the player character
-    // has finished the 'walk in' sequence. The background and obstacles will
-    // know to start moving now.
-
-    public void FinishedIntro()
-    {
-        isGameStopped = false;
-    }
-
-
-    // This is fired when the Restart button is pressed. Score is reset,
-    // we temporarily stop the game so that the intro can replay, and we
-    // let event subscribers know to smash that like button-- I mean
-    // re-initialize their states to the start of the game.
-
-    public void RestartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-
 }

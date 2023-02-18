@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManagerInGame : MonoBehaviour
 {
@@ -49,6 +50,12 @@ public class UIManagerInGame : MonoBehaviour
     public void GameOver()
     {
         StartCoroutine("DeathScreen");
+    }
+
+    // Called when clicking restart from game over screen
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // this is a coroutine that waits a couple of seconds after death, hides

@@ -174,7 +174,6 @@ public class PlayerController : MonoBehaviour
             // if already on running animation and its transitions are finished
             if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Run_Static"))
             {
-                //PlayerFinishedIntro?.Invoke();
                 ActivatePlayer();
                 spawnManagerScript.StartSpawner();
                 gameManagerScript.isGameStopped = false;

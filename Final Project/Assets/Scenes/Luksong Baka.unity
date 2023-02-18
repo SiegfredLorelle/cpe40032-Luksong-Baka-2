@@ -3617,8 +3617,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 270036710}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 1390805748}
+        m_TargetAssemblyTypeName: UIManagerInGame, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:

@@ -5,10 +5,9 @@ public class RotateInZAxis : MonoBehaviour
     // Attached to bomb and powerup prefabs
 
     // The rotate speed will be different for each object
-    // (base on the rotateSpeed entered in the objects inspector)
+    // (base on the rotateSpeed referenced in the objects inspector)
     public float rotateSpeed;
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         // Rotates the object in z axis
