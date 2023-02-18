@@ -2,6 +2,9 @@
 
 public class GameManager : MonoBehaviour
 {
+    // Attached to Game Manager object in Luksong Baka Scene
+    // Purpose: holds public string constants, holds variables used in various scripts, updates score 
+
     // These constants ensures consistency and prevents typo issues
     /** START OF GLOBAL STRING CONSTANTS **/
     // Animations
@@ -31,6 +34,7 @@ public class GameManager : MonoBehaviour
 
     // Object/prefab names
     public const string NAME_PROJECTILEXLIMIT = "ProjectileXLimitSensor";
+    public const string NAME_GROUND = "Ground";
     public const string NAME_MEAT = "Meat(Clone)";
     public const string NAME_BOMB = "Bomb(Clone)";
     public const string NAME_DAGGER = "Dagger(Clone)";

@@ -2791,7 +2791,6 @@ MonoBehaviour:
   meatPrefab: {fileID: 0}
   explosionEffects: {fileID: 0}
   mooSounds: []
-  sfxPlayer: {fileID: 0}
   explosionSound: {fileID: 0}
   cowHurtSound: {fileID: 0}
   metalHitSound: {fileID: 0}
@@ -5720,8 +5719,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1525634462}
   - component: {fileID: 1525634465}
-  - component: {fileID: 1525634464}
-  - component: {fileID: 1525634463}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -5746,117 +5743,6 @@ Transform:
   m_Father: {fileID: 1184584171}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1525634463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525634461}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54b1d4a12b7b4a3458f29dd333fb38e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: 17f286a851c4864408b684662b6769c9, type: 2}
-  musicSlider: {fileID: 0}
-  SFXSlider: {fileID: 0}
---- !u!82 &1525634464
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1525634461}
-  m_Enabled: 0
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a13352c65dccdfd438a7752c9b3983d4, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &1525634465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7711,8 +7597,6 @@ MonoBehaviour:
   UIManagerScript: {fileID: 0}
   gameManagerScript: {fileID: 0}
   shakeScreenScript: {fileID: 0}
-  bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
-  daggerPrefab: {fileID: 4736720416522279893, guid: c809056de18ac424b92e03ad422fa68d, type: 3}
   explosionParticle: {fileID: 318874665}
   dirtParticle: {fileID: 1209890967}
   heartPickUpParticle: {fileID: 1262544474120978219, guid: f8207af6abef93e418399f4f061a53fa, type: 3}
@@ -7723,14 +7607,20 @@ MonoBehaviour:
   throwCowsSound: {fileID: 8300000, guid: 4a3a0e936b7f42e478e05de7e570c217, type: 3}
   throwObstacleSound: {fileID: 8300000, guid: b5f555c505c15ab4992e3484eb458eb5, type: 3}
   playerAnim: {fileID: 1909851413}
+  idleAnimationDelay: 1.1
   runningAnimationSpeed: 2.5
   modifiedRunningAnimationSpeed: 0
+  runningSpeedMultiplier: 1.5
+  dirtAnimationSpeed: 0.65
+  modifiedDirtAnimationSpeed: 0
+  dirtSpeedMultiplier: 2.5
   jumpingAnimationSpeed: 0.5
-  walkingAnimationSpeed: 1
   deathAnimationSpeed: 0.5
   jumpForce: 700
   gravityConstant: {x: 0, y: -29.5, z: 0}
-  introStartPosition: {x: 0, y: 0, z: 0}
+  introStartPosition: {x: 1.75, y: 0, z: 0}
+  bombPrefab: {fileID: 1312437311016454683, guid: 8bea58577620d994797f4c7c619c23e4, type: 3}
+  daggerPrefab: {fileID: 4736720416522279893, guid: c809056de18ac424b92e03ad422fa68d, type: 3}
 --- !u!95 &1909851413 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9500000, guid: b186f9485a0828b468f98fe846ae1a68, type: 3}
