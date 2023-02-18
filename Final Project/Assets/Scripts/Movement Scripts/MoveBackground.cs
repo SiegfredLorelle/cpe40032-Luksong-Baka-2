@@ -2,32 +2,14 @@
 
 public class MoveBackground : MonoBehaviour
 {
+    // Attached to background
+    // Move left is also attached to background, this script main purpose is to reset the background on half
+
     private Vector3 startPos = new Vector3(45, 8.1f, 10);
-
-    // subscribe to GameManager event at the beginning so
-    // we know when we're supposed to restart
-
-    void Start()
-    {
-        //startPos = transform.position;
-        //startPos = new Vector3(45, 8.1f, 10);
-
-        ////GameManager.GameRestart += ResetBackground;
-    }
-
-    // this event fires when GameManager restarts, placing the background
-    // back to its starting position.
-
-    public void ResetBackground() => transform.position = startPos;
 
     void Update()
     {
-        // we're being moved by the MoveLeft script, but because MoveLeft also
-        // gets applied to obstacles, I wanted to make resetting the background
-        // a different script.
-        //
         // reset position if we've moved further than half our background width
-
         if (transform.position.x < startPos.x - gameObject.GetComponent<SpriteRenderer>().bounds.extents.x)
         {
             transform.position = startPos;

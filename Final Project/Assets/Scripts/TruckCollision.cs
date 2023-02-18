@@ -13,15 +13,17 @@ public class TruckCollision : MonoBehaviour
     private Collider trailerCollider;
     private Collider trailerTopCollider;
 
-    public AudioSource truckAudio;
+    public AudioSource sfxPlayer;
     public AudioClip truckHornSound;
+    public AudioClip metalHitSound;
+    public AudioClip explosionSound;
 
 
     // Start is called before the first frame update
     void Start()
     {
         moveLeftScript = GetComponentInParent<MoveLeft>();
-        truckAudio = GetComponentInParent<AudioSource>();
+        sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         playerControllerScript = GameObject.Find("Player").GetComponent<PlayerController>();
         powerupScript = GameObject.Find("Player").GetComponent<PlayerPowerUp>();
@@ -31,12 +33,6 @@ public class TruckCollision : MonoBehaviour
         truckCollider = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(GameManager.TAG_PLAYER))
@@ -44,24 +40,18 @@ public class TruckCollision : MonoBehaviour
             // Get the script of the obstacle and set isThrown to true
             // (setting it to true will stop move left movement and enable move top right movement)
             if (powerupScript.powerUps["Strength"].isActivated)
-            { 
+            {
                 moveLeftScript.isThrown = true;
             }
-            //MoveLeft moveLeftScript = other.gameObject.GetComponent<MoveLeft>();
             playerControllerScript.CollidingWithObstacle(transform.parent.gameObject);
             IgnoreCollisionWithPlayer(collision.gameObject);
         }
-
-
 
         // Prevents overlapping trucks (happens when consecutive trucks spawn at small interval)
         if (collision.gameObject.name == "TrailerCollider" && !moveLeftScript.isThrown && !moveLeftScript.isWithinScreen)
         {
             Destroy(transform.parent.gameObject);
         }
-
-
-
     }
 
     private void IgnoreCollisionWithPlayer(GameObject player)
@@ -69,8 +59,6 @@ public class TruckCollision : MonoBehaviour
         Physics.IgnoreCollision(truckCollider, player.GetComponent<Collider>());
         Physics.IgnoreCollision(trailerCollider, player.GetComponent<Collider>());
         Physics.IgnoreCollision(trailerTopCollider, player.GetComponent<Collider>());
-
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -79,20 +67,20 @@ public class TruckCollision : MonoBehaviour
         {
             if (other.name == GameManager.NAME_BOMB)
             {
-                moveLeftScript.BombExplosion(other.gameObject);
+                moveLeftScript.ObstacleProjectileCollision(other.gameObject, explosionSound, 1);
             }
             else if (other.name == GameManager.NAME_DAGGER)
             {
-                moveLeftScript.DaggerHitObstacle(other.gameObject);
+                moveLeftScript.ObstacleProjectileCollision(other.gameObject, metalHitSound, 1);
+
             }
         }
 
         else if (other.CompareTag(GameManager.TAG_WITHINCAMERA))
         {
-            truckAudio.PlayOneShot(truckHornSound);
+            sfxPlayer.PlayOneShot(truckHornSound);
             moveLeftScript.isWithinScreen = true;
         }
-
     }
 
     private void OnTriggerExit(Collider other)

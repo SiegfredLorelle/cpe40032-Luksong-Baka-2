@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
 
         Physics.gravity = gravityConstant;
 
-
         SetupIntro();
     }
 

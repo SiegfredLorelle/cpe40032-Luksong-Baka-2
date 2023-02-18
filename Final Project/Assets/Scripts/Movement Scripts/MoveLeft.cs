@@ -1,41 +1,48 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    // Attached to most objects in the scene including obstacles, powerups, and background
+    // Attached to obstacles, powerups, hearts and background
 
+    // References from other scripts
     public GameManager gameManagerScript;
     public SpawnManager spawnManagerScript;
+
     public GameObject meatPrefab;
+
+    // Effects
+    public ParticleSystem explosionEffects;
+    public List<AudioClip> mooSounds;
+    public AudioSource sfxPlayer;
+    public AudioClip explosionSound;
+    public AudioClip cowHurtSound;
+    public AudioClip metalHitSound;
+
     public bool isThrown;
     public bool isWithinScreen;
 
     private float moveSpeed;
     private float modifiedMoveSpeed;
 
-    // Variables used by some but not all objects
-    public ParticleSystem explosionEffects;
-    public AudioSource audioSrc;
-    public List<AudioClip> mooSounds;
-    public AudioClip explosionSound;
-    public AudioClip cowHurtSound;
-    public AudioClip metalHitSound;
+    private Vector3 meatSpawnOffset;
 
-
+    // Assign values to variables
     void Start()
     {
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
         spawnManagerScript = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        sfxPlayer = GameObject.Find("SfxPlayer").GetComponent<AudioSource>();
 
         moveSpeed = 20f;
         modifiedMoveSpeed = moveSpeed;
         isThrown = false;
         isWithinScreen = false;
+        meatSpawnOffset = new Vector3(0, 3.0f, 1.5f);
     }
 
+    // Speeds up this object when playing is on dash, else slow down to normal speed
     void Update()
     {
         // Increase or decrease speed base on player dash
@@ -59,7 +66,7 @@ public class MoveLeft : MonoBehaviour
         modifiedMoveSpeed = moveSpeed;
     }
 
-
+    // 
     void FixedUpdate()
     {
         // Do nothing if the game is stopped or if the object is being thrown (by strength powerup)
@@ -67,7 +74,8 @@ public class MoveLeft : MonoBehaviour
         {
             return;
         }
-        // Do actual movement, with modifiedMoveSpeed and relative to world (so that objects will always go left with respect to the world/camera regardless of their rotation)
+        // Do actual movement, using from relative to world
+        // (so that objects will always go left with respect to the world/camera regardless of their rotation)
         transform.Translate(Vector3.left * Time.fixedDeltaTime * modifiedMoveSpeed, Space.World);
 
     }
@@ -84,6 +92,7 @@ public class MoveLeft : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // If obstacle got hit by a projectile (bomb or dagger)
         if (CompareTag(GameManager.TAG_OBSTACLE) && other.CompareTag(GameManager.TAG_PROJECTILE))
         {
             // If this object was hit by a dagger
@@ -92,93 +101,79 @@ public class MoveLeft : MonoBehaviour
                 // this object is a cow/calf 
                 if (gameManagerScript.NAME_COWS.Contains(gameObject.name) || gameManagerScript.NAME_CALVES.Contains(gameObject.name))
                 {
-                    DaggerHitCow(other.gameObject);
+                    //DaggerHitCow(other.gameObject);
+                    ObstacleProjectileCollision(other.gameObject, cowHurtSound, 2);
+                    TurnCowToMeat();
                 }
                 else
                 {
-                    DaggerHitObstacle(other.gameObject);
+                    ObstacleProjectileCollision(other.gameObject, metalHitSound, 1);
+
                 }
             }
-
             // If this object was hit by a bomb
             else if (other.name == GameManager.NAME_BOMB)
             {
-                BombExplosion(other.gameObject);
-            }
+                ObstacleProjectileCollision(other.gameObject, explosionSound, 1);
 
+            }
         }
 
-        else if ((gameObject.CompareTag(GameManager.TAG_POWERUP) || gameObject.CompareTag(GameManager.TAG_HEART))  && !isWithinScreen)
+        // If this object is a powerup or heart and is not yet within player screen
+        else if ((gameObject.CompareTag(GameManager.TAG_POWERUP) || gameObject.CompareTag(GameManager.TAG_HEART)) && !isWithinScreen)
         {
+            // If the object that collided with powerup/heart is a truck's trailer (top) then delete the truck
             if ((other.gameObject.name == "TrailerTopCollider" && !other.transform.parent.gameObject.GetComponent<MoveLeft>().isThrown))
             {
                 Destroy(other.transform.parent.gameObject);
             }
+            // In case of a rare case where a powerup/heart collided with another powerup/heart just destroy it
             else if (other.gameObject.CompareTag(GameManager.TAG_POWERUP) || other.gameObject.CompareTag(GameManager.TAG_HEART))
             {
                 Destroy(other.gameObject);
             }
         }
 
+        // If object is hit the within camera sensor, then set it to be within screen and play moo sfx if this object is a cow
+        // Note: spawn sfx for trucks (horn) is called in the truck collision script
         else if (other.gameObject.CompareTag(GameManager.TAG_WITHINCAMERA))
         {
             if (gameManagerScript.NAME_COWS.Contains(gameObject.name))
-            PlayMooSoundEffects();
+                PlayMooSoundEffects();
 
             isWithinScreen = true;
         }
-
-        
-
     }
 
-    // plays a random moo sfx, called when cows enter player screen
-    // (note: sfx for trucks when entering screen is in truck collision script)
+    // Plays a random moo sfx, called when cows enter player screen
+    // (Note: sfx for trucks when entering screen is in truck collision script)
     public void PlayMooSoundEffects()
     {
-            audioSrc = GetComponent<AudioSource>();
-            int index = Random.Range(0, mooSounds.Count);
-            audioSrc.PlayOneShot(mooSounds[index]);
-
+        //audioSrc = GetComponent<AudioSource>();
+        int index = Random.Range(0, mooSounds.Count);
+        sfxPlayer.PlayOneShot(mooSounds[index]);
     }
 
-    public void BombExplosion(GameObject bomb)
+    // Called whe an obstacle got hit by projectile
+    public void ObstacleProjectileCollision(GameObject projectile, AudioClip sfxToPlay, int scoreToAdd)
     {
+        // Create an explosion effects and play sfx
+        Instantiate(explosionEffects, transform.position, Quaternion.identity);
+        sfxPlayer.PlayOneShot(sfxToPlay);
 
-        audioSrc = bomb.GetComponent<AudioSource>();
-        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
-        bomb.GetComponent<Renderer>().enabled = false;
-        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
-        bomb.GetComponent<BoxCollider>().enabled = false;
+        // Destroy the obstacle and the projectile
+        Destroy(gameObject);
+        Destroy(projectile);
 
         // Add score
-        gameManagerScript.IncreaseScore(1);
-
-        // Create an explosion effects and destroy the obstacle hit
-        Instantiate(explosionEffects, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-
-        audioSrc = bomb.GetComponent<AudioSource>();
-        audioSrc.PlayOneShot(explosionSound);
-        Destroy(bomb, explosionSound.length);
+        gameManagerScript.IncreaseScore(scoreToAdd);
     }
 
-    private void DaggerHitCow(GameObject dagger)
+    // Instantiate a meat upon destrying cow to make it sems like the cow turned to meat,
+    // Called when hitting cow/calf with dagger
+    private void TurnCowToMeat()
     {
-        audioSrc = dagger.GetComponent<AudioSource>();
-        GameObject meat = Instantiate(meatPrefab, new Vector3(transform.position.x, transform.position.y + 3.0f, transform.position.z + 1.5f), meatPrefab.transform.rotation);
-        audioSrc.PlayOneShot(cowHurtSound);
-        Destroy(gameObject);
-
-        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
-        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
-        dagger.GetComponent<Renderer>().enabled = false;
-        dagger.GetComponent<BoxCollider>().enabled = false;
-        Destroy(dagger, cowHurtSound.length);
-
-        Instantiate(explosionEffects, transform.position, Quaternion.identity);
-        gameManagerScript.IncreaseScore(2);
-
+        GameObject meat = Instantiate(meatPrefab, transform.position + meatSpawnOffset, meatPrefab.transform.rotation);
         // Scale down the meat by half, if it is from a calf
         if (gameManagerScript.NAME_CALVES.Contains(gameObject.name))
         {
@@ -186,41 +181,26 @@ public class MoveLeft : MonoBehaviour
         }
     }
 
-    public void DaggerHitObstacle(GameObject dagger)
-    {
-        audioSrc = dagger.GetComponent<AudioSource>();
-        audioSrc.PlayOneShot(metalHitSound);
-
-        // Turn of render so it appears destroyed, then actually destroy it after playing sfx
-        // Turn off collider, to prevent it from affecting other objects while the explosion sfx is still playing
-        dagger.GetComponent<Renderer>().enabled = false;
-        dagger.GetComponent<BoxCollider>().enabled = false;
-        Destroy(dagger, metalHitSound.length);
-
-        Destroy(gameObject);
-
-        Instantiate(explosionEffects, transform.position, Quaternion.identity);
-        gameManagerScript.IncreaseScore(1);
-    }
-
-
     private void OnTriggerExit(Collider other)
     {
+        // Destroy all objects with move left when passing the destroy sensor
         if (other.CompareTag(GameManager.TAG_DESTROYSENSOR))
         {
             Destroy(gameObject);
         }
 
+        // Add score based on dash when obatacle got passed point sensor
         else if (CompareTag(GameManager.TAG_OBSTACLE))
         {
             if (other.CompareTag(GameManager.TAG_POINTSENSOR))
             {
                 AddScoreBaseOnDash();
             }
-
         }
     }
 
+    // Add 2 score when getting passed an object while one dash
+    // Else add a regular 1 score
     public void AddScoreBaseOnDash()
     {
         if (gameManagerScript.playerIsDashing)
@@ -232,5 +212,4 @@ public class MoveLeft : MonoBehaviour
             gameManagerScript.IncreaseScore(1);
         }
     }
-
 }
