@@ -1,11 +1,7 @@
 TODOs
 
 test building the game
-remove unused imports (using on top of scripts)
-refactor scripts, add comments
 delete todos and changes txt file
 rename repo name
-delete back score, start game scripts
-create public constants for powerup names
 
 add git attributes
