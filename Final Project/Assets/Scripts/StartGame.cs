@@ -1,13 +1,13 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿//using UnityEngine;
+//using UnityEngine.SceneManagement;
 
-public class StartGame : MonoBehaviour
-{
-    // the only purpose of this scene/button/script is to
-    // load the actual game scene.
+//public class StartGame : MonoBehaviour
+//{
+//    // the only purpose of this scene/button/script is to
+//    // load the actual game scene.
 
-    public void BeginGame()
-    {
-        SceneManager.LoadScene(GameManager.SCENE_MENU);
-    }
-}
+//    public void BeginGame()
+//    {
+//        SceneManager.LoadScene(GameManager.SCENE_MENU);
+//    }
+//}
