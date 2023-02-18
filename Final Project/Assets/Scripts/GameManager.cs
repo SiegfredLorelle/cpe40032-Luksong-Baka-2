@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public const string SCENE_HELP = "Help";
 
 
+    public const string NAME_PROJECTILEXLIMIT = "ProjectileXLimitSensor";
     public const string NAME_MEAT = "Meat(Clone)";
     public readonly string[] NAME_COWS = {"Brown Cow(Clone)", "White Cow(Clone)"};
     public readonly string[] NAME_CALVES = { "Brown Calf(Clone)", "White Calf(Clone)" };

@@ -1,20 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveTopRight : MonoBehaviour
 {
+    // Attached to all obstacles
+    // Handles the movement of thrown obstacles (caused by collision with player with strength powerup)
+
     public MoveLeft moveLeftScript;
 
-    // Start is called before the first frame update
     void Start()
     {
         moveLeftScript = GetComponent<MoveLeft>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+        // Move the obstacle to the top right if thrown by player
+        // Note: If obstacle is thrown then its move left movement is deactivated (not the move left script just the movement within that script)
         if (moveLeftScript.isThrown)
         { 
             transform.Translate(new Vector3(1, 1.25f) * 20.0f * Time.deltaTime, relativeTo: Space.World);

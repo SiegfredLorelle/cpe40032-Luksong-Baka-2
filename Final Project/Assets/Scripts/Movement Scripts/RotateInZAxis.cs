@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RotateInZAxis : MonoBehaviour
@@ -11,9 +9,9 @@ public class RotateInZAxis : MonoBehaviour
     public float rotateSpeed;
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        // Rotates the object, just for effects
+        // Rotates the object in z axis
         transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
     }
 }
