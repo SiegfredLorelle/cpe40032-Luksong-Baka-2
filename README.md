@@ -137,7 +137,7 @@ It is a 2D side-scrolling game built on [Unity Game Engine version 2021.3.16](ht
 
       Regular obstacles do not have unique qualities/mechanics. It includes spools, boxes, and barrels.
 
-      ![Barrel - (regular obstacle)](img/small-obstacle.png)
+      ![Spool - (regular obstacle)](img/small-obstacle.png)
 
       [Back to the Top](#luksong-baka)
 
